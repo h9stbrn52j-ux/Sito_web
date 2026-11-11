@@ -193,7 +193,6 @@ ${head}</head>
 ${body}
 </main>
 <footer class="footer">
-  <canvas class="footer__terrain" data-terrain aria-hidden="true"></canvas>
   <a class="footer__cta" href="${root}contact/">
     <span class="footer__label">${esc(data.contact.headline)}</span>
     <span class="footer__big" data-fit>CONTACT</span>
