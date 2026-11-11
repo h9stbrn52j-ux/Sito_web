@@ -1,0 +1,1019 @@
+{
+  "site": {
+    "name": "Lorenzo Mangini",
+    "tagline": "Filmmaker & DP",
+    "title": "Lorenzo Mangini | Filmmaker & DP",
+    "url": "https://lorenzomangini.com",
+    "description": "Lorenzo Mangini is a Director & DoP crafting compelling cinematic imagery. He brings a bold aesthetic to high-end ADV, independent films, and global sports.",
+    "descriptionLong": "Lorenzo Mangini is an international Filmmaker, DoP & Camera Operator based in Italy, specializing in high-end commercials, global sports & narrative fiction.",
+    "keywords": "Lorenzo Mangini, filmmaker, cinematographer, director of photography, DoP, camera operator, narrative fiction, short films, sports videography, olympic games, commercial video, video production, regista, direttore della fotografia, regie social, Bergamo, Milan, Italy",
+    "email": "work@lorenzomangini.com",
+    "roles": [
+      "Director",
+      "Director of Photography",
+      "Camera Operator"
+    ],
+    "location": "Based in Italy",
+    "formEndpoint": "",
+    "socials": [
+      {
+        "label": "Instagram",
+        "url": "https://instagram.com/lorenzomanginii"
+      },
+      {
+        "label": "Vimeo",
+        "url": "https://vimeo.com/freettata"
+      },
+      {
+        "label": "YouTube",
+        "url": "https://youtube.com/@lorenzomanginii"
+      },
+      {
+        "label": "X",
+        "url": "https://x.com/freettataa"
+      }
+    ],
+    "cookieText": "Usiamo cookie per migliorare l’esperienza sul sito e per la visualizzazione dei video embedded. Cliccando “Accetto” consenti l’uso dei cookie."
+  },
+  "about": {
+    "html": "<p>At the <strong>European Institute of Design (IED)</strong>, I developed a definitive visual language alongside strong project management skills, bridging the gap between cinema theory and modern aesthetics. </p><p>I am equipped to oversee a project’s entire lifecycle — from the initial creative direction and scriptwriting, all the way to the final execution.</p><p class=\"gap\">My portfolio is built on versatility and impact. </p><p>I work as a <strong>Director</strong> across <strong>advertising, social media campaigns, and documentaries</strong>. </p><p>In the <strong>cinematic</strong> field, I shape the visual narrative as a <strong>Director of Photography</strong>, while also bringing my technical expertise to other film projects as a <strong>Camera Operator</strong>.</p><p class=\"gap\">My vision is backed by top-tier industry exposure. Embedded within the Olympic Broadcasting Services for the <strong>Milano-Cortina 2026 Winter Olympic and Paralympic Games</strong>, I gained inside access to elite live-production workflows and broadcast camera systems, absorbing the mechanics of the highest-pressure environment in the industry.</p><p class=\"gap\">From polished commercials to gritty documentaries, I bring a tailored, cinematic approach to every frame.</p><p class=\"gap\"><strong>Quality is the only metric.<br>Contact me to collaborate.</strong></p>",
+    "button": "CONTACT ME!"
+  },
+  "contact": {
+    "headline": "Let's make it happen!"
+  },
+  "projects": [
+    {
+      "slug": "dopo-di-lei-resto-io-trailer-ufficiale",
+      "title": "Dopo di lei; resto io",
+      "kind": "Trailer Ufficiale",
+      "fullTitle": "Dopo di lei; resto io | Trailer Ufficiale",
+      "role": "Director of Photography",
+      "year": "2026",
+      "category": "dop",
+      "cover": "dopo-di-lei-resto-io-trailer-ufficiale",
+      "blocks": [
+        {
+          "type": "video",
+          "provider": "youtube",
+          "id": "Ukzs1TpT0p0",
+          "width": 1280,
+          "height": 720,
+          "thumb": "video/Ukzs1TpT0p0"
+        }
+      ]
+    },
+    {
+      "slug": "autodromo-di-monza-x-masters-historic-racing-reel",
+      "title": "Autodromo di Monza x Masters Historic Racing",
+      "kind": "Reel",
+      "fullTitle": "Autodromo di Monza x Masters Historic Racing | Reel",
+      "role": "Director",
+      "year": "2026",
+      "category": "director",
+      "cover": "autodromo-di-monza-x-masters-historic-racing-reel",
+      "blocks": [
+        {
+          "type": "video",
+          "provider": "vimeo",
+          "id": "1234619732",
+          "hash": "6b5a45dca0",
+          "width": 1280,
+          "height": 2276,
+          "thumb": "video/1234619732",
+          "title": "Autodromo di Monza x Masters Historic Racing",
+          "duration": 34
+        },
+        {
+          "type": "video",
+          "provider": "youtube",
+          "id": "9zfxDdVHeyc",
+          "width": 720,
+          "height": 1280,
+          "thumb": "video/9zfxDdVHeyc"
+        }
+      ]
+    },
+    {
+      "slug": "la-rivoluzione-slow-i-nostri-primi-40-anni-docu",
+      "title": "La Rivoluzione Slow: I nostri primi 40 anni",
+      "kind": "Docu",
+      "fullTitle": "La Rivoluzione Slow: I nostri primi 40 anni | Docu",
+      "role": "Director",
+      "year": "2026",
+      "category": "director",
+      "cover": "la-rivoluzione-slow-i-nostri-primi-40-anni-docu",
+      "blocks": [
+        {
+          "type": "video",
+          "provider": "vimeo",
+          "id": "1231973304",
+          "hash": "cc26633cda",
+          "width": 1280,
+          "height": 675,
+          "thumb": "video/1231973304",
+          "title": "La rivoluzione Slow: I nostri primi 40 anni",
+          "duration": 1253
+        }
+      ]
+    },
+    {
+      "slug": "experience-fitness-club-commercial",
+      "title": "Experience Fitness Club",
+      "kind": "Commercial",
+      "fullTitle": "Experience Fitness Club | Commercial",
+      "role": "Director",
+      "year": "2026",
+      "category": "director",
+      "cover": "experience-fitness-club-commercial",
+      "blocks": [
+        {
+          "type": "row",
+          "items": [
+            {
+              "type": "video",
+              "provider": "vimeo",
+              "id": "1211761019",
+              "hash": "fab17f415a",
+              "width": 1280,
+              "height": 720,
+              "thumb": "video/1211761019",
+              "title": "Experience Fitness Club | Commercial 30\" (Director's Cut)",
+              "duration": 30
+            },
+            {
+              "type": "video",
+              "provider": "vimeo",
+              "id": "1211761020",
+              "hash": "8dea2d528c",
+              "width": 1280,
+              "height": 720,
+              "thumb": "video/1211761020",
+              "title": "Experience Fitness Club | Commercial 10\" (Director's Cut)",
+              "duration": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "golden-notes-con-giovanni-falzone-docu-10-cut",
+      "title": "Golden Notes, con Giovanni Falzone",
+      "kind": "DOCU 10' Cut",
+      "fullTitle": "Golden Notes, con Giovanni Falzone | DOCU 10' Cut",
+      "role": "Director",
+      "year": "2026",
+      "category": "director",
+      "cover": "golden-notes-con-giovanni-falzone-docu-10-cut",
+      "blocks": [
+        {
+          "type": "video",
+          "provider": "vimeo",
+          "id": "1204092911",
+          "hash": "dd4bd2fc4b",
+          "width": 1280,
+          "height": 692,
+          "thumb": "video/1204092911",
+          "title": "Golden Notes, con Giovanni Falzone | 10' Cut",
+          "duration": 640
+        }
+      ]
+    },
+    {
+      "slug": "looperfest-27-adv-campaign",
+      "title": "Looperfest '27",
+      "kind": "ADV Campaign",
+      "fullTitle": "Looperfest '27 | ADV Campaign",
+      "role": "Director of Photography",
+      "year": "2026",
+      "category": "dop",
+      "cover": "looperfest-27-adv-campaign",
+      "blocks": [
+        {
+          "type": "row",
+          "items": [
+            {
+              "type": "video",
+              "provider": "vimeo",
+              "id": "1207897018",
+              "hash": "c7555054a8",
+              "width": 1280,
+              "height": 2276,
+              "thumb": "video/1207897018",
+              "title": "Loopfest '27 | Teen",
+              "duration": 23,
+              "caption": "Looperfest '27 | Teen"
+            },
+            {
+              "type": "video",
+              "provider": "vimeo",
+              "id": "1207899349",
+              "hash": "0f9360c399",
+              "width": 1280,
+              "height": 2276,
+              "thumb": "video/1207899349",
+              "title": "Looperfest '27 | Student",
+              "duration": 33,
+              "caption": "Looperfest '27 | Student"
+            }
+          ]
+        },
+        {
+          "type": "video",
+          "provider": "vimeo",
+          "id": "1207900343",
+          "hash": "78c70bee0f",
+          "width": 1280,
+          "height": 2276,
+          "thumb": "video/1207900343",
+          "title": "Looperfest '27 | Adult",
+          "duration": 28,
+          "caption": "Looperfest '27 | Adult"
+        }
+      ]
+    },
+    {
+      "slug": "subvoce-documentario",
+      "title": "Subvoce",
+      "kind": "Documentario",
+      "fullTitle": "Subvoce | Documentario",
+      "role": "Director",
+      "year": "2026",
+      "category": "director",
+      "cover": "subvoce-documentario",
+      "blocks": [
+        {
+          "type": "video",
+          "provider": "vimeo",
+          "id": "1207902401",
+          "hash": "66a67667fb",
+          "width": 1280,
+          "height": 960,
+          "thumb": "video/1207902401",
+          "title": "Sub voce | Documentario - Interviste",
+          "duration": 524
+        }
+      ]
+    },
+    {
+      "slug": "la-cosa-piu-sexy-spot-medici-del-mondo-2026",
+      "title": "La cosa più sexy",
+      "kind": "SPOT Medici del Mondo 2026",
+      "fullTitle": "La cosa più sexy | SPOT Medici del Mondo 2026",
+      "role": "Director of Photography",
+      "year": "2026",
+      "category": "dop",
+      "cover": "la-cosa-piu-sexy-spot-medici-del-mondo-2026",
+      "blocks": [
+        {
+          "type": "video",
+          "provider": "vimeo",
+          "id": "1185910200",
+          "hash": "cadab8d539",
+          "width": 1280,
+          "height": 720,
+          "thumb": "video/1185910200",
+          "title": "La cosa più sexy | SPOT Medici del Mondo 2026",
+          "duration": 64
+        }
+      ]
+    },
+    {
+      "slug": "forge-spot",
+      "title": "FORGE Gym",
+      "kind": "SPOT 2026",
+      "fullTitle": "FORGE Gym | SPOT 2026",
+      "role": "Director",
+      "year": "2026",
+      "category": "director",
+      "cover": "forge-spot",
+      "blocks": [
+        {
+          "type": "video",
+          "provider": "vimeo",
+          "id": "1179671398",
+          "hash": "4ad090542b",
+          "width": 1280,
+          "height": 640,
+          "thumb": "video/1179671398",
+          "title": "FORGE Gym | SPOT 2026",
+          "duration": 45
+        }
+      ]
+    },
+    {
+      "slug": "overrev-documentary",
+      "title": "OVERREV",
+      "kind": "Documentary",
+      "fullTitle": "OVERREV | Documentary",
+      "role": "Director",
+      "year": "2026",
+      "category": "director",
+      "cover": "overrev-documentary",
+      "blocks": [
+        {
+          "type": "video",
+          "provider": "vimeo",
+          "id": "1176310326",
+          "hash": "b742c5c729",
+          "width": 1280,
+          "height": 640,
+          "thumb": "video/1176310326",
+          "title": "OVERREV | Documentary",
+          "duration": 514
+        }
+      ]
+    },
+    {
+      "slug": "forge-reels-adv",
+      "title": "FORGE: Reels",
+      "kind": "ADV",
+      "fullTitle": "FORGE: Reels | ADV",
+      "role": "Director",
+      "year": "2026",
+      "category": "director",
+      "cover": "forge-reels-adv",
+      "blocks": [
+        {
+          "type": "row",
+          "items": [
+            {
+              "type": "video",
+              "provider": "youtube",
+              "id": "gQwc7J_4Ajg",
+              "width": 720,
+              "height": 1280,
+              "thumb": "video/gQwc7J_4Ajg"
+            },
+            {
+              "type": "video",
+              "provider": "youtube",
+              "id": "59deRxl7v-o",
+              "width": 720,
+              "height": 1280,
+              "thumb": "video/59deRxl7v-o"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "src": "forge-reels-adv/01",
+          "width": 1920,
+          "height": 3413
+        },
+        {
+          "type": "row",
+          "items": [
+            {
+              "type": "video",
+              "provider": "youtube",
+              "id": "vMQpb3RDXAs",
+              "width": 720,
+              "height": 1280,
+              "thumb": "video/vMQpb3RDXAs"
+            },
+            {
+              "type": "video",
+              "provider": "youtube",
+              "id": "nwXYqxtEiVA",
+              "width": 720,
+              "height": 1280,
+              "thumb": "video/nwXYqxtEiVA"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "src": "forge-reels-adv/02",
+          "width": 1920,
+          "height": 3413
+        },
+        {
+          "type": "row",
+          "items": [
+            {
+              "type": "video",
+              "provider": "youtube",
+              "id": "OJkoPgV4Kr0",
+              "width": 720,
+              "height": 1280,
+              "thumb": "video/OJkoPgV4Kr0"
+            },
+            {
+              "type": "video",
+              "provider": "youtube",
+              "id": "rNuDr-9IZ0c",
+              "width": 720,
+              "height": 1280,
+              "thumb": "video/rNuDr-9IZ0c"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "src": "forge-reels-adv/03",
+          "width": 1920,
+          "height": 3413
+        },
+        {
+          "type": "row",
+          "items": [
+            {
+              "type": "video",
+              "provider": "youtube",
+              "id": "-ov3D7xhxq0",
+              "width": 720,
+              "height": 1280,
+              "thumb": "video/-ov3D7xhxq0"
+            },
+            {
+              "type": "video",
+              "provider": "youtube",
+              "id": "jF7K1ksGRd8",
+              "width": 720,
+              "height": 1280,
+              "thumb": "video/jF7K1ksGRd8"
+            }
+          ]
+        },
+        {
+          "type": "video",
+          "provider": "youtube",
+          "id": "gbyrkTAAZWU",
+          "width": 720,
+          "height": 1280,
+          "thumb": "video/gbyrkTAAZWU"
+        }
+      ]
+    },
+    {
+      "slug": "forge-teaser-adv",
+      "title": "FORGE: Teaser",
+      "kind": "ADV",
+      "fullTitle": "FORGE: Teaser | ADV",
+      "role": "Director",
+      "year": "2025",
+      "category": "director",
+      "cover": "forge-teaser-adv",
+      "blocks": [
+        {
+          "type": "text",
+          "html": "<p>FORGE: Teaser trailer</p><p>Director, DOP, Editor: Lorenzo Mangini</p><p>For FORGE™ GYM</p>"
+        },
+        {
+          "type": "video",
+          "provider": "vimeo",
+          "id": "1149169175",
+          "hash": "87ecf6740f",
+          "width": 1280,
+          "height": 720,
+          "thumb": "video/1149169175",
+          "title": "FORGE: Teaser | ADV",
+          "duration": 62
+        }
+      ]
+    },
+    {
+      "slug": "un-caffe-con-erminia-slow-food-documentary",
+      "title": "Un Caffè con Erminia",
+      "kind": "Slow Food Documentary",
+      "fullTitle": "Un Caffè con Erminia | Slow Food Documentary",
+      "role": "Director",
+      "year": "2026",
+      "category": "director",
+      "cover": "un-caffe-con-erminia-slow-food-documentary",
+      "blocks": [
+        {
+          "type": "video",
+          "provider": "vimeo",
+          "id": "1175479752",
+          "hash": "33f3c99b59",
+          "width": 1280,
+          "height": 582,
+          "thumb": "video/1175479752",
+          "title": "Un Caffè con Erminia | Slow Food Documentary",
+          "duration": 263
+        }
+      ]
+    },
+    {
+      "slug": "radici-storie-di-slow-food",
+      "title": "RADICI, Storie di Slow Food",
+      "kind": "",
+      "fullTitle": "RADICI, Storie di Slow Food",
+      "role": "Director",
+      "year": "2025",
+      "category": "director",
+      "cover": "radici-storie-di-slow-food",
+      "blocks": [
+        {
+          "type": "video",
+          "provider": "vimeo",
+          "id": "1113646105",
+          "hash": "06723964eb",
+          "width": 1280,
+          "height": 581,
+          "thumb": "video/1113646105",
+          "title": "RADICI, Storie di Slow Food - Documentario",
+          "duration": 900
+        }
+      ]
+    },
+    {
+      "slug": "il-silenzio-dei-boschi",
+      "title": "Il Silenzio dei Boschi",
+      "kind": "",
+      "fullTitle": "Il Silenzio dei Boschi",
+      "role": "Director",
+      "year": "2025",
+      "category": "director",
+      "cover": "il-silenzio-dei-boschi",
+      "blocks": [
+        {
+          "type": "video",
+          "provider": "vimeo",
+          "id": "1100311061",
+          "hash": "9e211bb60c",
+          "width": 1280,
+          "height": 581,
+          "thumb": "video/1100311061",
+          "title": "Il Silenzio dei Boschi",
+          "duration": 286
+        }
+      ]
+    },
+    {
+      "slug": "nicole",
+      "title": "Nicole",
+      "kind": "",
+      "fullTitle": "Nicole",
+      "role": "Director",
+      "year": "2025",
+      "category": "director",
+      "cover": "nicole",
+      "blocks": [
+        {
+          "type": "video",
+          "provider": "vimeo",
+          "id": "1071735770",
+          "hash": "d2b14ebccf",
+          "width": 1280,
+          "height": 1280,
+          "thumb": "video/1071735770",
+          "title": "Nicole",
+          "duration": 330
+        }
+      ]
+    },
+    {
+      "slug": "vertical-adv",
+      "title": "Vertical ADV",
+      "kind": "",
+      "fullTitle": "Vertical ADV",
+      "role": "Director",
+      "year": "2026",
+      "category": "director",
+      "cover": "vertical-adv",
+      "blocks": [
+        {
+          "type": "row",
+          "items": [
+            {
+              "type": "text",
+              "html": "<p>ENGLISH</p><p>A selection of <strong>social media campaigns</strong> and <strong>vertical commercials</strong> I directed.</p><p class=\"gap\">My approach to digital content is simple: a <strong>premium service</strong> deserves an exclusive aesthetic. </p><p>I bring the formal <strong>care and quality</strong> of cinematic direction straight into vertical formats (9:16), creating ad-ready content designed to convert and drive bookings. </p><p>Operating with zero intermediaries, I ensure a discreet presence on set while personally handling cinematic lighting and custom color grading. </p><p>The goal is to give your brand a strong, elegant, and instantly recognizable look.</p><p class=\"gap\"><strong>To discuss collaborations, feel free to send me a message on Instagram, use the Contact form or email me to <a href=\"mailto:work@lorenzomangini.com\">work@lorenzomangini.com</a></strong></p>"
+            },
+            {
+              "type": "text",
+              "html": "<p>ITALIANO</p><p>Una selezione di <strong>campagne social</strong> e <strong>spot verticali</strong> che ho diretto.</p><p class=\"gap\">Il mio approccio ai contenuti digitali è semplice: un <strong>servizio premium</strong> merita un'estetica esclusiva.<br>Porto la <strong>cura formale e la qualità</strong> della direzione cinematografica direttamente nei formati verticali (9:16), creando contenuti pronti per le ads, pensati per convertire e generare prenotazioni.<br>Lavorando senza intermediari, garantisco una presenza discreta sul set, curando personalmente l'illuminazione cinematografica e un color grading su misura.<br>L'obiettivo è dare al tuo brand un <strong>look forte, elegante e immediatamente riconoscibile</strong>.</p><p class=\"gap\"><strong>Per discutere di una collaborazione, puoi mandarmi un messaggio su Instagram, utilizzare il form di contatto o scrivermi a <a href=\"mailto:work@lorenzomangini.com\">work@lorenzomangini.com</a>.</strong></p>"
+            }
+          ]
+        },
+        {
+          "type": "button",
+          "href": "contact",
+          "label": "CONTACT ME!"
+        },
+        {
+          "type": "video",
+          "provider": "youtube",
+          "id": "9zfxDdVHeyc",
+          "width": 720,
+          "height": 1280,
+          "thumb": "video/9zfxDdVHeyc"
+        },
+        {
+          "type": "row",
+          "items": [
+            {
+              "type": "video",
+              "provider": "youtube",
+              "id": "usng5k_e19c",
+              "width": 720,
+              "height": 1280,
+              "thumb": "video/usng5k_e19c"
+            },
+            {
+              "type": "video",
+              "provider": "youtube",
+              "id": "xuzSZScVBBM",
+              "width": 720,
+              "height": 1280,
+              "thumb": "video/xuzSZScVBBM"
+            }
+          ]
+        },
+        {
+          "type": "row",
+          "items": [
+            {
+              "type": "video",
+              "provider": "youtube",
+              "id": "YmiqINV1HjI",
+              "width": 720,
+              "height": 1280,
+              "thumb": "video/YmiqINV1HjI"
+            },
+            {
+              "type": "video",
+              "provider": "youtube",
+              "id": "SDQla0DkkUY",
+              "width": 720,
+              "height": 1280,
+              "thumb": "video/SDQla0DkkUY"
+            }
+          ]
+        },
+        {
+          "type": "row",
+          "items": [
+            {
+              "type": "video",
+              "provider": "youtube",
+              "id": "dzROSfJUq1o",
+              "width": 720,
+              "height": 1280,
+              "thumb": "video/dzROSfJUq1o"
+            },
+            {
+              "type": "video",
+              "provider": "youtube",
+              "id": "e6DcQAIPW90",
+              "width": 720,
+              "height": 1280,
+              "thumb": "video/e6DcQAIPW90"
+            }
+          ]
+        },
+        {
+          "type": "row",
+          "items": [
+            {
+              "type": "video",
+              "provider": "youtube",
+              "id": "vaC4LM8l9fY",
+              "width": 720,
+              "height": 1280,
+              "thumb": "video/vaC4LM8l9fY"
+            },
+            {
+              "type": "video",
+              "provider": "youtube",
+              "id": "dRwl1Dx3mbg",
+              "width": 720,
+              "height": 1280,
+              "thumb": "video/dRwl1Dx3mbg"
+            }
+          ]
+        },
+        {
+          "type": "video",
+          "provider": "youtube",
+          "id": "1WjiAuzyV90",
+          "width": 720,
+          "height": 1280,
+          "thumb": "video/1WjiAuzyV90"
+        },
+        {
+          "type": "row",
+          "items": [
+            {
+              "type": "video",
+              "provider": "youtube",
+              "id": "gbyrkTAAZWU",
+              "width": 720,
+              "height": 1280,
+              "thumb": "video/gbyrkTAAZWU"
+            },
+            {
+              "type": "video",
+              "provider": "youtube",
+              "id": "jF7K1ksGRd8",
+              "width": 720,
+              "height": 1280,
+              "thumb": "video/jF7K1ksGRd8"
+            }
+          ]
+        },
+        {
+          "type": "row",
+          "items": [
+            {
+              "type": "video",
+              "provider": "youtube",
+              "id": "-ov3D7xhxq0",
+              "width": 720,
+              "height": 1280,
+              "thumb": "video/-ov3D7xhxq0"
+            },
+            {
+              "type": "video",
+              "provider": "youtube",
+              "id": "rNuDr-9IZ0c",
+              "width": 720,
+              "height": 1280,
+              "thumb": "video/rNuDr-9IZ0c"
+            }
+          ]
+        },
+        {
+          "type": "row",
+          "items": [
+            {
+              "type": "video",
+              "provider": "youtube",
+              "id": "OJkoPgV4Kr0",
+              "width": 720,
+              "height": 1280,
+              "thumb": "video/OJkoPgV4Kr0"
+            },
+            {
+              "type": "video",
+              "provider": "youtube",
+              "id": "nwXYqxtEiVA",
+              "width": 720,
+              "height": 1280,
+              "thumb": "video/nwXYqxtEiVA"
+            }
+          ]
+        },
+        {
+          "type": "row",
+          "items": [
+            {
+              "type": "video",
+              "provider": "youtube",
+              "id": "vMQpb3RDXAs",
+              "width": 720,
+              "height": 1280,
+              "thumb": "video/vMQpb3RDXAs"
+            },
+            {
+              "type": "video",
+              "provider": "youtube",
+              "id": "59deRxl7v-o",
+              "width": 720,
+              "height": 1280,
+              "thumb": "video/59deRxl7v-o"
+            }
+          ]
+        },
+        {
+          "type": "video",
+          "provider": "youtube",
+          "id": "gQwc7J_4Ajg",
+          "width": 720,
+          "height": 1280,
+          "thumb": "video/gQwc7J_4Ajg"
+        }
+      ]
+    },
+    {
+      "slug": "rondo-x-blu-basket",
+      "title": "RONDO X BLU BASKET",
+      "kind": "Photos",
+      "fullTitle": "RONDO X BLU BASKET | Photos",
+      "role": "",
+      "year": "2025",
+      "category": "photography",
+      "cover": "rondo-x-blu-basket",
+      "subtitle": "RONDO X BLU BASKET BERGAMO | Photos",
+      "coverHover": "rondo-x-blu-basket-2",
+      "blocks": [
+        {
+          "type": "video",
+          "provider": "adobe",
+          "src": "https://www-ccv.adobe.io/v1/player/ccv/KxBUJypSCcU/embed?bgcolor=%23191919&lazyLoading=true&api_key=BehancePro2View",
+          "width": 1080,
+          "height": 1920
+        },
+        {
+          "type": "gallery",
+          "images": [
+            {
+              "src": "rondo-x-blu-basket/01",
+              "width": 1920,
+              "height": 2560
+            },
+            {
+              "src": "rondo-x-blu-basket/02",
+              "width": 1920,
+              "height": 2880
+            },
+            {
+              "src": "rondo-x-blu-basket/03",
+              "width": 1920,
+              "height": 1280
+            },
+            {
+              "src": "rondo-x-blu-basket/04",
+              "width": 1920,
+              "height": 2880
+            },
+            {
+              "src": "rondo-x-blu-basket/05",
+              "width": 1920,
+              "height": 2880
+            },
+            {
+              "src": "rondo-x-blu-basket/06",
+              "width": 1920,
+              "height": 1280
+            },
+            {
+              "src": "rondo-x-blu-basket/07",
+              "width": 1920,
+              "height": 2880
+            },
+            {
+              "src": "rondo-x-blu-basket/08",
+              "width": 1920,
+              "height": 2880
+            },
+            {
+              "src": "rondo-x-blu-basket/09",
+              "width": 1920,
+              "height": 2880
+            },
+            {
+              "src": "rondo-x-blu-basket/10",
+              "width": 1920,
+              "height": 2880
+            },
+            {
+              "src": "rondo-x-blu-basket/11",
+              "width": 1920,
+              "height": 1280
+            },
+            {
+              "src": "rondo-x-blu-basket/12",
+              "width": 1920,
+              "height": 2880
+            },
+            {
+              "src": "rondo-x-blu-basket/13",
+              "width": 1920,
+              "height": 1280
+            },
+            {
+              "src": "rondo-x-blu-basket/14",
+              "width": 1920,
+              "height": 1280
+            },
+            {
+              "src": "rondo-x-blu-basket/15",
+              "width": 1920,
+              "height": 1280
+            },
+            {
+              "src": "rondo-x-blu-basket/16",
+              "width": 1920,
+              "height": 2880
+            },
+            {
+              "src": "rondo-x-blu-basket/17",
+              "width": 1920,
+              "height": 2880
+            }
+          ]
+        },
+        {
+          "type": "gallery",
+          "images": [
+            {
+              "src": "rondo-x-blu-basket/18",
+              "width": 1920,
+              "height": 2880
+            },
+            {
+              "src": "rondo-x-blu-basket/19",
+              "width": 1920,
+              "height": 1280
+            },
+            {
+              "src": "rondo-x-blu-basket/20",
+              "width": 1920,
+              "height": 2880
+            },
+            {
+              "src": "rondo-x-blu-basket/21",
+              "width": 1920,
+              "height": 2880
+            },
+            {
+              "src": "rondo-x-blu-basket/22",
+              "width": 1920,
+              "height": 2880
+            },
+            {
+              "src": "rondo-x-blu-basket/23",
+              "width": 1920,
+              "height": 1280
+            },
+            {
+              "src": "rondo-x-blu-basket/24",
+              "width": 1920,
+              "height": 2880
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "eurobucci-2025-photos",
+      "title": "Eurobucci 2025",
+      "kind": "Photos",
+      "fullTitle": "Eurobucci 2025 | Photos",
+      "role": "",
+      "year": "2025",
+      "category": "photography",
+      "cover": "eurobucci-2025-photos",
+      "blocks": [
+        {
+          "type": "gallery",
+          "images": [
+            {
+              "src": "eurobucci-2025-photos/01",
+              "width": 1920,
+              "height": 1280
+            },
+            {
+              "src": "eurobucci-2025-photos/02",
+              "width": 1920,
+              "height": 1280
+            },
+            {
+              "src": "eurobucci-2025-photos/03",
+              "width": 1920,
+              "height": 1280
+            },
+            {
+              "src": "eurobucci-2025-photos/04",
+              "width": 1920,
+              "height": 1280
+            },
+            {
+              "src": "eurobucci-2025-photos/05",
+              "width": 1920,
+              "height": 1280
+            },
+            {
+              "src": "eurobucci-2025-photos/06",
+              "width": 1920,
+              "height": 1280
+            },
+            {
+              "src": "eurobucci-2025-photos/07",
+              "width": 1920,
+              "height": 1280
+            },
+            {
+              "src": "eurobucci-2025-photos/08",
+              "width": 1920,
+              "height": 1280
+            },
+            {
+              "src": "eurobucci-2025-photos/09",
+              "width": 1920,
+              "height": 1280
+            },
+            {
+              "src": "eurobucci-2025-photos/10",
+              "width": 1920,
+              "height": 1280
+            },
+            {
+              "src": "eurobucci-2025-photos/11",
+              "width": 1920,
+              "height": 1280
+            },
+            {
+              "src": "eurobucci-2025-photos/12",
+              "width": 1920,
+              "height": 1280
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
