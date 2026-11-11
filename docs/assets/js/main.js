@@ -324,7 +324,9 @@
     });
   });
 
-  /* ---------- intro: muovi il cursore (o scorri) per "esporre" la pellicola ---------- */
+  /* ---------- intro: nebbia di montagna che si dirada ----------
+     Muovendo il mouse (o il dito, o scorrendo) la nebbia si apre sulle creste e sui fotogrammi.
+     Il tasto "Entra" è sempre visibile; se nessuno fa nulla, la nebbia si alza da sola in pochi secondi. */
 
   if (html.classList.contains('has-intro')) intro();
 
@@ -333,42 +335,49 @@
     try { covers = JSON.parse($('#intro-data').textContent); } catch (e) {}
     var root = doc.body.getAttribute('data-root') || './';
     var touch = !canHover;
+    var it = (navigator.language || '').slice(0, 2).toLowerCase() === 'it';
+    var T = it
+      ? { hint: touch ? 'Scorri il dito per diradare la nebbia' : 'Muovi il mouse per diradare la nebbia', enter: 'Entra nel sito', vis: 'Visibilità', alt: 'Quota' }
+      : { hint: touch ? 'Swipe to clear the fog' : 'Move your mouse to clear the fog', enter: 'Enter the site', vis: 'Visibility', alt: 'Altitude' };
+    var tpl = $('#ridges');
 
     var el = doc.createElement('div');
     el.className = 'intro';
     el.setAttribute('role', 'dialog');
     el.setAttribute('aria-label', 'Intro');
     el.innerHTML =
-      '<div class="intro__bar intro__bar--top"></div><div class="intro__bar intro__bar--bottom"></div>' +
+      '<div class="intro__sky"></div>' +
+      '<div class="intro__ridges">' + (tpl ? tpl.innerHTML : '') + '</div>' +
       '<div class="intro__trail"></div>' +
-      '<i class="intro__corner intro__corner--tl"></i><i class="intro__corner intro__corner--tr"></i>' +
-      '<i class="intro__corner intro__corner--bl"></i><i class="intro__corner intro__corner--br"></i>' +
-      '<div class="intro__cross"><span></span></div>' +
-      '<div class="intro__center"><em>//site</em>\n[Lorenzo Mangini]\n         [#]Director &amp; DoP</div>' +
-      '<div class="intro__hud intro__hud--tl">TC <span class="intro__tc">00:00:00:00</span></div>' +
-      '<div class="intro__hud intro__hud--tr"><span class="intro__rec">Rec</span><br>Frame <span class="intro__count">00</span>/' + pad(covers.length) + '</div>' +
-      '<div class="intro__hud intro__hud--bl"><span class="intro__hint">' + (touch ? 'Drag your finger to expose the film' : 'Move your cursor or scroll to expose the film') + '</span><br><button type="button" class="intro__skip">[ Skip intro ]</button></div>' +
-      '<div class="intro__hud intro__hud--br">Exposure <span class="intro__pct">000</span>%<span class="intro__meter"><i></i></span></div>';
+      '<div class="intro__veil"></div>' +
+      '<div class="intro__fog intro__fog--a"><i></i></div>' +
+      '<div class="intro__fog intro__fog--b"><i></i></div>' +
+      '<div class="intro__scale" aria-hidden="true"><i></i></div>' +
+      '<div class="intro__hud intro__hud--tl">' + T.alt + ' <span class="intro__alt">0850</span> m</div>' +
+      '<div class="intro__hud intro__hud--tr">Orobie · Alpi Bergamasche</div>' +
+      '<div class="intro__title"><span class="intro__first">Lorenzo</span><span class="intro__last">Mangini</span><span class="intro__role">Director · Director of Photography</span></div>' +
+      '<div class="intro__panel">' +
+        '<p class="intro__hint"><span class="intro__hand" aria-hidden="true"></span>' + T.hint + '</p>' +
+        '<button type="button" class="intro__enter"><i></i><span>' + T.enter + ' →</span></button>' +
+        '<p class="intro__vis">' + T.vis + ' <span class="intro__pct">0</span>%</p>' +
+      '</div>';
     doc.body.appendChild(el);
 
     var trail = $('.intro__trail', el);
-    var cross = $('.intro__cross', el);
-    var crossLabel = $('span', cross);
     var pct = $('.intro__pct', el);
-    var meter = $('.intro__meter', el);
-    var count = $('.intro__count', el);
-    var tc = $('.intro__tc', el);
-    var center = $('.intro__center', el);
+    var alt = $('.intro__alt', el);
+    var enter = $('.intro__enter', el);
+    var ridges = $$('.ridge', el);
 
     covers.slice(0, 6).forEach(function (src) { new Image().src = root + src; });
 
-    var progress = 0, shown = 0, done = false;
+    var progress = 0, done = false;
     var last = null, sinceFrame = 0, next = 0;
-    var start = performance.now(), lastInput = start, raf;
+    var lastInput = performance.now(), lastTick = lastInput, raf;
     var W = innerWidth, H = innerHeight;
-    var pos = { x: W / 2, y: H / 2 };
-    var need = Math.hypot(W, H) * (touch ? 1.1 : 1.7);
-    var step = Math.max(70, Math.min(W, H) * 0.11);
+    var need = Math.hypot(W, H) * (touch ? 0.55 : 0.9);
+    var step = Math.max(80, Math.min(W, H) * 0.14);
+    var ALT0 = 850, ALT1 = 3050; // dalla valle alla cima più alta delle Orobie (Pizzo Coca)
 
     function spawn(x, y) {
       if (!covers.length) return;
@@ -377,78 +386,77 @@
       img.alt = '';
       img.src = root + covers[next % covers.length];
       next++;
-      var w = Math.max(150, Math.min(330, W * 0.21));
+      var w = Math.max(140, Math.min(300, W * 0.19));
       img.style.translate = (x - w / 2).toFixed(0) + 'px ' + (y - w * 9 / 32).toFixed(0) + 'px';
-      img.style.rotate = ((Math.random() - 0.5) * 10).toFixed(1) + 'deg';
-      img.addEventListener('animationend', function () { img.remove(); });
+      img.style.rotate = ((Math.random() - 0.5) * 8).toFixed(1) + 'deg';
+      img.addEventListener('animationend', function () { if (img.parentNode) img.parentNode.removeChild(img); });
       trail.appendChild(img);
-      if (trail.children.length > 16) trail.firstChild.remove();
-      shown = Math.min(covers.length, shown + 1);
-      count.textContent = pad(shown);
+      if (trail.children.length > 10) trail.removeChild(trail.firstChild);
+    }
+
+    function render() {
+      var p = progress / 100;
+      el.style.setProperty('--p', p.toFixed(3));
+      pct.textContent = Math.round(progress);
+      alt.textContent = ('000' + Math.round(ALT0 + (ALT1 - ALT0) * p)).slice(-4);
     }
 
     function add(amount) {
       if (done) return;
       progress = Math.min(100, progress + amount);
-      var p = Math.round(progress);
-      pct.textContent = (p < 10 ? '00' : p < 100 ? '0' : '') + p;
-      meter.style.setProperty('--p', progress.toFixed(1));
-      if (progress >= 100) finish(650);
+      render();
+      if (progress >= 100) finish(350);
     }
 
     function move(x, y, weight) {
-      pos.x = x; pos.y = y;
-      cross.style.transform = 'translate(' + x.toFixed(0) + 'px,' + y.toFixed(0) + 'px)';
-      crossLabel.textContent = 'X' + pad4(x) + ' Y' + pad4(y);
+      el.style.setProperty('--mx', x.toFixed(0) + 'px');
+      el.style.setProperty('--my', y.toFixed(0) + 'px');
+      var dx = (x / W - 0.5), dy = (y / H - 0.5);
+      ridges.forEach(function (g, i) {
+        var d = (i + 1) / ridges.length;
+        g.style.transform = 'translate(' + (-dx * 26 * d).toFixed(1) + 'px,' + (-dy * 10 * d).toFixed(1) + 'px)';
+      });
       if (last) {
-        var d = Math.hypot(x - last.x, y - last.y);
-        sinceFrame += d;
-        add(d / need * 100 * (weight || 1));
+        var dist = Math.hypot(x - last.x, y - last.y);
+        sinceFrame += dist;
+        add(dist / need * 100 * (weight || 1));
         if (sinceFrame >= step) { sinceFrame = 0; spawn(x, y); }
       }
       last = { x: x, y: y };
     }
-    function pad4(n) { n = Math.max(0, Math.round(n)); return ('000' + n).slice(-4); }
 
-    function onPointer(e) { lastInput = performance.now(); move(e.clientX, e.clientY); }
+    function onPointer(e) { lastInput = performance.now(); el.classList.add('is-active'); move(e.clientX, e.clientY); }
     function onWheel(e) {
       e.preventDefault();
       lastInput = performance.now();
       var d = Math.min(240, Math.abs(e.deltaY) + Math.abs(e.deltaX));
-      add(d / 26);
+      add(d / 8);
       sinceFrame += d;
-      if (sinceFrame >= 110) {
+      if (sinceFrame >= 100) {
         sinceFrame = 0;
-        var a = next * 2.4, r = Math.min(W, H) * 0.26;
-        spawn(pos.x + Math.cos(a) * r * 0.5, pos.y + Math.sin(a) * r * 0.5);
+        spawn(W * (0.2 + Math.random() * 0.6), H * (0.3 + Math.random() * 0.3));
       }
     }
     function onKey(e) {
-      if (e.key === 'Enter' || e.key === 'Escape') finish(0);
-      else if (e.key === ' ' || e.key.indexOf('Arrow') === 0) {
-        e.preventDefault();
-        lastInput = performance.now();
-        add(12);
-        spawn(W * (0.2 + Math.random() * 0.6), H * (0.25 + Math.random() * 0.5));
-      }
-    }
-    function onClick(e) {
-      if (e.target.closest('.intro__skip')) return finish(0);
-      if (!touch) finish(0);
+      if (e.key === 'Enter' || e.key === 'Escape' || e.key === ' ') { e.preventDefault(); finish(0); }
+      else if (e.key.indexOf('Arrow') === 0) { e.preventDefault(); lastInput = performance.now(); add(25); }
     }
 
-    function tick(now) {
-      var t = (now - start) / 1000;
-      var f = Math.floor((t % 1) * 25);
-      tc.textContent = '00:00:' + pad(Math.floor(t) % 60) + ':' + pad(f);
-      // Se nessuno tocca nulla per qualche secondo, l'intro si "espone" da sola.
-      if (!done && now - lastInput > 5000) {
-        var a = now / 520;
-        var x = W / 2 + Math.cos(a) * W * 0.3;
-        var y = H / 2 + Math.sin(a * 1.7) * H * 0.24;
+    function tick() {
+      var now = performance.now();
+      var dt = Math.min(300, now - lastTick);
+      lastTick = now;
+      // Dopo un attimo di inattività la nebbia si alza da sola.
+      if (!done && now - lastInput > 1300) {
+        var a = now / 480;
         var keep = lastInput;
-        move(x, y, 0.75);
+        last = null;
+        move(W / 2 + Math.cos(a) * W * 0.28, H * 0.48 + Math.sin(a * 1.6) * H * 0.16);
+        last = null;
         lastInput = keep;
+        add(dt * 0.042);
+        sinceFrame += dt * 0.5;
+        if (sinceFrame >= step) { sinceFrame = 0; spawn(W / 2 + Math.cos(a) * W * 0.28, H * 0.48 + Math.sin(a * 1.6) * H * 0.16); }
       }
       raf = requestAnimationFrame(tick);
     }
@@ -457,9 +465,7 @@
       if (done) return;
       done = true;
       progress = 100;
-      pct.textContent = '100';
-      meter.style.setProperty('--p', 100);
-      center.textContent = '[ Rolling ]';
+      render();
       try { sessionStorage.setItem('lm-intro', '1'); } catch (e) {}
       removeEventListener('keydown', onKey);
       setTimeout(function () {
@@ -468,19 +474,22 @@
         el.classList.add('is-leaving');
         setTimeout(function () {
           cancelAnimationFrame(raf);
-          el.remove();
+          if (el.parentNode) el.parentNode.removeChild(el);
           removeEventListener('resize', onResize);
-        }, 1000);
+        }, 900);
       }, delay);
     }
-    function onResize() { W = innerWidth; H = innerHeight; need = Math.hypot(W, H) * (touch ? 1.1 : 1.7); }
+    function onResize() { W = innerWidth; H = innerHeight; need = Math.hypot(W, H) * (touch ? 0.55 : 0.9); }
 
     el.addEventListener('pointermove', onPointer);
     el.addEventListener('pointerdown', function (e) { if (touch) { last = null; onPointer(e); } });
     el.addEventListener('wheel', onWheel, { passive: false });
-    el.addEventListener('click', onClick);
+    enter.addEventListener('click', function () { finish(0); });
     addEventListener('keydown', onKey);
     addEventListener('resize', onResize);
+    el.style.setProperty('--mx', (W / 2) + 'px');
+    el.style.setProperty('--my', (H * 0.45) + 'px');
+    render();
     raf = requestAnimationFrame(tick);
   }
 })();
