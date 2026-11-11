@@ -113,6 +113,30 @@
     });
   }
 
+  /* ---------- selettore lingua (English / Italiano) ---------- */
+
+  $$('[data-lang]').forEach(function (box) {
+    var tabs = $$('[data-lang-tab]', box);
+    var panels = $$('[data-lang-panel]', box);
+    var codes = tabs.map(function (t) { return t.getAttribute('data-lang-tab'); });
+    function show(code, save) {
+      tabs.forEach(function (t) {
+        var on = t.getAttribute('data-lang-tab') === code;
+        t.classList.toggle('is-active', on);
+        t.setAttribute('aria-pressed', String(on));
+      });
+      panels.forEach(function (p) { p.classList.toggle('is-off', p.getAttribute('data-lang-panel') !== code); });
+      if (save) store.set('lm-lang', code);
+    }
+    // Prima visita: italiano se il browser è in italiano, altrimenti la prima lingua.
+    var saved = store.get('lm-lang');
+    var browser = (navigator.language || '').slice(0, 2).toLowerCase();
+    show(codes.indexOf(saved) > -1 ? saved : codes.indexOf(browser) > -1 ? browser : codes[0], false);
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () { show(t.getAttribute('data-lang-tab'), true); });
+    });
+  });
+
   /* ---------- filtri ---------- */
 
   var filters = $$('.filter');

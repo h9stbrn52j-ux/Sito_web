@@ -283,6 +283,22 @@ function renderBlocks(blocks, root, p) {
       out.push(`<div class="block block--video">${videoBlock(b, root, p)}</div>`);
     } else if (b.type === 'row') {
       const text = b.items.every((x) => x.type === 'text');
+      // Testi nella stessa riga che iniziano con il nome della lingua (ENGLISH / ITALIANO)
+      // diventano un selettore di lingua: se ne vede uno alla volta.
+      const langs = text ? b.items.map((x) => x.html.match(/^\s*<p>\s*([^<]{2,24}?)\s*<\/p>/)) : [];
+      if (text && b.items.length > 1 && langs.every(Boolean)) {
+        const code = (l) => (/^ita/i.test(l) ? 'it' : /^eng/i.test(l) ? 'en' : l.slice(0, 2).toLowerCase());
+        const cap = (l) => l.charAt(0).toUpperCase() + l.slice(1).toLowerCase();
+        out.push(`<div class="lang" data-lang>
+  <div class="lang__tabs" role="group" aria-label="Language / Lingua">${langs
+    .map((m, n) => `<button type="button" class="lang__tab${n === 0 ? ' is-active' : ''}" data-lang-tab="${code(m[1])}" aria-pressed="${n === 0}">${esc(cap(m[1]))}</button>`)
+    .join('<span aria-hidden="true">/</span>')}</div>
+  ${b.items
+    .map((x, n) => `<div class="lang__panel prose" lang="${code(langs[n][1])}" data-lang-panel="${code(langs[n][1])}">${x.html.replace(langs[n][0], '')}</div>`)
+    .join('\n  ')}
+</div>`);
+        continue;
+      }
       out.push(`<div class="row${text ? ' row--text' : ''}">${b.items.map((x) => renderBlocks([x], root, p)).join('')}</div>`);
     } else if (b.type === 'text') {
       out.push(`<div class="block block--text prose">${b.html}</div>`);
