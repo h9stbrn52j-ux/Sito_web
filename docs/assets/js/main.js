@@ -17,11 +17,10 @@
 
   function fit() {
     $$('[data-fit]').forEach(function (el) {
-      var inner = el.firstElementChild;
-      if (!inner || !inner.classList.contains('fit')) {
+      var inner = el.querySelector('.fit');
+      if (!inner) {
         inner = doc.createElement('span');
         inner.className = 'fit';
-        inner.style.display = 'inline-block';
         while (el.firstChild) inner.appendChild(el.firstChild);
         el.appendChild(inner);
       }

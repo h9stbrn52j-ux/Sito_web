@@ -62,6 +62,8 @@ h1, h2, p, dl, dd, figure { margin: 0; }
 ::selection { background: var(--hi); color: var(--bg); }
 :focus-visible { outline: 2px solid var(--hi); outline-offset: 3px; border-radius: 2px; }
 
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.fit { display: inline-block; }
 .skip { position: absolute; left: -999px; top: 8px; z-index: 200; background: var(--accent); color: var(--bg); padding: 8px 12px; }
 .skip:focus { left: 8px; }
 
@@ -69,6 +71,7 @@ h1, h2, p, dl, dd, figure { margin: 0; }
   text-transform: uppercase;
 }
 .label { color: var(--hi); }
+h2.label { font-size: inherit; font-weight: 400; }
 
 /* ---------- header ---------- */
 
@@ -133,6 +136,10 @@ h1, h2, p, dl, dd, figure { margin: 0; }
 }
 .hero__word { cursor: default; position: relative; }
 .hero__word .ch { display: inline-block; transition: font-weight 0.35s var(--ease), transform 0.35s var(--ease); will-change: transform; }
+
+.hero__intro { font-family: var(--display); font-size: clamp(15px, 1.35vw, 20px); line-height: 1.45; letter-spacing: 0; color: var(--text); max-width: 52ch; margin-top: clamp(14px, 2vw, 30px); }
+.credits { max-width: 1500px; margin: clamp(26px, 4vw, 56px) auto 0; width: 100%; padding-top: 16px; border-top: 1px solid var(--line); display: grid; grid-template-columns: minmax(120px, 1fr) minmax(0, 4fr); gap: 12px 24px; }
+.credits p { font-family: var(--display); font-size: 15px; line-height: 1.65; letter-spacing: 0; max-width: 70ch; color: var(--text); }
 
 /* ---------- filtri + griglia ---------- */
 
@@ -392,6 +399,7 @@ figcaption { text-align: center; color: var(--hi); padding-top: 12px; }
   .about, .contact { grid-template-columns: 1fr; }
   .about__side dl { position: static; flex-direction: row; flex-wrap: wrap; gap: 18px 32px; }
   .contact__side { order: 2; }
+  .credits { grid-template-columns: 1fr; }
   .cookie { right: var(--pad); max-width: none; }
   .intro__corner--tl, .intro__corner--bl { left: 8%; }
   .intro__corner--tr, .intro__corner--br { right: 8%; }

@@ -81,7 +81,8 @@
           "height": 2276,
           "thumb": "video/1234619732",
           "title": "Autodromo di Monza x Masters Historic Racing",
-          "duration": 34
+          "duration": 34,
+          "uploadDate": "2026-10-10"
         },
         {
           "type": "video",
@@ -91,6 +92,9 @@
           "height": 1280,
           "thumb": "video/9zfxDdVHeyc"
         }
+      ],
+      "credits": [
+        "Directed by Lorenzo Mangini"
       ]
     },
     {
@@ -112,8 +116,13 @@
           "height": 675,
           "thumb": "video/1231973304",
           "title": "La rivoluzione Slow: I nostri primi 40 anni",
-          "duration": 1253
+          "duration": 1253,
+          "uploadDate": "2026-10-01"
         }
+      ],
+      "credits": [
+        "Diretto da Lorenzo Mangini",
+        "Quarant'anni fa prendeva forma una rivoluzione gentile, destinata a cambiare per sempre il nostro rapporto con il cibo e con la terra. Al centro di questo movimento, la visione e la determinazione di Carlin Petrini. Il documentario ripercorre le origini e le sfide di Slow Food, per poi spogliarsi della veste istituzionale e cercare l'uomo dietro il fondatore. Attraverso una semplice telefonata con la sua storica segretaria, Laura Bonino, emerge un ricordo intimo e quotidiano. A chiudere il cerchio sono le voci degli studenti dell'Università di Pollenzo: il frutto più vivo del suo sogno, pronti a portare questo lascito nel futuro."
       ]
     },
     {
@@ -138,7 +147,8 @@
               "height": 720,
               "thumb": "video/1211761019",
               "title": "Experience Fitness Club | Commercial 30\" (Director's Cut)",
-              "duration": 30
+              "duration": 30,
+              "uploadDate": "2026-07-21"
             },
             {
               "type": "video",
@@ -149,10 +159,20 @@
               "height": 720,
               "thumb": "video/1211761020",
               "title": "Experience Fitness Club | Commercial 10\" (Director's Cut)",
-              "duration": 10
+              "duration": 10,
+              "uploadDate": "2026-07-21"
             }
           ]
         }
+      ],
+      "credits": [
+        "Directed by Lorenzo Mangini",
+        "Cinematography by Lorenzo Mangini, Giorgio Razk",
+        "First Assistant Director of Sofia Votino",
+        "Light & Grip Giorgio Razk",
+        "Voice of Lorenzo Riva",
+        "Sound Design by Alessandro Cesana",
+        "Edited and Colored by Lorenzo Mangini"
       ]
     },
     {
@@ -174,8 +194,13 @@
           "height": 692,
           "thumb": "video/1204092911",
           "title": "Golden Notes, con Giovanni Falzone | 10' Cut",
-          "duration": 640
+          "duration": 640,
+          "uploadDate": "2026-06-24"
         }
+      ],
+      "credits": [
+        "Golden Notes, con Giovanni Falzone.",
+        "Un documentario di Lorenzo Mangini e Francesco Fumagalli"
       ]
     },
     {
@@ -201,7 +226,8 @@
               "thumb": "video/1207897018",
               "title": "Loopfest '27 | Teen",
               "duration": 23,
-              "caption": "Looperfest '27 | Teen"
+              "caption": "Looperfest '27 | Teen",
+              "uploadDate": "2026-07-07"
             },
             {
               "type": "video",
@@ -213,7 +239,8 @@
               "thumb": "video/1207899349",
               "title": "Looperfest '27 | Student",
               "duration": 33,
-              "caption": "Looperfest '27 | Student"
+              "caption": "Looperfest '27 | Student",
+              "uploadDate": "2026-07-07"
             }
           ]
         },
@@ -227,8 +254,13 @@
           "thumb": "video/1207900343",
           "title": "Looperfest '27 | Adult",
           "duration": 28,
-          "caption": "Looperfest '27 | Adult"
+          "caption": "Looperfest '27 | Adult",
+          "uploadDate": "2026-07-07"
         }
+      ],
+      "credits": [
+        "Directed by Lukas Urbsys",
+        "Cinematography by Lorenzo Mangini"
       ]
     },
     {
@@ -250,8 +282,14 @@
           "height": 960,
           "thumb": "video/1207902401",
           "title": "Sub voce | Documentario - Interviste",
-          "duration": 524
+          "duration": 524,
+          "uploadDate": "2026-07-07"
         }
+      ],
+      "credits": [
+        "Documentario sui detenuti della Casa Circondariale di Monza e la loro esperienza con il teatro.",
+        "A cura di Lorenzo Mangini e Sofia Votino",
+        "Montaggio e Color di Lorenzo Mangini"
       ]
     },
     {
@@ -273,8 +311,19 @@
           "height": 720,
           "thumb": "video/1185910200",
           "title": "La cosa più sexy | SPOT Medici del Mondo 2026",
-          "duration": 64
+          "duration": 64,
+          "uploadDate": "2026-04-23"
         }
+      ],
+      "credits": [
+        "Regia di Sofia Votino",
+        "Fotografia di Lorenzo Mangini",
+        "Operatore di camera Gioele Gallo",
+        "Assistente regia Rebecca Molteni",
+        "Assistente camera Simona Autore",
+        "Gaffer Camilla Abati",
+        "Montaggio di Francesco Fumagalli",
+        "Con Lorenzo Riva e Camilla Borra"
       ]
     },
     {
@@ -296,8 +345,13 @@
           "height": 640,
           "thumb": "video/1179671398",
           "title": "FORGE Gym | SPOT 2026",
-          "duration": 45
+          "duration": 45,
+          "uploadDate": "2026-04-02"
         }
+      ],
+      "credits": [
+        "Director and DP: Lorenzo Mangini",
+        "1AD and Light & Grip: Sofia Votino"
       ]
     },
     {
@@ -319,8 +373,13 @@
           "height": 640,
           "thumb": "video/1176310326",
           "title": "OVERREV | Documentary",
-          "duration": 514
+          "duration": 514,
+          "uploadDate": "2026-03-23"
         }
+      ],
+      "credits": [
+        "Italian Car Culture Documentary",
+        "Directed and shot by Lorenzo Mangini"
       ]
     },
     {
@@ -468,8 +527,13 @@
           "height": 720,
           "thumb": "video/1149169175",
           "title": "FORGE: Teaser | ADV",
-          "duration": 62
+          "duration": 62,
+          "uploadDate": "2025-12-24"
         }
+      ],
+      "credits": [
+        "Director, DOP, Editor: Lorenzo Mangini",
+        "For FORGE™ GYM"
       ]
     },
     {
@@ -491,8 +555,13 @@
           "height": 582,
           "thumb": "video/1175479752",
           "title": "Un Caffè con Erminia | Slow Food Documentary",
-          "duration": 263
+          "duration": 263,
+          "uploadDate": "2026-03-20"
         }
+      ],
+      "credits": [
+        "Documentario in collaborazione con Slow Food Coffee Coalition",
+        "Prodotto e diretto da Lorenzo Mangini"
       ]
     },
     {
@@ -514,8 +583,14 @@
           "height": 581,
           "thumb": "video/1113646105",
           "title": "RADICI, Storie di Slow Food - Documentario",
-          "duration": 900
+          "duration": 900,
+          "uploadDate": "2025-08-27"
         }
+      ],
+      "credits": [
+        "Documentario in collaborazione con Slow Food",
+        "Prodotto e diretto da Lorenzo Mangini",
+        "Co-Produzione di Sara Torcoli"
       ]
     },
     {
@@ -537,8 +612,13 @@
           "height": 581,
           "thumb": "video/1100311061",
           "title": "Il Silenzio dei Boschi",
-          "duration": 286
+          "duration": 286,
+          "uploadDate": "2025-07-10"
         }
+      ],
+      "credits": [
+        "Scritto e diretto da Lorenzo Mangini",
+        "Con Isabella Campanelli"
       ]
     },
     {
@@ -560,8 +640,13 @@
           "height": 1280,
           "thumb": "video/1071735770",
           "title": "Nicole",
-          "duration": 330
+          "duration": 330,
+          "uploadDate": "2025-04-02"
         }
+      ],
+      "credits": [
+        "Scritto e diretto da Lorenzo Mangini",
+        "Starring Nicole Bergamelli"
       ]
     },
     {

@@ -106,7 +106,27 @@ const NAV = [
   { key: 'contact', label: 'Contact', href: 'contact/' },
 ];
 
-function layout({ path, root, title, description, image, current, body, bodyClass = '', head = '' }) {
+const abs = (f) => `${site.url}/${f}`;
+const clip = (t, n = 158) => {
+  t = String(t).replace(/\s+/g, ' ').trim();
+  return t.length <= n ? t : t.slice(0, n - 1).replace(/\s+\S*$/, '') + '…';
+};
+const ld = (o) => `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', ...o }).replace(/</g, '\\u003c')}</script>\n`;
+const person = () => ({
+  '@type': 'Person',
+  '@id': `${site.url}/#person`,
+  name: site.name,
+  url: `${site.url}/`,
+  image: abs('assets/img/icon-512.png'),
+  email: `mailto:${site.email}`,
+  jobTitle: site.roles,
+  description: site.descriptionLong,
+  address: { '@type': 'PostalAddress', addressCountry: 'IT' },
+  knowsAbout: ['Film directing', 'Cinematography', 'Camera operating', 'Commercials', 'Documentary film', 'Sports videography'],
+  sameAs: site.socials.map((x) => x.url),
+});
+
+function layout({ path, root, title, description, image, current, body, bodyClass = '', head = '', keywords = '', ogType = 'website', ogSize = [1200, 630] }) {
   const url = `${site.url}/${path}`;
   const og = `${site.url}/assets/img/og/${image && existsSync(join(OUT, 'assets/img/og', image + '.jpg')) ? image : 'site'}.jpg`;
   const link = (n) =>
@@ -120,23 +140,33 @@ function layout({ path, root, title, description, image, current, body, bodyClas
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title>
-<meta name="description" content="${esc(description)}">
-<meta name="keywords" content="${esc(site.keywords)}">
+<meta name="description" content="${esc(clip(description))}">
+<meta name="keywords" content="${esc(keywords ? `${keywords}, ${site.keywords}` : site.keywords)}">
+<meta name="robots" content="index, follow, max-image-preview:large, max-video-preview:-1, max-snippet:-1">${site.googleVerification ? `\n<meta name="google-site-verification" content="${esc(site.googleVerification)}">` : ''}
 <meta name="author" content="${esc(site.name)}">
 <meta name="copyright" content="© ${esc(site.name)}. All rights reserved.">
 <!-- © ${esc(site.name)}. All rights reserved. Design, code, photographs and films on this site may not be copied or reused without written permission. -->
 <link rel="license" href="${site.url}/LICENSE.txt">
 <link rel="canonical" href="${esc(url)}">
-<meta property="og:type" content="website">
+<meta property="og:type" content="${ogType}">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="it_IT">
 <meta property="og:site_name" content="${esc(site.name)}">
 <meta property="og:title" content="${esc(title)}">
-<meta property="og:description" content="${esc(description)}">
+<meta property="og:description" content="${esc(clip(description, 200))}">
 <meta property="og:url" content="${esc(url)}">
-<meta property="og:image" content="${esc(og)}">
+<meta property="og:image" content="${esc(og)}">${image && og.endsWith(`/${image}.jpg`) ? '' : `\n<meta property="og:image:width" content="${ogSize[0]}">\n<meta property="og:image:height" content="${ogSize[1]}">`}
+<meta property="og:image:alt" content="${esc(title)}">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${esc(title)}">
+<meta name="twitter:description" content="${esc(clip(description, 200))}">
+<meta name="twitter:image" content="${esc(og)}">
 <meta name="theme-color" content="#0b1322">
-<link rel="icon" href="${root}assets/img/favicon.png">
+<link rel="icon" href="${root}favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="96x96" href="${root}assets/img/icon-96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="${root}assets/img/icon-192.png">
 <link rel="apple-touch-icon" href="${root}assets/img/apple-touch-icon.png">
+<link rel="manifest" href="${root}site.webmanifest">
 <link rel="preload" href="${root}assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="${root}assets/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${root}assets/css/style.css?v=${VERSION}">
@@ -187,7 +217,7 @@ ${body}
 function card(p, root, { eager = false, index = 0 } = {}) {
   const base = `${root}assets/img/covers/`;
   const hover = p.coverHover
-    ? `<img class="card__img card__img--hover" ${imgAttrs(base, p.coverHover, 1600)} sizes="(max-width: 720px) 100vw, 50vw" alt="" loading="lazy" decoding="async">`
+    ? `<img class="card__img card__img--hover" ${imgAttrs(base, p.coverHover, 1600)} sizes="(max-width: 720px) 100vw, 50vw" alt="${esc(p.fullTitle)} — ${esc(site.name)}" loading="lazy" decoding="async">`
     : '';
   return `<a class="card" href="${root}${p.slug}/" data-category="${p.category}" data-cursor="${p.category === 'photography' ? 'View' : 'Play'}">
   <span class="card__media">
@@ -221,7 +251,7 @@ function videoBlock(v, root, p) {
   const poster = v.thumb ? `${root}assets/img/${imgSrc(v.thumb)}` : `${root}assets/img/covers/${imgSrc(p.cover)}`;
   return `<figure class="video${vertical ? ' video--vertical' : ''}" style="--ratio:${ratio}">
   <a class="video__frame" href="${esc(href)}" target="_blank" rel="noopener" data-embed="${esc(embed)}" data-cursor="Play" aria-label="Play: ${esc(label)}">
-    <img src="${poster}" alt="" loading="lazy" decoding="async">
+    <img src="${poster}" alt="${esc(label)} — ${esc(roleOf(p) || 'video')} ${esc(site.name)}" loading="lazy" decoding="async">
     <span class="video__play" aria-hidden="true">[ Play ]</span>
     ${v.duration ? `<span class="video__time" aria-hidden="true">${duration(v.duration)}</span>` : ''}
   </a>
@@ -229,8 +259,8 @@ function videoBlock(v, root, p) {
 </figure>`;
 }
 
-function imageTag(im, root, sizes, cls = '') {
-  return `<img${cls ? ` class="${cls}"` : ''} ${imgAttrs(`${root}assets/img/`, im.src, im.width)} sizes="${sizes}" width="${im.width}" height="${im.height}" alt="" loading="lazy" decoding="async">`;
+function imageTag(im, root, sizes, cls = '', alt = '') {
+  return `<img${cls ? ` class="${cls}"` : ''} ${imgAttrs(`${root}assets/img/`, im.src, im.width)} sizes="${sizes}" width="${im.width}" height="${im.height}" alt="${esc(alt)}" loading="lazy" decoding="async">`;
 }
 
 function renderBlocks(blocks, root, p) {
@@ -259,13 +289,13 @@ function renderBlocks(blocks, root, p) {
     } else if (b.type === 'button') {
       out.push(`<div class="block block--button"><a class="btn" href="${root}${b.href}/">${esc(b.label)}</a></div>`);
     } else if (b.type === 'image') {
-      out.push(`<figure class="block block--image">${imageTag(b, root, '(max-width: 1100px) 100vw, 1100px')}</figure>`);
+      out.push(`<figure class="block block--image">${imageTag(b, root, '(max-width: 1100px) 100vw, 1100px', '', `${p.fullTitle} — still, ${site.name}`)}</figure>`);
     } else if (b.type === 'gallery') {
       out.push(
         `<div class="gallery" data-gallery>${b.images
           .map(
             (im, n) =>
-              `<a class="gallery__item" href="${root}assets/img/${imgSrc(im.src)}" data-w="${im.width}" data-h="${im.height}" data-cursor="View" aria-label="Open photo ${n + 1}">${imageTag(im, root, '(max-width: 720px) 50vw, 33vw')}</a>`
+              `<a class="gallery__item" href="${root}assets/img/${imgSrc(im.src)}" data-w="${im.width}" data-h="${im.height}" data-cursor="View" aria-label="Open photo ${n + 1}">${imageTag(im, root, '(max-width: 720px) 50vw, 33vw', '', `${p.title} — photo ${n + 1} by ${site.name}`)}</a>`
           )
           .join('')}</div>`
       );
@@ -292,7 +322,8 @@ function home() {
     <span>${site.roles.map(esc).join(' / ')}</span>
     <span>${esc(site.location)}</span>
   </div>
-  <h1 class="hero__word" data-fit aria-label="${esc(site.name)}">MANGINI</h1>
+  <h1 class="hero__word" data-fit><span class="sr">${esc(site.name)} — ${site.roles.map(esc).join(', ')} </span><span class="fit" aria-hidden="true">MANGINI</span></h1>
+  <p class="hero__intro">${esc(site.descriptionLong)}</p>
 </section>
 <section class="work" aria-label="Selected work">
   <div class="filters" role="group" aria-label="Filter projects">
@@ -309,17 +340,11 @@ ${projects.map((p, i) => card(p, root, { eager: i < 2, index: i })).join('\n')}
 </section>`;
   const head = `<script>try{if(!sessionStorage.getItem('lm-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('has-intro')}catch(e){}</script>
 <script type="application/json" id="intro-data">${JSON.stringify(covers)}</script>
-<script type="application/ld+json">${JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: site.name,
-    url: site.url,
-    email: site.email,
-    jobTitle: site.roles.join(', '),
-    description: site.descriptionLong,
-    sameAs: site.socials.map((s) => s.url),
-  })}</script>
-`;
+${ld({ '@type': 'WebSite', '@id': `${site.url}/#website`, url: `${site.url}/`, name: site.name, alternateName: [site.title, 'lorenzomangini.com'], description: site.description, inLanguage: ['en', 'it'], publisher: { '@id': `${site.url}/#person` } })}${ld(person())}${ld({
+    '@type': 'ItemList',
+    name: 'Selected work',
+    itemListElement: projects.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.fullTitle, url: `${site.url}/${p.slug}/` })),
+  })}`;
   write('index.html', layout({ path: '', root, title: site.title, description: site.description, current: 'work', body, bodyClass: 'page-home', head }));
 }
 
@@ -353,6 +378,10 @@ function projectPage(p, i) {
   <div class="project__body">
 ${renderBlocks(p.blocks, root, p)}
   </div>
+  ${p.credits && p.credits.length ? `<section class="credits" aria-labelledby="credits-title">
+    <h2 class="label" id="credits-title">Credits</h2>
+    <p>${p.credits.map(esc).join('<br>')}</p>
+  </section>` : ''}
   <nav class="pager" aria-label="Projects">
     <a href="${root}${prev.slug}/"><span>← Previous</span>${esc(prev.title)}</a>
     <a href="${root}${next.slug}/"><span>Next →</span>${esc(next.title)}</a>
@@ -364,7 +393,62 @@ ${renderBlocks(p.blocks, root, p)}
 ${more.map((m) => card(m, root, { index: projects.indexOf(m) })).join('\n')}
   </div>
 </section>`;
-  const description = `${p.fullTitle} — ${roleOf(p)}${p.year ? `, ${p.year}` : ''}. ${site.description}`;
+  const credits = (p.credits || []).join('. ').replace(/\.\./g, '.');
+  const description = `${p.fullTitle} (${[roleOf(p), p.year].filter(Boolean).join(', ')}). ${credits ? credits + '. ' : ''}From the portfolio of ${site.name}, ${site.tagline}.`;
+  const url = `${site.url}/${p.slug}/`;
+  const coverUrl = abs(`assets/img/covers/${imgSrc(p.cover)}`);
+  const videos = [];
+  const photos = [];
+  (function collect(bs) {
+    for (const b of bs) {
+      if (b.type === 'row') collect(b.items);
+      if (b.type === 'video') videos.push(b);
+      if (b.type === 'image') photos.push(b);
+      if (b.type === 'gallery') photos.push(...b.images);
+    }
+  })(p.blocks);
+  const iso = (sec) => `PT${Math.floor(sec / 60)}M${sec % 60}S`;
+  const work = {
+    '@type': p.category === 'photography' ? 'ImageGallery' : 'CreativeWork',
+    '@id': `${url}#work`,
+    name: p.fullTitle,
+    url,
+    description: clip(description, 300),
+    image: coverUrl,
+    [p.category === 'dop' ? 'contributor' : 'creator']: { '@id': `${site.url}/#person` },
+    ...(p.year ? { dateCreated: p.year, copyrightYear: Number(p.year) } : {}),
+    copyrightHolder: { '@id': `${site.url}/#person` },
+    ...(p.category === 'photography'
+      ? { image: photos.slice(0, 30).map((im) => ({ '@type': 'ImageObject', contentUrl: abs(`assets/img/${imgSrc(im.src)}`), creator: { '@id': `${site.url}/#person` }, creditText: site.name, copyrightNotice: `© ${site.name}` })) }
+      : {}),
+  };
+  // Google accetta i video solo con la data di caricamento: la abbiamo per quelli Vimeo.
+  const videoLd = videos
+    .filter((v) => v.uploadDate)
+    .map((v) =>
+      ld({
+        '@type': 'VideoObject',
+        name: v.caption || v.title || p.fullTitle,
+        description: clip(description, 300),
+        thumbnailUrl: v.thumb ? abs(`assets/img/${imgSrc(v.thumb)}`) : coverUrl,
+        uploadDate: v.uploadDate,
+        ...(v.duration ? { duration: iso(v.duration) } : {}),
+        embedUrl: `https://player.vimeo.com/video/${v.id}${v.hash ? `?h=${v.hash}` : ''}`,
+        [p.category === 'dop' ? 'contributor' : 'creator']: { '@id': `${site.url}/#person` },
+      })
+    )
+    .join('');
+  const head =
+    ld(person()) +
+    ld(work) +
+    ld({
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Work', item: `${site.url}/` },
+        { '@type': 'ListItem', position: 2, name: p.fullTitle, item: url },
+      ],
+    }) +
+    videoLd;
   write(
     `${p.slug}/index.html`,
     layout({
@@ -374,6 +458,9 @@ ${more.map((m) => card(m, root, { index: projects.indexOf(m) })).join('\n')}
       description,
       image: p.slug,
       current: p.slug === 'vertical-adv' ? 'vertical-adv' : '',
+      head,
+      keywords: [p.title, p.kind, roleOf(p), `${site.name} ${p.kind || roleOf(p)}`].filter(Boolean).join(', '),
+      ogType: videos.length ? 'video.other' : 'website',
       body,
       bodyClass: `page-project page-${p.category}`,
     })
@@ -403,7 +490,7 @@ function about() {
     </div>
   </div>
 </section>`;
-  write('about/index.html', layout({ path: 'about/', root, title: `About — ${site.title}`, description: site.descriptionLong, current: 'about', body, bodyClass: 'page-about' }));
+  write('about/index.html', layout({ path: 'about/', root, title: `About — ${site.title}`, description: site.descriptionLong, current: 'about', body, bodyClass: 'page-about', ogType: 'profile', keywords: `about ${site.name}, biography, showreel`, head: ld({ '@type': 'ProfilePage', url: `${site.url}/about/`, name: `About ${site.name}`, mainEntity: person() }) }));
 }
 
 function contact() {
@@ -429,7 +516,7 @@ function contact() {
     </div>
   </div>
 </section>`;
-  write('contact/index.html', layout({ path: 'contact/', root, title: `Contact — ${site.title}`, description: `${data.contact.headline} ${site.email}`, current: 'contact', body, bodyClass: 'page-contact' }));
+  write('contact/index.html', layout({ path: 'contact/', root, title: `Contact — ${site.title}`, description: `Contact ${site.name}, ${site.roles.join(', ')} ${site.location.toLowerCase()}. ${data.contact.headline} Email: ${site.email}`, current: 'contact', body, bodyClass: 'page-contact', keywords: `contact ${site.name}, hire director, hire director of photography, email`, head: ld({ '@type': 'ContactPage', url: `${site.url}/contact/`, name: `Contact ${site.name}`, mainEntity: person() }) }));
 }
 
 function notFound() {
@@ -480,9 +567,46 @@ redirect('about-me', 'about/');
 redirect('about-me-1', 'about/');
 
 const urls = ['', 'about/', 'contact/', ...projects.map((p) => `${p.slug}/`)];
+const today = new Date().toISOString().slice(0, 10);
+const xml = (t) => esc(t).replace(/'/g, '&apos;');
+const pageImages = (p) => {
+  const list = [`assets/img/covers/${imgSrc(p.cover)}`];
+  (function collect(bs) {
+    for (const b of bs) {
+      if (b.type === 'row') collect(b.items);
+      if (b.type === 'image') list.push(`assets/img/${imgSrc(b.src)}`);
+      if (b.type === 'gallery') b.images.forEach((im) => list.push(`assets/img/${imgSrc(im.src)}`));
+    }
+  })(p.blocks);
+  return list;
+};
+const entry = (u, priority, images = []) =>
+  `  <url><loc>${site.url}/${u}</loc><lastmod>${today}</lastmod><priority>${priority}</priority>${images.map((f) => `<image:image><image:loc>${xml(abs(f))}</image:loc></image:image>`).join('')}</url>`;
 write(
   'sitemap.xml',
-  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${site.url}/${u}</loc></url>`).join('\n')}\n</urlset>\n`
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${[
+    entry('', '1.0', projects.map((p) => `assets/img/covers/${imgSrc(p.cover)}`)),
+    entry('about/', '0.8'),
+    entry('contact/', '0.7'),
+    ...projects.map((p) => entry(`${p.slug}/`, '0.9', pageImages(p))),
+  ].join('\n')}\n</urlset>\n`
+);
+write(
+  'site.webmanifest',
+  JSON.stringify(
+    {
+      name: site.title,
+      short_name: site.name,
+      description: site.description,
+      start_url: '/',
+      display: 'browser',
+      background_color: '#0b1322',
+      theme_color: '#0b1322',
+      icons: [192, 512].map((n) => ({ src: `/assets/img/icon-${n}.png`, sizes: `${n}x${n}`, type: 'image/png' })),
+    },
+    null,
+    2
+  ) + '\n'
 );
 write('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${site.url}/sitemap.xml\n`);
 write('.nojekyll', '');
