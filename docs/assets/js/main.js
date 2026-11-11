@@ -98,7 +98,7 @@
 
   /* ---------- comparsa allo scorrimento ---------- */
 
-  var revealItems = $$('.card, .project__body > *, .gallery__item, .about__text > *, .form > *');
+  var revealItems = $$('.card, .project__body > *, .gallery__item, .about__text > *');
   if ('IntersectionObserver' in window && !reduced) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
@@ -251,37 +251,32 @@
 
   function pad(n) { return (n < 10 ? '0' : '') + n; }
 
-  /* ---------- modulo contatti ---------- */
+  /* ---------- contatti: copia email ---------- */
 
-  var form = $('#contact-form');
-  if (form) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var status = $('.form__status', form);
-      var data = new FormData(form);
-      if (data.get('_gotcha')) return;
-      var endpoint = form.getAttribute('data-endpoint');
-      var done = function (msg) { status.textContent = msg; status.hidden = false; };
-      if (endpoint) {
-        var btn = $('button[type=submit]', form);
-        btn.disabled = true;
-        fetch(endpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } })
-          .then(function (r) {
-            if (!r.ok) throw new Error();
-            form.reset();
-            done('Thank you!');
-          })
-          .catch(function () { done('Something went wrong — please write to ' + form.getAttribute('data-email')); })
-          .then(function () { btn.disabled = false; });
-      } else {
-        // Senza un servizio per i moduli, il messaggio viene preparato nel programma di posta.
-        var body = data.get('message') + '\n\n' + data.get('firstName') + ' ' + data.get('lastName') + '\n' + data.get('email');
-        location.href = 'mailto:' + form.getAttribute('data-email') +
-          '?subject=' + encodeURIComponent(data.get('subject')) + '&body=' + encodeURIComponent(body);
-        done('Thank you! Your email app is opening with the message ready to send.');
-      }
+  $$('[data-copy]').forEach(function (btn) {
+    var label = btn.textContent;
+    var status = $('.contact__status');
+    btn.addEventListener('click', function () {
+      var email = btn.getAttribute('data-copy');
+      var ok = function () {
+        btn.textContent = 'Copied ✓';
+        if (status) status.textContent = email + ' copied to clipboard';
+        setTimeout(function () { btn.textContent = label; }, 2200);
+      };
+      var fallback = function () {
+        var t = doc.createElement('textarea');
+        t.value = email;
+        t.style.position = 'fixed';
+        t.style.opacity = '0';
+        doc.body.appendChild(t);
+        t.select();
+        try { doc.execCommand('copy'); ok(); } catch (e) { if (status) status.textContent = email; }
+        doc.body.removeChild(t);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(email).then(ok, fallback);
+      else fallback();
     });
-  }
+  });
 
   /* ---------- intro: muovi il cursore (o scorri) per "esporre" la pellicola ---------- */
 

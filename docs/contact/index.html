@@ -14,12 +14,12 @@
 <meta property="og:url" content="https://lorenzomangini.com/contact/">
 <meta property="og:image" content="https://lorenzomangini.com/assets/img/og/site.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#0b0b0c">
+<meta name="theme-color" content="#0b1322">
 <link rel="icon" href="../assets/img/favicon.png">
 <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
 <link rel="preload" href="../assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../assets/css/style.css?v=fc4d8106">
+<link rel="stylesheet" href="../assets/css/style.css?v=86abae8f">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body class="page-contact" data-root="../">
@@ -44,23 +44,18 @@
   </header>
   <div class="contact">
     <div class="contact__side">
-      <p class="label">Email</p>
-      <a class="contact__mail" href="mailto:work@lorenzomangini.com">work@lorenzomangini.com</a>
       <p class="label">Follow</p>
       <div class="contact__socials"><a href="https://instagram.com/lorenzomanginii" target="_blank" rel="noopener">Instagram ↗</a><a href="https://vimeo.com/freettata" target="_blank" rel="noopener">Vimeo ↗</a><a href="https://youtube.com/@lorenzomanginii" target="_blank" rel="noopener">YouTube ↗</a><a href="https://x.com/freettataa" target="_blank" rel="noopener">X ↗</a></div>
     </div>
-    <form class="form" id="contact-form" action="mailto:work@lorenzomangini.com" method="post" data-endpoint="" data-email="work@lorenzomangini.com">
-      <div class="form__row">
-        <label class="field"><span>First Name *</span><input type="text" name="firstName" required autocomplete="given-name"></label>
-        <label class="field"><span>Last Name *</span><input type="text" name="lastName" required autocomplete="family-name"></label>
+    <div class="contact__main">
+      <p class="label">Email</p>
+      <a class="contact__mail" href="mailto:work@lorenzomangini.com">work@lorenzomangini.com</a>
+      <div class="contact__actions">
+        <a class="btn btn--solid" href="mailto:work@lorenzomangini.com">Write me an email</a>
+        <button class="btn" type="button" data-copy="work@lorenzomangini.com">Copy email</button>
       </div>
-      <label class="field"><span>Email Address *</span><input type="email" name="email" required autocomplete="email"></label>
-      <label class="field"><span>Subject *</span><input type="text" name="subject" required></label>
-      <label class="field"><span>Message *</span><textarea name="message" rows="6" required></textarea></label>
-      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="form__trap" aria-hidden="true">
-      <button class="btn btn--solid" type="submit">Submit</button>
-      <p class="form__status" role="status" aria-live="polite" hidden>Thank you!</p>
-    </form>
+      <p class="contact__status" role="status" aria-live="polite"></p>
+    </div>
   </div>
 </section>
 </main>
@@ -80,6 +75,6 @@
   <p>Usiamo cookie per migliorare l’esperienza sul sito e per la visualizzazione dei video embedded. Cliccando “Accetto” consenti l’uso dei cookie.</p>
   <div class="cookie__actions"><button type="button" data-cookie="yes">Accetta</button><button type="button" data-cookie="no">Rifiuta</button></div>
 </div>
-<script src="../assets/js/main.js?v=fc4d8106" defer></script>
+<script src="../assets/js/main.js?v=86abae8f" defer></script>
 </body>
 </html>

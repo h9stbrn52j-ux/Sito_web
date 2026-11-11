@@ -3,6 +3,8 @@
 Nuovo sito portfolio di Lorenzo Mangini (Filmmaker & DP). Sito statico, senza dipendenze:
 tutto quello che va online è nella cartella `docs/`.
 
+**Per mettere online il sito e aggiungere nuovi video leggi [GUIDA.md](GUIDA.md).**
+
 ## Come è fatto
 
 | Cosa | Dove |
@@ -10,8 +12,8 @@ tutto quello che va online è nella cartella `docs/`.
 | Tutti i contenuti (progetti, testi, link, social) | `content/site.json` |
 | Generatore delle pagine | `build.mjs` |
 | Sito pronto da pubblicare | `docs/` |
-| Stile (colore d'accento: variabile `--accent`) | `docs/assets/css/style.css` |
-| Interazioni (intro, filtri, video, gallery, form) | `docs/assets/js/main.js` |
+| Stile (colori: variabili `--bg`, `--accent`, `--hi`) | `docs/assets/css/style.css` |
+| Interazioni (intro, filtri, video, gallery) | `docs/assets/js/main.js` |
 | Immagini (copertine, foto, anteprime video) | `docs/assets/img/` |
 
 ## Modificare o aggiungere un progetto
@@ -21,8 +23,8 @@ tutto quello che va online è nella cartella `docs/`.
    - `slug`: l'indirizzo della pagina (`/slug/`)
    - `title`, `kind`, `role`, `year`
    - `category`: `director`, `dop` oppure `photography` (serve ai filtri in home)
-   - `cover`: nome del file in `docs/assets/img/covers/` senza estensione
-     (servono `nome.webp` largo 1600px e `nome-800.webp` largo 800px)
+   - `cover`: nome del file in `docs/assets/img/covers/`, con estensione (es. `nuovo.jpg`);
+     senza estensione servono `nome.webp` (1600px) e `nome-800.webp` (800px)
    - `blocks`: il contenuto della pagina, nell'ordine in cui appare:
      - video Vimeo: `{ "type": "video", "provider": "vimeo", "id": "…", "hash": "…", "width": 1280, "height": 720, "thumb": "video/ID" }`
      - video YouTube: `{ "type": "video", "provider": "youtube", "id": "…", "width": 720, "height": 1280, "thumb": "video/ID" }`
@@ -47,15 +49,9 @@ per rivederla chiudi e riapri la scheda.
 
 ## Pubblicazione
 
-`docs/` funziona su qualsiasi hosting statico (GitHub Pages con sorgente `/docs`,
-Netlify, Vercel, Cloudflare Pages…). Gli indirizzi dei progetti sono gli stessi del
+Il workflow `.github/workflows/deploy.yml` rigenera e pubblica il sito su GitHub Pages a ogni push.
+`docs/` funziona comunque su qualsiasi hosting statico. Gli indirizzi dei progetti sono gli stessi del
 vecchio sito; `/home`, `/me` e `/about-me-1` reindirizzano alle nuove pagine.
-
-## Modulo contatti
-
-Senza configurazione il modulo prepara il messaggio nel programma di posta del visitatore.
-Per ricevere i messaggi direttamente, crea un modulo su un servizio come Formspree e
-incolla il suo indirizzo in `site.formEndpoint` dentro `content/site.json`, poi rilancia il build.
 
 ## Video e cookie
 

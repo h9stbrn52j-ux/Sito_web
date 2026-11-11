@@ -20,6 +20,12 @@ const esc = (s = '') => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').r
 const pad = (n) => String(n).padStart(2, '0');
 const duration = (s) => (s ? `${pad(Math.floor(s / 60))}:${pad(s % 60)}` : '');
 const categoryLabel = { director: 'Director', dop: 'Director of Photography', photography: 'Photography' };
+// Un'immagine può essere indicata senza estensione (allora servono nome.webp e nome-800.webp)
+// oppure come file singolo con estensione (es. "nuovo-video.jpg").
+const hasExt = (f) => /\.(jpe?g|png|webp|avif)$/i.test(f);
+const imgSrc = (f, small) => (hasExt(f) ? f : `${f}${small ? '-800' : ''}.webp`);
+const imgAttrs = (base, f, w) =>
+  hasExt(f) ? `src="${base}${f}"` : `src="${base}${f}-800.webp" srcset="${base}${f}-800.webp 800w, ${base}${f}.webp ${w}w"`;
 const roleOf = (p) => p.role || categoryLabel[p.category] || '';
 
 function write(path, html) {
@@ -39,7 +45,7 @@ const NAV = [
 
 function layout({ path, root, title, description, image, current, body, bodyClass = '', head = '' }) {
   const url = `${site.url}/${path}`;
-  const og = `${site.url}/assets/img/og/${image || 'site'}.jpg`;
+  const og = `${site.url}/assets/img/og/${image && existsSync(join(OUT, 'assets/img/og', image + '.jpg')) ? image : 'site'}.jpg`;
   const link = (n) =>
     `<a class="nav__link${current === n.key ? ' is-current' : ''}" href="${root}${n.href}"${current === n.key ? ' aria-current="page"' : ''}>${esc(n.label)}</a>`;
   const socials = site.socials
@@ -61,7 +67,7 @@ function layout({ path, root, title, description, image, current, body, bodyClas
 <meta property="og:url" content="${esc(url)}">
 <meta property="og:image" content="${esc(og)}">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#0b0b0c">
+<meta name="theme-color" content="#0b1322">
 <link rel="icon" href="${root}assets/img/favicon.png">
 <link rel="apple-touch-icon" href="${root}assets/img/apple-touch-icon.png">
 <link rel="preload" href="${root}assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
@@ -112,13 +118,13 @@ ${body}
 }
 
 function card(p, root, { eager = false, index = 0 } = {}) {
-  const img = (f) => `${root}assets/img/covers/${f}`;
+  const base = `${root}assets/img/covers/`;
   const hover = p.coverHover
-    ? `<img class="card__img card__img--hover" src="${img(p.coverHover)}-800.webp" srcset="${img(p.coverHover)}-800.webp 800w, ${img(p.coverHover)}.webp 1600w" sizes="(max-width: 720px) 100vw, 50vw" alt="" loading="lazy" decoding="async">`
+    ? `<img class="card__img card__img--hover" ${imgAttrs(base, p.coverHover, 1600)} sizes="(max-width: 720px) 100vw, 50vw" alt="" loading="lazy" decoding="async">`
     : '';
   return `<a class="card" href="${root}${p.slug}/" data-category="${p.category}" data-cursor="${p.category === 'photography' ? 'View' : 'Play'}">
   <span class="card__media">
-    <img class="card__img" src="${img(p.cover)}-800.webp" srcset="${img(p.cover)}-800.webp 800w, ${img(p.cover)}.webp 1600w" sizes="(max-width: 720px) 100vw, 50vw" width="1600" height="900" alt="${esc(p.fullTitle)}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">${hover}
+    <img class="card__img" ${imgAttrs(base, p.cover, 1600)} sizes="(max-width: 720px) 100vw, 50vw" width="1600" height="900" alt="${esc(p.fullTitle)}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">${hover}
     <span class="card__index">${pad(index + 1)}</span>
   </span>
   <span class="card__caption">
@@ -145,7 +151,7 @@ function videoBlock(v, root, p) {
     embed = v.src;
   }
   const label = v.caption || v.title || p.fullTitle;
-  const poster = v.thumb ? `${root}assets/img/${v.thumb}.webp` : `${root}assets/img/covers/${p.cover}.webp`;
+  const poster = v.thumb ? `${root}assets/img/${imgSrc(v.thumb)}` : `${root}assets/img/covers/${imgSrc(p.cover)}`;
   return `<figure class="video${vertical ? ' video--vertical' : ''}" style="--ratio:${ratio}">
   <a class="video__frame" href="${esc(href)}" target="_blank" rel="noopener" data-embed="${esc(embed)}" data-cursor="Play" aria-label="Play: ${esc(label)}">
     <img src="${poster}" alt="" loading="lazy" decoding="async">
@@ -157,8 +163,7 @@ function videoBlock(v, root, p) {
 }
 
 function imageTag(im, root, sizes, cls = '') {
-  const src = `${root}assets/img/${im.src}`;
-  return `<img${cls ? ` class="${cls}"` : ''} src="${src}-800.webp" srcset="${src}-800.webp 800w, ${src}.webp ${im.width}w" sizes="${sizes}" width="${im.width}" height="${im.height}" alt="" loading="lazy" decoding="async">`;
+  return `<img${cls ? ` class="${cls}"` : ''} ${imgAttrs(`${root}assets/img/`, im.src, im.width)} sizes="${sizes}" width="${im.width}" height="${im.height}" alt="" loading="lazy" decoding="async">`;
 }
 
 function renderBlocks(blocks, root, p) {
@@ -193,7 +198,7 @@ function renderBlocks(blocks, root, p) {
         `<div class="gallery" data-gallery>${b.images
           .map(
             (im, n) =>
-              `<a class="gallery__item" href="${root}assets/img/${im.src}.webp" data-w="${im.width}" data-h="${im.height}" data-cursor="View" aria-label="Open photo ${n + 1}">${imageTag(im, root, '(max-width: 720px) 50vw, 33vw')}</a>`
+              `<a class="gallery__item" href="${root}assets/img/${imgSrc(im.src)}" data-w="${im.width}" data-h="${im.height}" data-cursor="View" aria-label="Open photo ${n + 1}">${imageTag(im, root, '(max-width: 720px) 50vw, 33vw')}</a>`
           )
           .join('')}</div>`
       );
@@ -213,7 +218,7 @@ function home() {
     ['photography', 'Photography'],
   ];
   const count = (k) => (k === 'all' ? projects.length : projects.filter((p) => p.category === k).length);
-  const covers = projects.map((p) => `assets/img/covers/${p.cover}-800.webp`);
+  const covers = projects.map((p) => `assets/img/covers/${imgSrc(p.cover, true)}`);
   const body = `<section class="hero" id="top">
   <div class="hero__meta">
     <span>Lorenzo</span>
@@ -336,8 +341,6 @@ function about() {
 
 function contact() {
   const root = '../';
-  const field = (name, label, type = 'text', auto = '') =>
-    `<label class="field"><span>${label} *</span><input type="${type}" name="${name}" required${auto ? ` autocomplete="${auto}"` : ''}></label>`;
   const body = `<section class="page" id="top">
   <header class="page__head">
     <p class="label">${esc(data.contact.headline)}</p>
@@ -345,23 +348,18 @@ function contact() {
   </header>
   <div class="contact">
     <div class="contact__side">
-      <p class="label">Email</p>
-      <a class="contact__mail" href="mailto:${site.email}">${site.email}</a>
       <p class="label">Follow</p>
       <div class="contact__socials">${site.socials.map((s) => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)} ↗</a>`).join('')}</div>
     </div>
-    <form class="form" id="contact-form" action="${esc(site.formEndpoint || `mailto:${site.email}`)}" method="post" data-endpoint="${esc(site.formEndpoint)}" data-email="${site.email}">
-      <div class="form__row">
-        ${field('firstName', 'First Name', 'text', 'given-name')}
-        ${field('lastName', 'Last Name', 'text', 'family-name')}
+    <div class="contact__main">
+      <p class="label">Email</p>
+      <a class="contact__mail" href="mailto:${site.email}">${site.email}</a>
+      <div class="contact__actions">
+        <a class="btn btn--solid" href="mailto:${site.email}">Write me an email</a>
+        <button class="btn" type="button" data-copy="${site.email}">Copy email</button>
       </div>
-      ${field('email', 'Email Address', 'email', 'email')}
-      ${field('subject', 'Subject')}
-      <label class="field"><span>Message *</span><textarea name="message" rows="6" required></textarea></label>
-      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="form__trap" aria-hidden="true">
-      <button class="btn btn--solid" type="submit">Submit</button>
-      <p class="form__status" role="status" aria-live="polite" hidden>Thank you!</p>
-    </form>
+      <p class="contact__status" role="status" aria-live="polite"></p>
+    </div>
   </div>
 </section>`;
   write('contact/index.html', layout({ path: 'contact/', root, title: `Contact — ${site.title}`, description: `${data.contact.headline} ${site.email}`, current: 'contact', body, bodyClass: 'page-contact' }));
@@ -389,13 +387,13 @@ function redirect(from, to) {
 const missing = [];
 const need = (f) => existsSync(join(OUT, 'assets/img', f)) || missing.push(f);
 for (const p of projects) {
-  need(`covers/${p.cover}.webp`);
+  need(`covers/${imgSrc(p.cover)}`);
   const scan = (bs) =>
     bs.forEach((b) => {
       if (b.type === 'row') scan(b.items);
-      if (b.type === 'image') need(`${b.src}.webp`);
-      if (b.type === 'gallery') b.images.forEach((im) => need(`${im.src}.webp`));
-      if (b.type === 'video' && b.thumb) need(`${b.thumb}.webp`);
+      if (b.type === 'image') need(imgSrc(b.src));
+      if (b.type === 'gallery') b.images.forEach((im) => need(imgSrc(im.src)));
+      if (b.type === 'video' && b.thumb) need(imgSrc(b.thumb));
     });
   scan(p.blocks);
 }
@@ -421,4 +419,5 @@ write(
 );
 write('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${site.url}/sitemap.xml\n`);
 write('.nojekyll', '');
+write('CNAME', new URL(site.url).host + '\n');
 console.log(`OK — ${urls.length} pagine generate in docs/`);

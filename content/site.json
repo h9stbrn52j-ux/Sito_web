@@ -14,7 +14,6 @@
       "Camera Operator"
     ],
     "location": "Based in Italy",
-    "formEndpoint": "",
     "socials": [
       {
         "label": "Instagram",
@@ -799,13 +798,6 @@
       "subtitle": "RONDO X BLU BASKET BERGAMO | Photos",
       "coverHover": "rondo-x-blu-basket-2",
       "blocks": [
-        {
-          "type": "video",
-          "provider": "adobe",
-          "src": "https://www-ccv.adobe.io/v1/player/ccv/KxBUJypSCcU/embed?bgcolor=%23191919&lazyLoading=true&api_key=BehancePro2View",
-          "width": 1080,
-          "height": 1920
-        },
         {
           "type": "gallery",
           "images": [
