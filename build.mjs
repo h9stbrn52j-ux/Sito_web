@@ -122,6 +122,10 @@ function layout({ path, root, title, description, image, current, body, bodyClas
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 <meta name="keywords" content="${esc(site.keywords)}">
+<meta name="author" content="${esc(site.name)}">
+<meta name="copyright" content="© ${esc(site.name)}. All rights reserved.">
+<!-- © ${esc(site.name)}. All rights reserved. Design, code, photographs and films on this site may not be copied or reused without written permission. -->
+<link rel="license" href="${site.url}/LICENSE.txt">
 <link rel="canonical" href="${esc(url)}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="${esc(site.name)}">
@@ -164,7 +168,7 @@ ${body}
     <span class="footer__big" data-fit>CONTACT</span>
   </a>
   <div class="footer__row">
-    <span>© <span data-year>${new Date().getFullYear()}</span> ${esc(site.name)}</span>
+    <span>© <span data-year>${new Date().getFullYear()}</span> ${esc(site.name)} — All rights reserved</span>
     <a href="mailto:${site.email}">${site.email}</a>
     <div class="footer__socials">${socials}</div>
     <a class="footer__top" href="#top" data-top>Back to top ↑</a>

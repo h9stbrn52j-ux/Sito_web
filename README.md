@@ -62,3 +62,8 @@ il video si apre sulla piattaforma in una nuova scheda.
 ## Font
 
 Archivo e JetBrains Mono, entrambi con licenza SIL Open Font License, inclusi in `docs/assets/fonts/`.
+
+## Copyright
+
+© Lorenzo Mangini. Tutti i diritti riservati. Il repository è pubblico solo per pubblicare il sito:
+codice, design, foto e video **non** sono riutilizzabili senza autorizzazione scritta. Vedi [LICENSE](LICENSE).

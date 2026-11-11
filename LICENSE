@@ -1,0 +1,52 @@
+Copyright © 2026 Lorenzo Mangini. Tutti i diritti riservati. / All rights reserved.
+
+ITALIANO
+
+Questo repository contiene il sito lorenzomangini.com. È pubblico solo perché
+il sito possa essere pubblicato: NON è software open source.
+
+Sono di proprietà esclusiva di Lorenzo Mangini e protetti dalla legge sul
+diritto d'autore (L. 633/1941) e dalle convenzioni internazionali:
+
+  - il design, la grafica, i testi e il codice del sito (HTML, CSS, JavaScript,
+    file di contenuto e script di generazione);
+  - le fotografie, le copertine, i fotogrammi e le anteprime dei video;
+  - i video e i film mostrati o collegati dal sito;
+  - il nome e il logo.
+
+Senza autorizzazione scritta del titolare è vietato copiare, riprodurre,
+modificare, distribuire, ripubblicare o riutilizzare, in tutto o in parte,
+qualsiasi contenuto di questo repository o del sito, anche a fini non
+commerciali, e utilizzarlo per addestrare sistemi di intelligenza artificiale.
+È consentita la sola consultazione del sito tramite browser.
+
+Richieste di autorizzazione: work@lorenzomangini.com
+
+ENGLISH
+
+This repository contains the website lorenzomangini.com. It is public only so
+that the site can be published: it is NOT open-source software.
+
+The design, graphics, texts and code of the site, the photographs, covers,
+stills and video thumbnails, the videos and films shown on or linked from the
+site, and the name and logo are the exclusive property of Lorenzo Mangini and
+are protected by copyright law and international conventions.
+
+No part of this repository or of the site may be copied, reproduced, modified,
+distributed, republished or reused, in whole or in part, for any purpose
+including non-commercial use and the training of artificial-intelligence
+systems, without the prior written permission of the copyright holder.
+Viewing the site in a web browser is the only permitted use.
+
+Permission requests: work@lorenzomangini.com
+
+ECCEZIONI / EXCEPTIONS
+
+I font in docs/assets/fonts (Archivo, JetBrains Mono) appartengono ai rispettivi
+autori e sono distribuiti con licenza SIL Open Font License 1.1.
+The fonts in docs/assets/fonts (Archivo, JetBrains Mono) belong to their
+respective authors and are distributed under the SIL Open Font License 1.1.
+
+I loghi e i marchi di terzi che compaiono nelle immagini appartengono ai
+rispettivi titolari. / Third-party logos and trademarks appearing in the images
+belong to their respective owners.
