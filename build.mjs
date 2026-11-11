@@ -10,6 +10,69 @@ const ROOT = dirname(fileURLToPath(import.meta.url));
 const OUT = join(ROOT, 'docs');
 const data = JSON.parse(readFileSync(join(ROOT, 'content/site.json'), 'utf8'));
 const { site, projects } = data;
+
+/* ---------- scorciatoie per chi compila site.json a mano ----------
+   Un progetto può essere scritto in forma breve:
+     { "title": "...", "role": "Director", "year": "2027", "cover": "file.jpg", "video": "https://vimeo.com/..." }
+   Qui vengono ricavati da soli indirizzo della pagina, categoria e dati del video. */
+
+function fail(msg) {
+  console.error('\nERRORE in content/site.json — ' + msg + '\n');
+  process.exit(1);
+}
+
+function parseVideo(url, where) {
+  const u = String(url).trim();
+  let m;
+  if ((m = u.match(/vimeo\.com\/(?:video\/)?(\d+)(?:\/([0-9a-z]+)|\?h=([0-9a-z]+))?/i)))
+    return { provider: 'vimeo', id: m[1], ...(m[2] || m[3] ? { hash: m[2] || m[3] } : {}) };
+  if ((m = u.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/|live\/)|youtu\.be\/)([\w-]{6,})/i)))
+    return { provider: 'youtube', id: m[1], shorts: /\/shorts\//i.test(u) };
+  fail(`${where}: non riconosco questo link video: "${u}". Usa un link Vimeo o YouTube.`);
+}
+
+function expandVideo(b, where) {
+  const link = b.reel || b.video || b.url;
+  const v = parseVideo(link, where);
+  const vertical = Boolean(b.reel) || b.vertical === true || (v.shorts && b.vertical !== false);
+  const out = { type: 'video', provider: v.provider, id: v.id };
+  if (v.hash) out.hash = v.hash;
+  out.width = b.width || (vertical ? 1080 : 1920);
+  out.height = b.height || (vertical ? 1920 : 1080);
+  if (b.thumb) out.thumb = b.thumb;
+  if (b.caption) out.caption = b.caption;
+  return out;
+}
+
+function expandBlocks(blocks, where) {
+  return blocks.map((b) => {
+    if (typeof b === 'string') return expandVideo({ video: b }, where);
+    if (b.type === 'row') return { ...b, items: expandBlocks(b.items, where) };
+    if (!b.type && (b.reel || b.video || b.url)) return expandVideo(b, where);
+    if (b.type === 'video' && !b.id && b.url) return expandVideo(b, where);
+    return b;
+  });
+}
+
+const slugify = (t) =>
+  String(t).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+
+const seen = new Set();
+projects.forEach((p, i) => {
+  const where = `progetto n. ${i + 1}${p.title ? ` ("${p.title}")` : ''}`;
+  if (!p.title) fail(`${where}: manca "title".`);
+  if (!p.cover) fail(`${where}: manca "cover" (il nome del file della copertina).`);
+  p.kind = p.kind || '';
+  p.fullTitle = p.fullTitle || (p.kind ? `${p.title} | ${p.kind}` : p.title);
+  p.slug = p.slug || slugify(p.fullTitle);
+  if (seen.has(p.slug)) fail(`${where}: esiste già un altro progetto con lo stesso indirizzo "${p.slug}". Cambia titolo o aggiungi "slug".`);
+  seen.add(p.slug);
+  p.role = p.role || '';
+  p.year = String(p.year || '');
+  p.category = p.category || (/photograph(y|er)$|^photo/i.test(p.role) && !/director/i.test(p.role) ? 'photography' : /photography|dop/i.test(p.role) ? 'dop' : 'director');
+  const quick = p.video ? (Array.isArray(p.video) ? p.video : [p.video]).map((v) => (typeof v === 'string' ? { video: v, vertical: p.vertical } : v)) : [];
+  p.blocks = expandBlocks([...quick, ...(p.blocks || [])], where);
+});
 const VERSION = createHash('sha1')
   .update(readFileSync(join(OUT, 'assets/css/style.css')))
   .update(readFileSync(join(OUT, 'assets/js/main.js')))

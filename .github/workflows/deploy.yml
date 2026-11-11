@@ -4,7 +4,7 @@ name: Pubblica il sito
 
 on:
   push:
-    branches: [main, claude/redesign-lorenzo-mangini-site-0skw2y]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
