@@ -126,48 +126,6 @@ const person = () => ({
   sameAs: site.socials.map((x) => x.url),
 });
 
-/* ---------- creste di montagna (intro e footer) ----------
-   Profili generati con un rumore "a creste": sempre uguali a ogni build (seme fisso). */
-function ridgePath(seed, base, amp, W = 1600, H = 600) {
-  const rnd = (i) => {
-    const x = Math.sin(i * 127.1 + seed * 311.7) * 43758.5453;
-    return x - Math.floor(x);
-  };
-  const noise = (x) => {
-    const i = Math.floor(x), f = x - i, u = f * f * (3 - 2 * f);
-    return rnd(i) * (1 - u) + rnd(i + 1) * u;
-  };
-  let d = `M0 ${H}`;
-  for (let x = 0; x <= W; x += 8) {
-    let n = 0, a = 1, fq = 1 / 300, tot = 0;
-    for (let o = 0; o < 5; o++) {
-      n += (1 - Math.abs(noise(x * fq + o * 19.3) * 2 - 1)) * a;
-      tot += a;
-      a *= 0.5;
-      fq *= 2.15;
-    }
-    d += `L${x} ${(base - amp * Math.pow(n / tot, 1.5)).toFixed(1)}`;
-  }
-  return `${d}L${W} ${H}Z`;
-}
-function ridgesSvg(id = 'r') {
-  const layers = [
-    [3, 330, 300, '#2b3c62'],
-    [11, 395, 270, '#213053'],
-    [24, 460, 250, '#182542'],
-    [37, 525, 210, '#101b31'],
-    [52, 600, 170, '#0b1322'],
-  ];
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><defs><linearGradient id="${id}h" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c3d0e8" stop-opacity="0"/><stop offset="1" stop-color="#c3d0e8" stop-opacity=".16"/></linearGradient></defs>${layers
-    .map(([seed, base, amp, color], i) => {
-      const d = ridgePath(seed, base, amp);
-      const line = i < 4 ? `<path d="${d}" fill="none" stroke="#8fb3ff" stroke-opacity="${(0.34 - i * 0.07).toFixed(2)}" stroke-width="1" vector-effect="non-scaling-stroke"/>` : '';
-      const haze = i < 4 ? `<rect y="${base - amp}" width="1600" height="${600 - base + amp}" fill="url(#${id}h)"/>` : '';
-      return `<g class="ridge"><path d="${d}" fill="${color}"/>${line}</g>${haze}`;
-    })
-    .join('')}</svg>`;
-}
-
 function layout({ path, root, title, description, image, current, body, bodyClass = '', head = '', keywords = '', ogType = 'website', ogSize = [1200, 630] }) {
   const url = `${site.url}/${path}`;
   const og = `${site.url}/assets/img/og/${image && existsSync(join(OUT, 'assets/img/og', image + '.jpg')) ? image : 'site'}.jpg`;
@@ -235,7 +193,7 @@ ${head}</head>
 ${body}
 </main>
 <footer class="footer">
-  <div class="footer__ridge" aria-hidden="true"><img src="${root}assets/img/ridges.svg" alt="" loading="lazy" decoding="async"><span>Orobie · Alpi Bergamasche</span></div>
+  <canvas class="footer__terrain" data-terrain aria-hidden="true"></canvas>
   <a class="footer__cta" href="${root}contact/">
     <span class="footer__label">${esc(data.contact.headline)}</span>
     <span class="footer__big" data-fit>CONTACT</span>
@@ -399,7 +357,6 @@ ${projects.map((p, i) => card(p, root, { eager: i < 2, index: i })).join('\n')}
 </section>`;
   const head = `<script>try{if(!sessionStorage.getItem('lm-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('has-intro')}catch(e){}</script>
 <script type="application/json" id="intro-data">${JSON.stringify(covers)}</script>
-<template id="ridges">${ridgesSvg('i')}</template>
 ${ld({ '@type': 'WebSite', '@id': `${site.url}/#website`, url: `${site.url}/`, name: site.name, alternateName: [site.title, 'lorenzomangini.com'], description: site.description, inLanguage: ['en', 'it'], publisher: { '@id': `${site.url}/#person` } })}${ld(person())}${ld({
     '@type': 'ItemList',
     name: 'Selected work',
@@ -671,6 +628,5 @@ write(
 );
 write('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${site.url}/sitemap.xml\n`);
 write('.nojekyll', '');
-write('assets/img/ridges.svg', ridgesSvg('f'));
 write('CNAME', new URL(site.url).host + '\n');
 console.log(`OK — ${urls.length} pagine generate in docs/`);
