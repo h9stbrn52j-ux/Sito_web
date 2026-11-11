@@ -250,6 +250,29 @@
 
   function pad(n) { return (n < 10 ? '0' : '') + n; }
 
+  /* ---------- contatti: scrivi email ----------
+     Il link mailto apre il programma di posta solo se sul computer ce n'è uno configurato.
+     Se la pagina resta in primo piano (cioè non si è aperto nulla) copiamo l'indirizzo e lo diciamo. */
+
+  $$('[data-mail]').forEach(function (link) {
+    link.addEventListener('click', function () {
+      var email = link.getAttribute('data-mail');
+      var status = $('.contact__status');
+      var left = false;
+      var onBlur = function () { left = true; };
+      addEventListener('blur', onBlur);
+      setTimeout(function () {
+        removeEventListener('blur', onBlur);
+        if (left || doc.hidden) return;
+        var say = function (copied) {
+          if (status) status.textContent = 'No mail app opened? ' + (copied ? 'The address ' + email + ' has been copied — paste it in your email, or use Gmail.' : 'Write to ' + email + ' or use the Gmail button.');
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(email).then(function () { say(true); }, function () { say(false); });
+        else say(false);
+      }, 900);
+    });
+  });
+
   /* ---------- contatti: copia email ---------- */
 
   $$('[data-copy]').forEach(function (btn) {

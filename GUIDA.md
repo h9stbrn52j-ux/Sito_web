@@ -35,7 +35,6 @@ Qui sotto c'è la versione breve.
          "title": "Nuovo Spot",
          "kind":  "Commercial",
          "role":  "Director",
-         "year":  "2027",
          "cover": "nuovo-spot.jpg",
          "video": "https://vimeo.com/1179671398/4ad090542b"
        },

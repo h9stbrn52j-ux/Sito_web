@@ -21,7 +21,7 @@ tutto quello che va online è nella cartella `docs/`.
 1. Apri `content/site.json` e modifica (o copia) una voce dentro `projects`.
    L'ordine nel file è l'ordine nella home.
    - `slug`: l'indirizzo della pagina (`/slug/`)
-   - `title`, `kind`, `role`, `year`
+   - `title`, `kind`, `role` (`year` è facoltativo: se lo aggiungi, l'anno compare nel sito)
    - `category`: `director`, `dop` oppure `photography` (serve ai filtri in home)
    - `cover`: nome del file in `docs/assets/img/covers/`, con estensione (es. `nuovo.jpg`);
      senza estensione servono `nome.webp` (1600px) e `nome-800.webp` (800px)

@@ -370,7 +370,7 @@ function projectPage(p, i) {
     ${p.kind ? `<p class="project__kind">${esc(p.kind)}</p>` : ''}
     <dl class="project__meta">
       <div><dt>Role</dt><dd>${esc(roleOf(p))}</dd></div>
-      <div><dt>Year</dt><dd>${esc(p.year)}</dd></div>
+      ${p.year ? `<div><dt>Year</dt><dd>${esc(p.year)}</dd></div>` : ''}
       <div><dt>Format</dt><dd>${format}</dd></div>
       ${p.subtitle ? `<div><dt>Project</dt><dd>${esc(p.subtitle.replace(/\s*\|.*$/, ''))}</dd></div>` : ''}
     </dl>
@@ -509,7 +509,8 @@ function contact() {
       <p class="label">Email</p>
       <a class="contact__mail" href="mailto:${site.email}">${site.email}</a>
       <div class="contact__actions">
-        <a class="btn btn--solid" href="mailto:${site.email}">Write me an email</a>
+        <a class="btn btn--solid" href="mailto:${site.email}" data-mail="${site.email}">Write me an email</a>
+        <a class="btn" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=${encodeURIComponent(site.email)}" target="_blank" rel="noopener">Write with Gmail ↗</a>
         <button class="btn" type="button" data-copy="${site.email}">Copy email</button>
       </div>
       <p class="contact__status" role="status" aria-live="polite"></p>
