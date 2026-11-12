@@ -103,6 +103,8 @@ h2.label { font-size: inherit; font-weight: 400; }
 }
 .nav__logo:hover .logo { transform: scale(1.08) rotate(-3deg); }
 .nav__toggle { display: none; justify-self: end; padding: 10px 0; color: var(--accent); }
+.nav__quick { display: none; justify-self: end; padding: 10px 0; text-transform: uppercase; white-space: nowrap; }
+.nav__quick.is-current { color: var(--hi); }
 .nav__toggle::before { content: '['; }
 .nav__toggle::after { content: ']'; }
 
@@ -140,6 +142,13 @@ h2.label { font-size: inherit; font-weight: 400; }
 .hero__intro { font-family: var(--display); font-size: clamp(15px, 1.35vw, 20px); line-height: 1.45; letter-spacing: 0; color: var(--text); max-width: 52ch; margin-top: clamp(14px, 2vw, 30px); }
 .credits { max-width: 1500px; margin: clamp(26px, 4vw, 56px) auto 0; width: 100%; padding-top: 16px; border-top: 1px solid var(--line); display: grid; grid-template-columns: minmax(120px, 1fr) minmax(0, 4fr); gap: 12px 24px; }
 .credits p { font-family: var(--display); font-size: 15px; line-height: 1.65; letter-spacing: 0; max-width: 70ch; color: var(--text); }
+
+.service { display: grid; grid-template-columns: 1fr auto; column-gap: 18px; row-gap: 3px; align-items: center; max-width: 640px; margin-top: clamp(18px, 2.2vw, 30px); padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-transform: uppercase; }
+.service__label { grid-column: 1; color: var(--hi); font-size: 11px; }
+.service__text { grid-column: 1; color: var(--accent); text-wrap: balance; }
+.service__arrow { grid-column: 2; grid-row: 1 / span 2; color: var(--accent); font-size: 18px; transition: transform 0.3s var(--ease); }
+.service:hover .service__arrow { transform: translateX(6px); }
+.service:hover .service__text { color: var(--hi); }
 
 /* ---------- filtri + griglia ---------- */
 
@@ -425,7 +434,8 @@ main { animation: pagein 0.45s ease-out backwards; }
 }
 @media (max-width: 720px) {
   :root { --header: 56px; }
-  .nav { grid-template-columns: auto 1fr; }
+  .nav { grid-template-columns: auto 1fr auto; column-gap: 20px; }
+  .nav__quick { display: block; }
   .nav__group { display: none; }
   .nav__toggle { display: block; }
   .nav__logo { justify-self: start; padding-left: 0; }

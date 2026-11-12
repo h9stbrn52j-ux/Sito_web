@@ -187,6 +187,7 @@ ${head}</head>
     <div class="nav__group nav__group--left">${NAV.slice(0, 2).map(link).join('')}</div>
     <a class="nav__logo" href="${root}" aria-label="${esc(site.name)} — home"><span class="logo" aria-hidden="true"></span></a>
     <div class="nav__group nav__group--right">${NAV.slice(2).map(link).join('')}</div>
+    <a class="nav__quick${current === 'vertical-adv' ? ' is-current' : ''}" href="${root}vertical-adv/">Vertical ADV</a>
     <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
   </nav>
 </header>
@@ -348,6 +349,11 @@ function home() {
   </div>
   <h1 class="hero__word" data-fit><span class="sr">${esc(site.name)} — ${site.roles.map(esc).join(', ')} </span><span class="fit" aria-hidden="true">MANGINI</span></h1>
   <p class="hero__intro">${esc(site.descriptionLong)}</p>
+  ${site.service ? `<a class="service" href="${root}${site.service.href}">
+    <span class="service__label">${esc(site.service.label)}</span>
+    <span class="service__text">${esc(site.service.text)}</span>
+    <span class="service__arrow" aria-hidden="true">→</span>
+  </a>` : ''}
 </section>
 <section class="work" aria-label="Selected work">
   <div class="filters" role="group" aria-label="Filter projects">
