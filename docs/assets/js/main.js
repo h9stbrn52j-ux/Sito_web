@@ -403,10 +403,10 @@
     });
   });
 
-  /* ---------- intro: la cinepresa ----------
-     Sul monitor della cinepresa scorrono i lavori. Scorrendo (o da sola dopo un attimo)
-     la ripresa entra nel monitor finché riempie lo schermo, poi si apre il sito.
-     Scorrere verso l'alto la riporta indietro. [ Entra ] accelera la sequenza. */
+  /* ---------- intro: la cinepresa 3D ----------
+     Scorrendo (o da sola dopo un attimo) la cinepresa si gira di fronte, la ripresa entra nell'obiettivo,
+     l'iride si apre su un lavoro e attraverso l'apertura compare il sito.
+     Il modello 3D si carica solo qui (assets/js/intro3d.js). Scorrere verso l'alto torna indietro. */
 
   if (html.classList.contains('has-intro')) intro();
 
@@ -416,94 +416,42 @@
     var root = doc.body.getAttribute('data-root') || './';
     var it = (navigator.language || '').slice(0, 2).toLowerCase() === 'it';
     var T = it ? { enter: 'Entra', hint: 'Scorri' } : { enter: 'Enter', hint: 'Scroll' };
-    // misure della foto (pixel): dimensioni, centro e ingombro dello schermo, proiezione del contenuto sullo schermo
-    var CAM = { w: 995, h: 775, sx: 676.38, sy: 430.12, sw: 204.5, sh: 157.5,
-      matrix: 'matrix3d(0.135828035,0.00206173661,0,1.02961268e-05,0.00212009839,0.17360975,0,2.7233121e-06,0,0,1,0,574,354.5,0,1)' };
     var big = covers.map(function (c) { return root + c.replace(/-800\.webp$/, '.webp'); });
 
     var el = doc.createElement('div');
-    el.className = 'intro';
+    el.className = 'intro is-loading';
     el.setAttribute('role', 'dialog');
     el.setAttribute('aria-label', 'Intro');
     el.innerHTML =
+      '<canvas class="intro__gl" aria-hidden="true"></canvas>' +
       '<div class="intro__name"><span class="intro__first">Lorenzo</span><span class="intro__last">Mangini</span><span class="intro__role">Director · Director of Photography</span></div>' +
-      '<div class="intro__cam" style="width:' + CAM.w + 'px;height:' + CAM.h + 'px">' +
-        '<div class="intro__body" style="transform-origin:' + CAM.sx + 'px ' + CAM.sy + 'px">' +
-          '<img class="intro__photo" src="' + root + 'assets/img/camera/cam.webp" alt="" decoding="async">' +
-          '<div class="intro__screen" style="transform:' + CAM.matrix + '"><img alt=""><img alt="" class="is-next"><i></i></div>' +
-        '</div>' +
-      '</div>' +
       '<div class="intro__hud intro__hud--tl"><span class="intro__rec">Rec</span> <span class="intro__tc">00:00:00:00</span></div>' +
       '<div class="intro__hud intro__hud--tr">Frame <span class="intro__count">01</span>/' + pad(Math.max(1, covers.length)) + '</div>' +
-      '<div class="intro__hud intro__hud--bl">25 fps · 1/50 · 4K</div>' +
+      '<div class="intro__hud intro__hud--bl">25 fps · 1/50 · <span class="intro__t">T16</span></div>' +
       '<div class="intro__hud intro__hud--br"><span class="intro__pct">000</span>%</div>' +
       '<div class="intro__panel"><span class="intro__hint"><i></i>' + T.hint + '</span><button type="button" class="intro__enter">' + T.enter + ' →</button></div>' +
       '<div class="intro__progress"><i></i></div>';
     doc.body.appendChild(el);
 
-    var cam = $('.intro__cam', el), body = $('.intro__body', el), name = $('.intro__name', el), photo = $('.intro__photo', el);
-    var shots = $$('.intro__screen img', el);
-    var pct = $('.intro__pct', el), tc = $('.intro__tc', el), count = $('.intro__count', el);
+    var gl = $('.intro__gl', el), name = $('.intro__name', el);
+    var pct = $('.intro__pct', el), tc = $('.intro__tc', el), count = $('.intro__count', el), tstop = $('.intro__t', el);
+    var api = null, done = false, finishing = false, revealed = false;
+    var p = 0, target = 0, start = performance.now(), lastInput = start, lastTick = start, raf;
+    var W = innerWidth, H = innerHeight, mx = 0, my = 0, pmx = 0, pmy = 0;
+    var frameIdx = 0, frameTimer = null;
+    // per controllare un singolo momento della sequenza: ?introp=0.6 la ferma a quel punto
+    var freeze = /[?&]introp=([\d.]+)/.exec(location.search);
+    if (freeze) { p = target = Math.min(0.999, parseFloat(freeze[1])); }
 
-    // i lavori sul monitor: dissolvenza fra un fotogramma e il successivo
-    var frameIdx = 0, front = 0;
-    big.slice(0, 4).forEach(function (src) { new Image().src = src; });
-    function showFrame() {
-      if (!big.length) return;
-      var next = shots[1 - front];
-      next.src = big[frameIdx % big.length];
-      next.classList.add('is-on');
-      shots[front].classList.remove('is-on');
-      front = 1 - front;
-      count.textContent = pad((frameIdx % big.length) + 1);
-      frameIdx++;
-    }
-    showFrame();
-    var frameTimer = setInterval(showFrame, 900);
-
-    var W, H, g = {}, p = 0, target = 0, done = false, finishing = false;
-    var start = performance.now(), lastInput = start - 600, lastTick = start, raf;
-    var mx = 0, my = 0, pmx = 0, pmy = 0;
-
-    function layout() {
-      W = innerWidth; H = innerHeight;
-      var mobile = W < 720;
-      // inquadratura iniziale: la cinepresa intera sotto il nome
-      g.k0 = Math.min((W * (mobile ? 0.96 : 0.6)) / CAM.w, (H * (mobile ? 0.4 : 0.54)) / CAM.h);
-      g.cx = W / 2; g.cy = H * (mobile ? 0.6 : 0.63);
-      // inquadratura finale: lo schermo della cinepresa copre tutta la finestra
-      g.k1 = Math.max(W / CAM.sw, H / CAM.sh) * 1.12;
-      // posizione dello schermo nell'inquadratura iniziale
-      g.px0 = g.cx + (CAM.sx - CAM.w / 2) * g.k0;
-      g.py0 = g.cy + (CAM.sy - CAM.h / 2) * g.k0;
+    function nextFrame() {
+      if (!api || !big.length) return;
+      frameIdx = (frameIdx + 1) % Math.min(6, big.length);
+      api.setFrame(frameIdx);
+      count.textContent = pad(frameIdx + 1);
     }
 
     function ease(t) { t = Math.max(0, Math.min(1, t)); return t * t * (3 - 2 * t); }
     function seg(a, b) { return Math.max(0, Math.min(1, (p - a) / (b - a))); }
-
-    function render(now) {
-      pmx += (mx - pmx) * 0.08; pmy += (my - pmy) * 0.08;
-      var z = ease(seg(0.2, 0.92));            // avvicinamento allo schermo
-      var zz = Math.pow(z, 1.6);
-      var k = g.k0 * Math.pow(g.k1 / g.k0, zz);   // scala geometrica: velocità percepita costante
-      var bob = Math.sin(now / 900) * 4 * (1 - z);
-      var px = g.px0 + (W / 2 - g.px0) * zz;
-      var py = g.py0 + (H / 2 - g.py0) * zz + bob;
-      cam.style.transform = 'translate(' + (px - CAM.sx * k).toFixed(2) + 'px,' + (py - CAM.sy * k).toFixed(2) + 'px) scale(' + k.toFixed(5) + ')';
-      // quando lo schermo riempie la finestra il corpo della cinepresa non si vede più: non serve disegnarlo
-      photo.style.visibility = CAM.sw * k * 0.92 > W && CAM.sh * k * 0.92 > H ? 'hidden' : '';
-      // leggera rotazione verso il cursore all'inizio; si raddrizza mentre si entra nel monitor
-      var tilt = 1 - ease(seg(0.15, 0.5));
-      body.style.transform = 'rotateY(' + (pmx * 9 * tilt).toFixed(2) + 'deg) rotateX(' + (-pmy * 5 * tilt).toFixed(2) + 'deg)';
-      name.style.opacity = (1 - ease(seg(0.18, 0.42))).toFixed(3);
-      name.style.transform = 'translateY(' + (-seg(0.18, 0.5) * 30).toFixed(1) + 'px)';
-      // alla fine resta solo il fotogramma sullo schermo, che sfuma nel sito
-      el.style.opacity = (1 - ease(seg(0.93, 1))).toFixed(3);
-      if (p > 0.93 && html.classList.contains('has-intro')) { html.classList.remove('has-intro'); fit(); }
-      if (p <= 0.93 && !done && !html.classList.contains('has-intro')) html.classList.add('has-intro');
-      pct.textContent = ('00' + Math.round(p * 100)).slice(-3);
-      el.style.setProperty('--p', p.toFixed(3));
-    }
 
     function tick() {
       var now = performance.now();
@@ -511,11 +459,34 @@
       lastTick = now;
       var t = (now - start) / 1000;
       tc.textContent = '00:00:' + pad(Math.floor(t) % 60) + ':' + pad(Math.floor((t % 1) * 25));
-      if (!done && now - lastInput > 900) target = Math.min(1, target + dt * (finishing ? 0.0016 : 0.00033));
-      p += (target - p) * Math.min(1, dt * 0.009);
-      if (Math.abs(target - p) < 0.0005) p = target;
-      render(now);
-      if (p >= 0.999 && !done) return close();
+      if (api) {
+        // senza input per un attimo la sequenza prosegue da sola (circa 3,5 secondi in tutto)
+        if (!done && !freeze && now - lastInput > 900) target = Math.min(1, target + dt * (finishing ? 0.0016 : 0.00033));
+        p += (target - p) * Math.min(1, dt * 0.009);
+        if (Math.abs(target - p) < 0.0005) p = target;
+        pmx += (mx - pmx) * 0.06; pmy += (my - pmy) * 0.06;
+        var ap = api.render(p, pmx, pmy, now);
+        // quando l'iride si ferma su un lavoro, smette di cambiare fotogramma
+        if (p > 0.55 && frameTimer) { clearInterval(frameTimer); frameTimer = null; }
+        name.style.opacity = (1 - ease(seg(0.18, 0.42))).toFixed(3);
+        name.style.transform = 'translateY(' + (-seg(0.18, 0.5) * 30).toFixed(1) + 'px)';
+        tstop.textContent = 'T' + (16 - api.open * 14.5).toFixed(1).replace('.0', '');
+        // attraverso l'apertura si vede il sito, poi l'apertura si allarga fino a tutto lo schermo
+        var reveal = ease(seg(0.84, 1));
+        if (reveal > 0) {
+          if (!revealed) { revealed = true; html.classList.remove('has-intro'); fit(); }
+          var hole = ap.r * (1 + reveal * 2) + reveal * Math.hypot(W, H);
+          var m = 'radial-gradient(circle at ' + ap.x.toFixed(1) + 'px ' + ap.y.toFixed(1) + 'px, transparent ' + hole.toFixed(1) + 'px, #000 ' + (hole + 1.5).toFixed(1) + 'px)';
+          el.style.webkitMaskImage = el.style.maskImage = m;
+        } else if (revealed) {
+          revealed = false; html.classList.add('has-intro');
+          el.style.webkitMaskImage = el.style.maskImage = '';
+        }
+        if (p > 0.12) el.classList.add('is-active');
+        pct.textContent = ('00' + Math.round(p * 100)).slice(-3);
+        el.style.setProperty('--p', p.toFixed(3));
+        if (p >= 0.999 && !done) return close();
+      }
       raf = requestAnimationFrame(tick);
     }
 
@@ -525,10 +496,7 @@
       el.classList.add('is-active');
       target = Math.max(0, Math.min(1, target + amount));
     }
-    function onWheel(e) {
-      e.preventDefault();
-      nudge(Math.max(-240, Math.min(240, e.deltaY || e.deltaX)) / 620);
-    }
+    function onWheel(e) { e.preventDefault(); nudge(Math.max(-240, Math.min(240, e.deltaY || e.deltaX)) / 620); }
     var touchY = null;
     function onTouchStart(e) { touchY = e.touches[0].clientY; }
     function onTouchMove(e) {
@@ -544,17 +512,19 @@
       else if (e.key === ' ' || e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); nudge(0.16); }
       else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); nudge(-0.16); }
     }
-    function finish() { finishing = true; lastInput = 0; el.classList.add('is-active'); }
+    function finish() { if (!api) return close(); finishing = true; lastInput = 0; el.classList.add('is-active'); }
+    function onResize() { W = innerWidth; H = innerHeight; if (api) api.resize(); }
 
     function close() {
       done = true;
-      clearInterval(frameTimer);
+      if (frameTimer) clearInterval(frameTimer);
       try { sessionStorage.setItem('lm-intro', '1'); } catch (e) {}
       removeEventListener('keydown', onKey);
-      removeEventListener('resize', layout);
+      removeEventListener('resize', onResize);
       html.classList.remove('has-intro');
       fit();
       cancelAnimationFrame(raf);
+      if (api) api.dispose();
       if (el.parentNode) el.parentNode.removeChild(el);
     }
 
@@ -564,9 +534,22 @@
     el.addEventListener('pointermove', onPointer);
     $('.intro__enter', el).addEventListener('click', finish);
     addEventListener('keydown', onKey);
-    addEventListener('resize', layout);
-    layout();
-    render(start);
+    addEventListener('resize', onResize);
     raf = requestAnimationFrame(tick);
+
+    // se il 3D non si può caricare (browser vecchio, niente WebGL, errore di rete) si entra subito nel sito
+    var giveUp = setTimeout(close, 8000);
+    // l'indirizzo va reso assoluto: import() lo risolverebbe rispetto alla cartella di main.js
+    import(new URL(root + 'assets/js/intro3d.js', location.href).href)
+      .then(function (m) { return m.createCamera(gl, { covers: big }); })
+      .then(function (a) {
+        clearTimeout(giveUp);
+        if (done) return a.dispose();
+        api = a;
+        el.classList.remove('is-loading');
+        start = lastInput = lastTick = performance.now();
+        frameTimer = setInterval(nextFrame, 900);
+      })
+      .catch(function (err) { if (window.console) console.warn('intro 3D non disponibile:', err); clearTimeout(giveUp); close(); });
   }
 })();
