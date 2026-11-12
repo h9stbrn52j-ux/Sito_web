@@ -403,10 +403,10 @@
     });
   });
 
-  /* ---------- intro: il mirino di una cinepresa ----------
-     I fotogrammi dei lavori compaiono lungo il percorso del cursore (o del dito, o scorrendo).
-     Parte da sola dopo mezzo secondo, così lo schermo è subito vivo; chi si muove la guida.
-     [ Enter ] è sempre disponibile. Alla fine lo schermo si apre come un otturatore. */
+  /* ---------- intro: la cinepresa ----------
+     Scorrendo (o trascinando, o da sola dopo un attimo) la cinepresa si gira di fronte,
+     si entra nell'obiettivo, l'iride si apre sui lavori e attraverso l'obiettivo si arriva al sito.
+     Scorrere verso l'alto la riporta indietro. [ Entra ] è sempre disponibile. */
 
   if (html.classList.contains('has-intro')) intro();
 
@@ -416,153 +416,245 @@
     var root = doc.body.getAttribute('data-root') || './';
     var touch = !canHover;
     var it = (navigator.language || '').slice(0, 2).toLowerCase() === 'it';
-    var T = it
-      ? { enter: 'Entra', hint: touch ? 'Scorri con il dito' : 'Muovi il cursore' }
-      : { enter: 'Enter', hint: touch ? 'Swipe' : 'Move your cursor' };
+    var T = it ? { enter: 'Entra', hint: 'Scorri' } : { enter: 'Enter', hint: 'Scroll' };
+    var NS = 'http://www.w3.org/2000/svg';
+    // misure prese dalle immagini: monitor nella vista di tre quarti, obiettivo nella vista frontale (in %)
+    var C34 = { ratio: 995 / 822, screen: [58.29, 43.67, 21.11, 19.22], clip: '0% 4.4%, 100% 0%, 99% 100%, 1% 98.7%' };
+    var CF = { ratio: 905 / 960, lens: [44.69, 64.75, 18.57] };
 
     var el = doc.createElement('div');
     el.className = 'intro';
     el.setAttribute('role', 'dialog');
     el.setAttribute('aria-label', 'Intro');
     el.innerHTML =
-      '<div class="intro__bar intro__bar--top"></div><div class="intro__bar intro__bar--bottom"></div>' +
-      '<div class="intro__trail"></div>' +
-      '<i class="intro__corner intro__corner--tl"></i><i class="intro__corner intro__corner--tr"></i>' +
-      '<i class="intro__corner intro__corner--bl"></i><i class="intro__corner intro__corner--br"></i>' +
-      '<div class="intro__focus"><i></i></div>' +
-      '<div class="intro__center"><span class="intro__logo"></span><span class="intro__name">Lorenzo Mangini</span><span class="intro__role">Director · Director of Photography</span></div>' +
+      '<div class="intro__name"><span class="intro__first">Lorenzo</span><span class="intro__last">Mangini</span><span class="intro__role">Director · Director of Photography</span></div>' +
+      '<div class="intro__stage">' +
+        '<div class="intro__cam intro__cam--34"><img src="' + root + 'assets/img/camera/cam-34.webp" alt="" decoding="async">' +
+          '<div class="intro__screen" style="left:' + C34.screen[0] + '%;top:' + C34.screen[1] + '%;width:' + C34.screen[2] + '%;height:' + C34.screen[3] + '%;clip-path:polygon(' + C34.clip + ')"><img alt=""></div></div>' +
+        '<div class="intro__cam intro__cam--front"><img src="' + root + 'assets/img/camera/cam-front.webp" alt="" decoding="async"></div>' +
+      '</div>' +
+      '<svg class="intro__lens" viewBox="-100 -100 200 200" aria-hidden="true">' +
+        '<defs>' +
+          '<radialGradient id="ilBarrel" cx="40%" cy="35%" r="75%"><stop offset="0" stop-color="#3a414b"/><stop offset=".55" stop-color="#14171c"/><stop offset="1" stop-color="#050607"/></radialGradient>' +
+          '<radialGradient id="ilGlass" cx="45%" cy="40%" r="65%"><stop offset="0" stop-color="#16202c"/><stop offset=".7" stop-color="#05080c"/><stop offset="1" stop-color="#000"/></radialGradient>' +
+          '<linearGradient id="ilFlare" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b26bff" stop-opacity=".55"/><stop offset=".5" stop-color="#3fd3a6" stop-opacity=".35"/><stop offset="1" stop-color="#ff6aa8" stop-opacity="0"/></linearGradient>' +
+          '<clipPath id="ilClip"><circle r="74"/></clipPath>' +
+        '</defs>' +
+        '<circle r="100" fill="url(#ilBarrel)"/>' +
+        '<circle r="99" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width=".8"/>' +
+        '<circle r="91" fill="none" stroke="#262b33" stroke-width="7" stroke-dasharray="1.1 1.1"/>' +
+        '<circle r="86.5" fill="none" stroke="#000" stroke-opacity=".7" stroke-width="2"/>' +
+        '<circle r="82" fill="#0b0d10"/>' +
+        '<circle r="81" fill="none" stroke="#fff" stroke-opacity=".12" stroke-width=".6"/>' +
+        '<g clip-path="url(#ilClip)">' +
+          '<rect x="-74" y="-74" width="148" height="148" fill="url(#ilGlass)"/>' +
+          '<image class="intro__shot" x="-74" y="-74" width="148" height="148" preserveAspectRatio="xMidYMid slice"/>' +
+          '<g class="intro__iris"></g>' +
+          '<path d="M-60,-30 A68,68 0 0 1 10,-66" fill="none" stroke="url(#ilFlare)" stroke-opacity=".7" stroke-width="4" stroke-linecap="round"/>' +
+          '<path d="M38,52 A66,66 0 0 1 -8,66" fill="none" stroke="#7cf2c8" stroke-opacity=".12" stroke-width="3" stroke-linecap="round"/>' +
+          '<ellipse cx="-30" cy="-34" rx="16" ry="7" transform="rotate(-38 -30 -34)" fill="#fff" fill-opacity=".14"/>' +
+        '</g>' +
+        '<circle r="74" fill="none" stroke="#000" stroke-width="2.5"/>' +
+      '</svg>' +
       '<div class="intro__hud intro__hud--tl"><span class="intro__rec">Rec</span> <span class="intro__tc">00:00:00:00</span></div>' +
-      '<div class="intro__hud intro__hud--tr">Frame <span class="intro__count">00</span>/' + pad(covers.length) + '</div>' +
-      '<div class="intro__hud intro__hud--bl">25 fps · 1/50 · 4K</div>' +
+      '<div class="intro__hud intro__hud--tr">Frame <span class="intro__count">01</span>/' + pad(Math.max(1, covers.length)) + '</div>' +
+      '<div class="intro__hud intro__hud--bl">25 fps · 1/50 · <span class="intro__t">T16</span></div>' +
       '<div class="intro__hud intro__hud--br"><span class="intro__pct">000</span>%</div>' +
-      '<div class="intro__panel"><span class="intro__hint">' + T.hint + '</span><button type="button" class="intro__enter">' + T.enter + ' →</button></div>' +
+      '<div class="intro__panel"><span class="intro__hint"><i></i>' + T.hint + '</span><button type="button" class="intro__enter">' + T.enter + ' →</button></div>' +
       '<div class="intro__progress"><i></i></div>';
     doc.body.appendChild(el);
 
-    var trail = $('.intro__trail', el);
-    var focus = $('.intro__focus', el);
-    var pct = $('.intro__pct', el);
-    var count = $('.intro__count', el);
-    var tc = $('.intro__tc', el);
+    var stage = $('.intro__stage', el), cam34 = $('.intro__cam--34', el), camF = $('.intro__cam--front', el);
+    var name = $('.intro__name', el), lens = $('.intro__lens', el), iris = $('.intro__iris', el), shot = $('.intro__shot', el);
+    var screenImg = $('.intro__screen img', el);
+    var pct = $('.intro__pct', el), tc = $('.intro__tc', el), count = $('.intro__count', el), tstop = $('.intro__t', el);
+    var BLADES = 9, blades = [];
+    for (var b = 0; b < BLADES; b++) {
+      var pth = doc.createElementNS(NS, 'path');
+      pth.setAttribute('fill', '#111317');
+      pth.setAttribute('stroke', '#5b6573');
+      pth.setAttribute('stroke-opacity', '.35');
+      pth.setAttribute('stroke-width', '.6');
+      iris.appendChild(pth);
+      blades.push(pth);
+    }
 
+    // i fotogrammi dei lavori: sul monitor della cinepresa e dentro l'obiettivo
+    var frameIdx = 0;
     covers.slice(0, 6).forEach(function (src) { new Image().src = root + src; });
-
-    var progress = 0, shown = 0, done = false;
-    var last = null, sinceFrame = 0, next = 0;
-    var start = performance.now(), lastInput = start - 400, lastTick = start, raf;
-    var W = innerWidth, H = innerHeight;
-    var need = Math.hypot(W, H) * (touch ? 0.55 : 0.9);
-    var step = Math.max(70, Math.min(W, H) * 0.11);
-
-    function spawn(x, y) {
+    function showFrame() {
       if (!covers.length) return;
-      var img = doc.createElement('img');
-      img.className = 'intro__frame';
-      img.alt = '';
-      img.src = root + covers[next % covers.length];
-      next++;
-      var w = Math.max(150, Math.min(330, W * 0.21));
-      img.style.translate = (x - w / 2).toFixed(0) + 'px ' + (y - w * 9 / 32).toFixed(0) + 'px';
-      img.style.rotate = ((Math.random() - 0.5) * 10).toFixed(1) + 'deg';
-      img.addEventListener('animationend', function () { if (img.parentNode) img.parentNode.removeChild(img); });
-      trail.appendChild(img);
-      if (trail.children.length > 16) trail.removeChild(trail.firstChild);
-      shown = Math.min(covers.length, shown + 1);
-      count.textContent = pad(shown);
+      var src = root + covers[frameIdx % covers.length];
+      screenImg.src = src;
+      shot.setAttribute('href', src);
+      count.textContent = pad((frameIdx % covers.length) + 1);
+      frameIdx++;
+    }
+    showFrame();
+    var frameTimer = setInterval(showFrame, 650);
+
+    var W, H, box = {}, p = 0, target = 0, done = false, revealed = false;
+    var start = performance.now(), lastInput = start - 600, lastTick = start, raf, mx = 0, my = 0, pmx = 0, pmy = 0;
+    var finishing = false;
+
+    function layout() {
+      W = innerWidth; H = innerHeight;
+      // la cinepresa di tre quarti occupa al massimo il 62% della larghezza e il 52% dell'altezza
+      var h34 = Math.min(H * (W < 720 ? 0.36 : 0.52), (W * (W < 720 ? 0.94 : 0.62)) / C34.ratio);
+      box.w34 = h34 * C34.ratio; box.h34 = h34;
+      box.cx = W / 2; box.cy = H * (W < 720 ? 0.56 : 0.6);
+      // vista frontale: alta come quella di tre quarti
+      box.hF = h34 * 1.02; box.wF = box.hF * CF.ratio;
+      cam34.style.width = box.w34 + 'px'; cam34.style.height = box.h34 + 'px';
+      camF.style.width = box.wF + 'px'; camF.style.height = box.hF + 'px';
+      // obiettivo della vista frontale, in pixel rispetto al centro del palco
+      box.lx = (CF.lens[0] / 100 - 0.5) * box.wF;
+      box.ly = (CF.lens[1] / 100 - 0.5) * box.hF;
+      box.lr = (CF.lens[2] / 100) * box.wF;
+      box.far = Math.hypot(W, H) * 0.62;
+      stage.style.top = box.cy + 'px';
     }
 
-    function render() {
-      var p = Math.round(progress);
-      pct.textContent = ('00' + p).slice(-3);
-      el.style.setProperty('--p', (progress / 100).toFixed(3));
-    }
+    function ease(t) { t = Math.max(0, Math.min(1, t)); return t * t * (3 - 2 * t); }
+    function seg(a, b) { return Math.max(0, Math.min(1, (p - a) / (b - a))); }
 
-    function add(amount) {
-      if (done) return;
-      progress = Math.min(100, progress + amount);
-      render();
-      if (progress >= 100) finish(380);
-    }
-
-    function move(x, y, counts) {
-      focus.style.transform = 'translate(' + x.toFixed(0) + 'px,' + y.toFixed(0) + 'px)';
-      if (last) {
-        el.classList.add('is-rolling');
-        var d = Math.hypot(x - last.x, y - last.y);
-        sinceFrame += d;
-        if (counts) add(d / need * 100);
-        if (sinceFrame >= step) { sinceFrame = 0; spawn(x, y); }
-      }
-      last = { x: x, y: y };
-    }
-
-    function active() { lastInput = performance.now(); el.classList.add('is-active'); }
-    function onPointer(e) {
-      // Il primo evento (anche quello "fantasma" all'apertura della pagina) fissa solo la posizione.
-      if (!last || (e.clientX === last.x && e.clientY === last.y)) { if (!last) move(e.clientX, e.clientY, false); return; }
-      active();
-      move(e.clientX, e.clientY, true);
-    }
-    function onWheel(e) {
-      e.preventDefault();
-      active();
-      var d = Math.min(240, Math.abs(e.deltaY) + Math.abs(e.deltaX));
-      add(d / 4);
-      sinceFrame += d;
-      if (sinceFrame >= 90) {
-        sinceFrame = 0;
-        var c = last || { x: W / 2, y: H / 2 }, a = next * 2.4, r = Math.min(W, H) * 0.16;
-        spawn(c.x + Math.cos(a) * r, c.y + Math.sin(a) * r);
+    function drawIris(open) {
+      var r = 74 * open, L = 220, n = BLADES, tan = Math.tan(Math.PI / n);
+      for (var i = 0; i < n; i++) {
+        var a = (i / n) * Math.PI * 2 + open * 0.9;
+        var ux = Math.cos(a), uy = Math.sin(a), vx = -uy, vy = ux;
+        var t0 = -r * tan - 2;
+        var pts = [
+          [r * ux + t0 * vx, r * uy + t0 * vy],
+          [r * ux + L * vx, r * uy + L * vy],
+          [(r + L) * ux + L * vx, (r + L) * uy + L * vy],
+          [(r + L) * ux + t0 * vx, (r + L) * uy + t0 * vy]
+        ];
+        blades[i].setAttribute('d', 'M' + pts.map(function (q) { return q[0].toFixed(2) + ',' + q[1].toFixed(2); }).join('L') + 'Z');
       }
     }
-    function onKey(e) {
-      if (e.key === 'Enter' || e.key === 'Escape' || e.key === ' ') { e.preventDefault(); finish(0); }
-      else if (e.key.indexOf('Arrow') === 0) { e.preventDefault(); active(); add(25); spawn(W * (0.2 + Math.random() * 0.6), H * (0.25 + Math.random() * 0.5)); }
+
+    function render(now) {
+      // 1) eroe: cinepresa di tre quarti che segue il cursore
+      pmx += (mx - pmx) * 0.08; pmy += (my - pmy) * 0.08;
+      var turn = ease(seg(0.22, 0.46));
+      var zoom = ease(seg(0.44, 0.86));
+      var open = ease(seg(0.56, 0.84));
+      var reveal = ease(seg(0.82, 1));
+      var bob = Math.sin(now / 900) * 4 * (1 - turn);
+
+      cam34.style.opacity = (1 - turn).toFixed(3);
+      cam34.style.transform = 'translate(-50%,-50%) translate(' + (turn * box.w34 * 0.18) + 'px,' + bob + 'px) rotateY(' + (pmx * 10 + turn * 38).toFixed(2) + 'deg) rotateX(' + (-pmy * 6).toFixed(2) + 'deg) scale(' + (1 + turn * 0.08) + ')';
+      cam34.style.filter = turn > 0.01 ? 'blur(' + (turn * 6).toFixed(1) + 'px)' : '';
+
+      // 2) di fronte, poi zoom centrato sull'obiettivo
+      var s = 1 + Math.pow(zoom, 2.2) * (box.far / box.lr - 1);
+      var ox = -box.lx * zoom, oy = (H / 2 - box.cy - box.ly) * zoom; // l'obiettivo va al centro dello schermo
+      camF.style.opacity = (turn * (1 - ease((zoom - 0.35) / 0.3))).toFixed(3);
+      camF.style.transformOrigin = (CF.lens[0]) + '% ' + (CF.lens[1]) + '%';
+      camF.style.transform = 'translate(-50%,-50%) translate(' + ((1 - turn) * -box.w34 * 0.12 + ox) + 'px,' + (oy + bob) + 'px) rotateY(' + ((1 - turn) * -34 + pmx * 4 * (1 - zoom)).toFixed(2) + 'deg) scale(' + s.toFixed(4) + ')';
+      camF.style.filter = turn < 0.99 ? 'blur(' + ((1 - turn) * 5).toFixed(1) + 'px)' : '';
+
+      // 3) l'obiettivo vettoriale prende il posto della foto, nitido a qualsiasi ingrandimento
+      var lr = box.lr * s; // raggio esterno dell'obiettivo sullo schermo (il centro resta fermo: lo zoom parte da lì)
+      var lcx = box.cx + (1 - turn) * -box.w34 * 0.12 + ox + box.lx;
+      var lcy = box.cy + oy + bob + box.ly;
+      var lensOn = ease((zoom - 0.12) / 0.3);
+      lens.style.opacity = lensOn.toFixed(3);
+      lens.style.width = lens.style.height = (lr * 2) + 'px'; // il bordo (r=100) coincide con l'obiettivo della foto
+      lens.style.transform = 'translate(' + (lcx - lr) + 'px,' + (lcy - lr) + 'px)';
+      drawIris(0.03 + open * 1.05);
+      tstop.textContent = 'T' + (16 - open * 14.5).toFixed(1).replace('.0', '');
+
+      name.style.opacity = (1 - ease(seg(0.3, 0.55))).toFixed(3);
+      name.style.transform = 'translateY(' + (-seg(0.3, 0.6) * 30) + 'px)';
+
+      // 4) attraverso l'apertura si vede il sito
+      if (reveal > 0 && !revealed) { revealed = true; html.classList.remove('has-intro'); fit(); }
+      if (reveal <= 0 && revealed && !done) { revealed = false; html.classList.add('has-intro'); }
+      if (revealed) {
+        var hole = Math.max(lr * 0.74 * open, 1) * (1 + reveal * 3) + reveal * Math.hypot(W, H);
+        var m = 'radial-gradient(circle at ' + lcx.toFixed(1) + 'px ' + lcy.toFixed(1) + 'px, transparent ' + hole.toFixed(1) + 'px, #000 ' + (hole + 1.5).toFixed(1) + 'px)';
+        el.style.webkitMaskImage = el.style.maskImage = m;
+        shot.style.opacity = (1 - reveal * 1.4).toFixed(3);
+      } else {
+        el.style.webkitMaskImage = el.style.maskImage = '';
+        shot.style.opacity = '';
+      }
+
+      var v = Math.round(p * 100);
+      pct.textContent = ('00' + v).slice(-3);
+      el.style.setProperty('--p', p.toFixed(3));
     }
 
     function tick() {
       var now = performance.now();
-      var dt = Math.min(300, now - lastTick);
+      var dt = Math.min(100, now - lastTick);
       lastTick = now;
       var t = (now - start) / 1000;
       tc.textContent = '00:00:' + pad(Math.floor(t) % 60) + ':' + pad(Math.floor((t % 1) * 25));
-      // Senza input (all'inizio, o quando ci si ferma) la ripresa prosegue da sola.
-      if (!done && now - lastInput > 900) {
-        var a = now / 430;
-        move(W / 2 + Math.cos(a) * W * 0.3, H * 0.47 + Math.sin(a * 1.7) * H * 0.2, false);
-        add(dt * 0.036);
-      }
+      // senza input per un attimo la ripresa prosegue da sola (circa 3,5 secondi in tutto)
+      if (!done && now - lastInput > 900) target = Math.min(1, target + dt * (finishing ? 0.0016 : 0.00032));
+      p += (target - p) * Math.min(1, dt * 0.009);
+      if (Math.abs(target - p) < 0.0005) p = target;
+      render(now);
+      if (p >= 0.999 && !done) return close();
       raf = requestAnimationFrame(tick);
     }
 
-    function finish(delay) {
+    function nudge(amount) {
       if (done) return;
+      lastInput = performance.now();
+      el.classList.add('is-active');
+      target = Math.max(0, Math.min(1, target + amount));
+    }
+    function onWheel(e) {
+      e.preventDefault();
+      var d = Math.max(-240, Math.min(240, e.deltaY || e.deltaX));
+      nudge(d / 620);
+    }
+    var touchY = null;
+    function onTouchStart(e) { touchY = e.touches[0].clientY; }
+    function onTouchMove(e) {
+      if (touchY === null) return;
+      e.preventDefault();
+      var y = e.touches[0].clientY;
+      nudge((touchY - y) / (H * 0.7));
+      touchY = y;
+    }
+    function onPointer(e) {
+      mx = (e.clientX / W - 0.5) * 2;
+      my = (e.clientY / H - 0.5) * 2;
+    }
+    function onKey(e) {
+      if (e.key === 'Enter' || e.key === 'Escape') { e.preventDefault(); finish(); }
+      else if (e.key === ' ' || e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); nudge(0.16); }
+      else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); nudge(-0.16); }
+    }
+    // [ Entra ]: la sequenza non viene tagliata, viene solo accelerata
+    function finish() { finishing = true; lastInput = 0; el.classList.add('is-active'); }
+
+    function close() {
       done = true;
-      progress = 100;
-      render();
+      clearInterval(frameTimer);
       try { sessionStorage.setItem('lm-intro', '1'); } catch (e) {}
       removeEventListener('keydown', onKey);
-      setTimeout(function () {
-        html.classList.remove('has-intro');
-        fit();
-        el.classList.add('is-leaving');
-        setTimeout(function () {
-          cancelAnimationFrame(raf);
-          if (el.parentNode) el.parentNode.removeChild(el);
-          removeEventListener('resize', onResize);
-        }, 1000);
-      }, delay);
+      removeEventListener('resize', layout);
+      html.classList.remove('has-intro');
+      fit();
+      cancelAnimationFrame(raf);
+      if (el.parentNode) el.parentNode.removeChild(el);
     }
-    function onResize() { W = innerWidth; H = innerHeight; need = Math.hypot(W, H) * (touch ? 0.55 : 0.9); }
 
-    el.addEventListener('pointermove', onPointer);
-    el.addEventListener('pointerdown', function (e) { if (touch) { last = null; move(e.clientX, e.clientY, false); active(); } });
     el.addEventListener('wheel', onWheel, { passive: false });
-    $('.intro__enter', el).addEventListener('click', function () { finish(0); });
+    el.addEventListener('touchstart', onTouchStart, { passive: true });
+    el.addEventListener('touchmove', onTouchMove, { passive: false });
+    el.addEventListener('pointermove', onPointer);
+    $('.intro__enter', el).addEventListener('click', finish);
     addEventListener('keydown', onKey);
-    addEventListener('resize', onResize);
-    focus.style.transform = 'translate(' + (W / 2) + 'px,' + (H / 2) + 'px)';
-    render();
+    addEventListener('resize', layout);
+    layout();
+    render(start);
     raf = requestAnimationFrame(tick);
   }
 })();
