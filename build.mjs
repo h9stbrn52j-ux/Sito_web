@@ -550,11 +550,17 @@ function verticalPage(p) {
     </div>
     <div class="vstage__phone" aria-hidden="true">
       <div class="phone" data-phone>
-        <div class="phone__screen"><div class="phone__strip">${strip
-          .map((r, n) => `<img src="${root}assets/img/${imgSrc(r.thumb)}" alt="" ${n < 2 ? '' : 'loading="lazy" '}decoding="async">`)
-          .join('')}</div></div>
-        <i class="phone__island"></i>
+        <div class="phone__face phone__face--front">
+          <div class="phone__screen"><div class="phone__strip">${strip
+            .map((r, n) => `<img src="${root}assets/img/${imgSrc(r.thumb)}" alt="" ${n < 2 ? '' : 'loading="lazy" '}decoding="async">`)
+            .join('')}</div></div>
+          <img class="phone__tex" src="${root}assets/img/phone/front.webp" alt="" decoding="async">
+        </div>
+        <div class="phone__face phone__face--back"><img class="phone__tex" src="${root}assets/img/phone/back.webp" alt="" decoding="async"></div>
+        <div class="phone__face phone__face--left"><img class="phone__tex" src="${root}assets/img/phone/side.webp" alt="" decoding="async"></div>
+        <div class="phone__face phone__face--right"><img class="phone__tex" src="${root}assets/img/phone/side-r.webp" alt="" decoding="async"></div>
       </div>
+      <i class="phone__shadow"></i>
     </div>
     <div class="vstage__dots" aria-hidden="true">${[0, ...v.steps.map((_, n) => n + 1)].map((n) => `<i${n === 0 ? ' class="is-on"' : ''}></i>`).join('')}</div>
   </div>

@@ -180,11 +180,19 @@
       var r = stage.getBoundingClientRect();
       var total = r.height - innerHeight;
       var p = total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 0;
-      var e = p * p * (3 - 2 * p);
-      var ry = -26 + e * 46; // da -26° a +20°
+      // il giro completo avviene nella parte centrale dello scorrimento: a "Riprese" si vede il retro con le fotocamere
+      var t = Math.min(1, Math.max(0, (p - 0.26) / 0.62));
+      var s = t * t * (3 - 2 * t);
+      var ry = -22 + 368 * s; // da -22° a 346° (di nuovo quasi di fronte)
       phone.style.setProperty('--ry', ry.toFixed(2) + 'deg');
-      phone.style.setProperty('--rx', (5 - e * 8).toFixed(2) + 'deg');
-      phone.style.setProperty('--sx', (-ry / 26).toFixed(3));
+      phone.style.setProperty('--rx', (4 * (1 - p)).toFixed(2) + 'deg');
+      // luce da sinistra-davanti: ogni faccia si scurisce quando si gira
+      var a = ry * Math.PI / 180;
+      [['--lf', 0], ['--lr', 90], ['--lb', 180], ['--ll', -90]].forEach(function (f) {
+        var yaw = a + f[1] * Math.PI / 180;
+        var lit = Math.max(0, Math.sin(yaw) * -0.37 + Math.cos(yaw) * 0.93);
+        phone.style.setProperty(f[0], (0.62 + 0.46 * lit).toFixed(3));
+      });
       var room = Math.max(0, strip.scrollHeight - screen.clientHeight);
       phone.style.setProperty('--shift', (p * room).toFixed(1));
       var idx = Math.min(panels.length - 1, Math.floor(p * panels.length * 0.999));
