@@ -173,6 +173,7 @@
     var strip = $('.phone__strip', phone);
     var screen = $('.phone__screen', phone);
     var ticking = false, active = -1;
+    var shaded = $$('[data-n]', phone).map(function (el) { return { el: el, n: el.getAttribute('data-n').split(',').map(Number) }; });
     stage.classList.add('is-live');
 
     function update() {
@@ -186,12 +187,15 @@
       var ry = -22 + 368 * s; // da -22° a 346° (di nuovo quasi di fronte)
       phone.style.setProperty('--ry', ry.toFixed(2) + 'deg');
       phone.style.setProperty('--rx', (4 * (1 - p)).toFixed(2) + 'deg');
-      // luce da sinistra-davanti: ogni faccia si scurisce quando si gira
-      var a = ry * Math.PI / 180;
-      [['--lf', 0], ['--lr', 90], ['--lb', 180], ['--ll', -90]].forEach(function (f) {
-        var yaw = a + f[1] * Math.PI / 180;
-        var lit = Math.max(0, Math.sin(yaw) * -0.37 + Math.cos(yaw) * 0.93);
-        phone.style.setProperty(f[0], (0.62 + 0.46 * lit).toFixed(3));
+      // luce da sinistra, in alto, davanti: ogni faccia e ogni striscia del bordo si schiarisce o si scurisce
+      var ay = ry * Math.PI / 180, ax = 4 * (1 - p) * Math.PI / 180;
+      var cy = Math.cos(ay), sy = Math.sin(ay), cx = Math.cos(ax), sx = Math.sin(ax);
+      shaded.forEach(function (it) {
+        var n = it.n;
+        var y1 = n[1] * cx - n[2] * sx, z1 = n[1] * sx + n[2] * cx;
+        var x2 = n[0] * cy + z1 * sy, z2 = -n[0] * sy + z1 * cy;
+        var lit = Math.max(0, x2 * -0.36 + y1 * -0.28 + z2 * 0.89);
+        it.el.style.setProperty('--b', (0.5 + 0.62 * lit).toFixed(3));
       });
       var room = Math.max(0, strip.scrollHeight - screen.clientHeight);
       phone.style.setProperty('--shift', (p * room).toFixed(1));

@@ -499,6 +499,30 @@ ${more.map((m) => card(m, root, { index: projects.indexOf(m) })).join('\n')}
 
 /* ---------- pagina Vertical ADV: una landing a sé, per brand ed eventi ---------- */
 
+// Proporzioni del telefono, in frazioni dell'altezza: larghezza, spessore, raggio degli angoli.
+const PH = { w: 0.496, d: 0.0501, r: 0.1017 };
+function phoneRim() {
+  const { w, d, r } = PH;
+  const N = 6, cx = w / 2 - r, cy = 0.5 - r;
+  const k = (v) => `calc(var(--h) * ${v.toFixed(5)})`;
+  const len = 2 * r * Math.sin(Math.PI / 4 / N) * 1.12;
+  const out = [];
+  [[1, -1, -90], [1, 1, 0], [-1, 1, 90], [-1, -1, 180]].forEach(([sx, sy, a0]) => {
+    for (let i = 0; i < N; i++) {
+      const a = a0 + (i + 0.5) * (90 / N);
+      const rad = (a * Math.PI) / 180;
+      const x = sx * cx + r * Math.cos(rad), y = sy * cy + r * Math.sin(rad);
+      out.push(
+        `<i class="phone__seg" data-n="${Math.cos(rad).toFixed(3)},${Math.sin(rad).toFixed(3)},0" style="height:${k(len)};top:calc(50% - ${k(len / 2)});transform:translate3d(${k(x)},${k(y)},0) rotateZ(${a.toFixed(2)}deg) rotateY(90deg)"></i>`
+      );
+    }
+  });
+  const flat = w - 2 * r;
+  out.push(`<i class="phone__cap phone__cap--top" data-n="0,-1,0" style="width:${k(flat)}"></i>`);
+  out.push(`<i class="phone__cap phone__cap--bottom" data-n="0,1,0" style="width:${k(flat)}"></i>`);
+  return out.join('');
+}
+
 function verticalPage(p) {
   const root = '../';
   const v = data.vertical;
@@ -550,15 +574,16 @@ function verticalPage(p) {
     </div>
     <div class="vstage__phone" aria-hidden="true">
       <div class="phone" data-phone>
-        <div class="phone__face phone__face--front">
+        <div class="phone__face phone__face--front" data-n="0,0,1">
           <div class="phone__screen"><div class="phone__strip">${strip
             .map((r, n) => `<img src="${root}assets/img/${imgSrc(r.thumb)}" alt="" ${n < 2 ? '' : 'loading="lazy" '}decoding="async">`)
             .join('')}</div></div>
-          <img class="phone__tex" src="${root}assets/img/phone/front.webp" alt="" decoding="async">
+          <img class="phone__tex" src="${root}assets/img/phone/front.svg" alt="" decoding="async">
         </div>
-        <div class="phone__face phone__face--back"><img class="phone__tex" src="${root}assets/img/phone/back.webp" alt="" decoding="async"></div>
-        <div class="phone__face phone__face--left"><img class="phone__tex" src="${root}assets/img/phone/side.webp" alt="" decoding="async"></div>
-        <div class="phone__face phone__face--right"><img class="phone__tex" src="${root}assets/img/phone/side-r.webp" alt="" decoding="async"></div>
+        <div class="phone__face phone__face--back" data-n="0,0,-1"><img class="phone__tex" src="${root}assets/img/phone/back.svg" alt="" decoding="async"></div>
+        <div class="phone__face phone__face--left" data-n="-1,0,0"><img class="phone__tex" src="${root}assets/img/phone/side-l.svg" alt="" decoding="async"></div>
+        <div class="phone__face phone__face--right" data-n="1,0,0"><img class="phone__tex" src="${root}assets/img/phone/side-r.svg" alt="" decoding="async"></div>
+        ${phoneRim()}
       </div>
       <i class="phone__shadow"></i>
     </div>
