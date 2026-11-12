@@ -122,7 +122,7 @@ const person = () => ({
   jobTitle: site.roles,
   description: site.descriptionLong,
   address: { '@type': 'PostalAddress', addressCountry: 'IT' },
-  knowsAbout: ['Film directing', 'Cinematography', 'Camera operating', 'Commercials', 'Documentary film', 'Sports videography'],
+  knowsAbout: ['Film directing', 'Cinematography', 'Camera operating', 'Commercials', 'Documentary film', 'Narrative fiction'],
   sameAs: site.socials.map((x) => x.url),
 });
 
