@@ -429,7 +429,13 @@ html:not(.js) .lang__tabs { display: none; }
 
 /* punti di forza */
 .vfeat { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap); padding: clamp(50px, 7vw, 110px) var(--pad) 0; }
-.vfeat__item { border-top: 1px solid var(--line); padding-top: 16px; }
+.vfeat__item { border-top: 1px solid var(--line); padding-top: 16px; min-width: 0; }
+.vfeat__item h3 { overflow-wrap: break-word; hyphens: auto; -webkit-hyphens: auto; }
+/* sui telefoni i punti di forza vanno uno sotto l'altro: in due colonne le parole lunghe non ci stanno */
+@media (max-width: 600px) {
+  .vfeat { grid-template-columns: 1fr; row-gap: 26px; }
+  .vfeat__item h3 { font-size: 20px; }
+}
 .vfeat__n { color: var(--hi); font-size: 11px; }
 .vfeat__item h3 { font-family: var(--display); font-stretch: 118%; font-weight: 600; text-transform: uppercase; font-size: clamp(17px, 1.5vw, 23px); line-height: 1.05; letter-spacing: -0.01em; color: var(--accent); margin: 10px 0 8px; }
 .vfeat__item p { font-family: var(--display); font-size: 15px; line-height: 1.5; letter-spacing: 0; color: var(--muted); }
