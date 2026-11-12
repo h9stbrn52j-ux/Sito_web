@@ -414,13 +414,18 @@ html:not(.js) .lang__tabs { display: none; }
 /* loghi che scorrono */
 .vclients { padding: clamp(40px, 6vw, 90px) 0 0; text-align: center; }
 .vclients .label { margin-bottom: clamp(20px, 2.6vw, 36px); }
-.marquee { overflow: hidden; -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent); }
-.marquee__track { display: flex; align-items: center; width: max-content; animation: marquee 46s linear infinite; }
+.marquee { position: relative; overflow: hidden; }
+/* sfumature ai bordi fatte con due livelli sopra i loghi: la maschera CSS su un elemento animato
+   molto largo fa sparire i loghi dopo pochi secondi in Safari (iPhone e Mac) */
+.marquee::before, .marquee::after { content: ''; position: absolute; top: 0; bottom: 0; width: 14%; z-index: 1; pointer-events: none; }
+.marquee::before { left: 0; background: linear-gradient(90deg, var(--bg), rgba(11, 19, 34, 0)); }
+.marquee::after { right: 0; background: linear-gradient(270deg, var(--bg), rgba(11, 19, 34, 0)); }
+.marquee__track { display: flex; align-items: center; width: max-content; animation: marquee var(--mq-dur, 22s) linear infinite; will-change: transform; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
 .marquee__dup { display: flex; align-items: center; }
 .marquee img { display: block; width: auto; max-width: none; margin: 0 clamp(22px, 3.2vw, 52px); opacity: 0.72; transition: opacity 0.25s; }
 .marquee img:hover { opacity: 1; }
 .marquee:hover .marquee__track { animation-play-state: paused; }
-@keyframes marquee { to { transform: translateX(-50%); } }
+@keyframes marquee { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
 
 /* punti di forza */
 .vfeat { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap); padding: clamp(50px, 7vw, 110px) var(--pad) 0; }
@@ -478,7 +483,8 @@ html:not(.js) .lang__tabs { display: none; }
   .vstage__dots i.is-on { width: 30px; height: 2px; }
   .vreels__nav button { display: none; }
   .vreels__track .video { width: 62vw; }
-  .marquee img { transform: scale(0.82); margin: 0 14px; }
+  .marquee img { margin: 0 16px; zoom: 0.82; }
+  .marquee::before, .marquee::after { width: 10%; }
 }
 @media (max-width: 720px) and (max-height: 720px) {
   .vadv__title { font-size: 34px; }

@@ -540,7 +540,7 @@ function verticalPage(p) {
   const strip = reels.filter((r) => r.thumb).slice(0, 8);
   const insta = site.socials.find((s) => /instagram/i.test(s.label));
   const logo = (c) =>
-    `<img src="${root}assets/img/logos/${c.file}" alt="${esc(c.name)}" style="height:${Math.round(46 * (c.scale || 1))}px" loading="lazy" decoding="async">`;
+    `<img src="${root}assets/img/logos/${c.file}" alt="${esc(c.name)}" style="height:${Math.round(46 * (c.scale || 1))}px" decoding="async">`;
   const logos = v.clients.map(logo).join('');
 
   const body = `<div class="vadv" data-vadv data-l="en" id="top">

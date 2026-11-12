@@ -156,6 +156,16 @@
     setLang(saved === 'it' || saved === 'en' ? saved : browser === 'it' ? 'it' : 'en', false);
     tabs.forEach(function (t) { t.addEventListener('click', function () { setLang(t.getAttribute('data-vlang'), true); }); });
 
+    // loghi: velocità costante (pixel al secondo), così tutte le collaborazioni passano in pochi secondi
+    var mq = $('.marquee__track', page);
+    function mqSpeed() {
+      if (!mq) return;
+      mq.style.setProperty('--mq-dur', Math.max(8, mq.scrollWidth / 2 / (innerWidth < 720 ? 70 : 110)).toFixed(1) + 's');
+    }
+    mqSpeed();
+    addEventListener('resize', mqSpeed);
+    if (mq) $$('img', mq).forEach(function (im) { if (!im.complete) im.addEventListener('load', mqSpeed); });
+
     // fila dei reel: frecce su desktop, swipe su telefono
     var track = $('[data-vreels-track]', page);
     $$('[data-vreels]', page).forEach(function (b) {
