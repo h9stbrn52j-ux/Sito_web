@@ -370,7 +370,7 @@ ${projects.map((p, i) => card(p, root, { eager: i < 2, index: i })).join('\n')}
 </section>`;
   const head = `<script>try{if(!sessionStorage.getItem('lm-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('has-intro')}catch(e){}</script>
 <script type="application/json" id="intro-data">${JSON.stringify(covers)}</script>
-<link rel="preload" href="assets/img/camera/cam-34.webp" as="image">
+<link rel="preload" href="assets/img/camera/cam.webp" as="image">
 ${ld({ '@type': 'WebSite', '@id': `${site.url}/#website`, url: `${site.url}/`, name: site.name, alternateName: [site.title, 'lorenzomangini.com'], description: site.description, inLanguage: ['en', 'it'], publisher: { '@id': `${site.url}/#person` } })}${ld(person())}${ld({
     '@type': 'ItemList',
     name: 'Selected work',
