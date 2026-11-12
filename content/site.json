@@ -1189,16 +1189,6 @@
         "scale": 1.45
       },
       {
-        "name": "Milano Cortina 2026",
-        "file": "milano-cortina-2026.png",
-        "scale": 1.6
-      },
-      {
-        "name": "Olympic Games",
-        "file": "olympics.png",
-        "scale": 1.05
-      },
-      {
         "name": "Kings League",
         "file": "kings-league.png",
         "scale": 1.5
@@ -1214,8 +1204,8 @@
         "scale": 1.5
       },
       {
-        "name": "",
-        "file": "crest.png",
+        "name": "Consorzio Franciacorta",
+        "file": "consorzio-franciacorta.png",
         "scale": 1.5
       }
     ],
