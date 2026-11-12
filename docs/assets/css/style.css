@@ -286,7 +286,7 @@ html:not(.js) .lang__tabs { display: none; }
 .contact__socials { display: flex; flex-direction: column; gap: 6px; text-transform: uppercase; }
 
 .contact__main { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
-.contact__main .contact__mail { font-size: clamp(22px, 4.2vw, 64px); color: var(--accent); line-height: 1.1; }
+.contact__main .contact__mail { font-size: min(5vw, clamp(22px, 4.2vw, 64px)); color: var(--accent); line-height: 1.1; }
 .contact__main .contact__mail:hover { color: var(--hi); }
 .contact__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(16px, 2vw, 28px); }
 .contact__status { color: var(--muted); font-size: 11px; min-height: 1.5em; }
@@ -300,6 +300,8 @@ html:not(.js) .lang__tabs { display: none; }
 .footer__cta:hover .footer__big { color: var(--hi); }
 .footer__row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px 26px; margin-top: 18px; color: var(--muted); font-size: 11px; }
 .footer__socials { display: flex; gap: 18px; }
+/* pagina Contact: niente scritta gigante nel footer, sarebbe una ripetizione */
+.footer--plain .footer__row { border-top: 1px solid var(--line); padding-top: 18px; margin-top: 0; }
 
 /* ---------- cookie ---------- */
 

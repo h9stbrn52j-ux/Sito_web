@@ -200,11 +200,11 @@ ${head}</head>
 <main id="main">
 ${body}
 </main>
-<footer class="footer">
-  <a class="footer__cta" href="${root}contact/">
+<footer class="footer${current === 'contact' ? ' footer--plain' : ''}">
+  ${current === 'contact' ? '' : `<a class="footer__cta" href="${root}contact/">
     <span class="footer__label">${esc(data.contact.headline)}</span>
     <span class="footer__big" data-fit>CONTACT</span>
-  </a>
+  </a>`}
   <div class="footer__row">
     <span>© <span data-year>${new Date().getFullYear()}</span> ${esc(site.name)} — All rights reserved</span>
     <a href="mailto:${site.email}">${site.email}</a>
