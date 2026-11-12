@@ -452,13 +452,28 @@ html:not(.js) .lang__tabs { display: none; }
 }
 @media (max-width: 720px) {
   .vstage__sticky { grid-template-columns: 1fr; grid-template-rows: auto auto auto; }
+  /* riga in alto: se non c'è spazio il selettore della lingua va a capo invece di sovrapporsi */
+  .vstage__top { flex-wrap: wrap; gap: 10px 16px; padding: 12px 0 4px; }
+  .vstage__top .lang__tab { padding: 8px 14px; }
   .vstage__phone { min-height: 0; padding: 10px 0 0; }
-  .phone { --h: min(40svh, 400px); }
+  .phone { --h: min(46svh, 440px); }
   .phone__shadow { display: none; }
   .vadv__sub { display: none; }
-  .vpanel { padding: 12px 0; }
-  .vstage.is-live .vstage__sticky { grid-template-rows: auto minmax(0, 1fr) auto; height: 100svh; padding-bottom: 14px; }
-  .vstage.is-live .vstage__dots { flex-direction: row; top: auto; bottom: 2px; right: 50%; transform: translateX(50%); }
+  .vpanel { padding: 10px 0; }
+  .vadv__title { margin-top: 6px; }
+  .vadv__claim { margin-top: 10px; }
+  .vadv__actions { margin-top: 16px; gap: 8px; }
+  .vadv__actions .btn { padding: 12px 16px; font-size: 12px; }
+  /* versione animata: i testi stanno uno sopra l'altro nella stessa cella (l'altezza è quella del più alto),
+     il telefono prende tutto lo spazio che resta sotto, così niente si sovrappone */
+  .vstage.is-live .vstage__sticky { grid-template-rows: auto auto minmax(0, 1fr); height: 100svh; padding-bottom: 22px; }
+  .vstage.is-live .vstage__copy { display: grid; align-content: start; }
+  .vstage.is-live .vpanel { position: relative; top: auto; grid-area: 1 / 1; transform: translateY(14px); }
+  .vstage.is-live .vpanel.is-on { transform: none; }
+  .vstage.is-live .vstage__phone { container-type: size; height: 100%; padding: 12px 0 0; }
+  .vstage.is-live .phone { --h: min(46svh, 440px); }
+  @supports (height: 1cqh) { .vstage.is-live .phone { --h: min(96cqh, 190cqw, 520px); } }
+  .vstage.is-live .vstage__dots { flex-direction: row; top: auto; bottom: 8px; right: 50%; transform: translateX(50%); }
   .vstage__dots i { width: 18px; height: 2px; }
   .vstage__dots i.is-on { width: 30px; height: 2px; }
   .vreels__nav button { display: none; }
@@ -466,13 +481,18 @@ html:not(.js) .lang__tabs { display: none; }
   .marquee img { transform: scale(0.82); margin: 0 14px; }
 }
 @media (max-width: 720px) and (max-height: 720px) {
-  .phone { --h: 30svh; }
   .vadv__title { font-size: 34px; }
-  .vadv__claim { font-size: 18px; margin-top: 10px; }
-  .vadv__actions { margin-top: 14px; gap: 8px; }
-  .vadv__actions .btn { padding: 11px 16px; }
+  .vadv__claim { font-size: 18px; }
+  .vadv__actions { margin-top: 12px; }
+  .vadv__actions .btn { padding: 10px 14px; }
   .vpanel__title { font-size: 30px; }
   .vpanel__text { font-size: 16px; }
+}
+@media (max-width: 380px) {
+  .vadv__title { font-size: 34px; }
+  .vadv__claim { font-size: 18px; }
+  .vadv__actions { flex-wrap: nowrap; }
+  .vadv__actions .btn { padding: 10px 11px; font-size: 11px; letter-spacing: 0; white-space: nowrap; }
 }
 @media (prefers-reduced-motion: reduce) {
   .marquee__track { animation: none; flex-wrap: wrap; justify-content: center; width: auto; row-gap: 26px; }
