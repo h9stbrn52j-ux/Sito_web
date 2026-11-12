@@ -66,8 +66,11 @@
       "title": "Autodromo di Monza x Masters Historic Racing",
       "kind": "Reel",
       "fullTitle": "Autodromo di Monza x Masters Historic Racing | Reel",
-      "role": "Director",
-      "category": "director",
+      "role": "Director & DoP",
+      "category": [
+        "director",
+        "dop"
+      ],
       "cover": "autodromo-di-monza-x-masters-historic-racing-reel",
       "blocks": [
         {
@@ -100,8 +103,11 @@
       "title": "La Rivoluzione Slow: I nostri primi 40 anni",
       "kind": "Docu",
       "fullTitle": "La Rivoluzione Slow: I nostri primi 40 anni | Docu",
-      "role": "Director",
-      "category": "director",
+      "role": "Director & DoP",
+      "category": [
+        "director",
+        "dop"
+      ],
       "cover": "la-rivoluzione-slow-i-nostri-primi-40-anni-docu",
       "blocks": [
         {
@@ -127,8 +133,11 @@
       "title": "Experience Fitness Club",
       "kind": "Commercial",
       "fullTitle": "Experience Fitness Club | Commercial",
-      "role": "Director",
-      "category": "director",
+      "role": "Director & DoP",
+      "category": [
+        "director",
+        "dop"
+      ],
       "cover": "experience-fitness-club-commercial",
       "blocks": [
         {
@@ -176,8 +185,11 @@
       "title": "Golden Notes, con Giovanni Falzone",
       "kind": "DOCU 10' Cut",
       "fullTitle": "Golden Notes, con Giovanni Falzone | DOCU 10' Cut",
-      "role": "Director",
-      "category": "director",
+      "role": "Director & DoP",
+      "category": [
+        "director",
+        "dop"
+      ],
       "cover": "golden-notes-con-giovanni-falzone-docu-10-cut",
       "blocks": [
         {
@@ -262,8 +274,11 @@
       "title": "Subvoce",
       "kind": "Documentario",
       "fullTitle": "Subvoce | Documentario",
-      "role": "Director",
-      "category": "director",
+      "role": "Director & DoP",
+      "category": [
+        "director",
+        "dop"
+      ],
       "cover": "subvoce-documentario",
       "blocks": [
         {
@@ -323,8 +338,11 @@
       "title": "FORGE Gym",
       "kind": "SPOT 2026",
       "fullTitle": "FORGE Gym | SPOT 2026",
-      "role": "Director",
-      "category": "director",
+      "role": "Director & DoP",
+      "category": [
+        "director",
+        "dop"
+      ],
       "cover": "forge-spot",
       "blocks": [
         {
@@ -350,8 +368,11 @@
       "title": "OVERREV",
       "kind": "Documentary",
       "fullTitle": "OVERREV | Documentary",
-      "role": "Director",
-      "category": "director",
+      "role": "Director & DoP",
+      "category": [
+        "director",
+        "dop"
+      ],
       "cover": "overrev-documentary",
       "blocks": [
         {
@@ -377,8 +398,11 @@
       "title": "FORGE: Reels",
       "kind": "ADV",
       "fullTitle": "FORGE: Reels | ADV",
-      "role": "Director",
-      "category": "director",
+      "role": "Director & DoP",
+      "category": [
+        "director",
+        "dop"
+      ],
       "cover": "forge-reels-adv",
       "blocks": [
         {
@@ -498,8 +522,11 @@
       "title": "FORGE: Teaser",
       "kind": "ADV",
       "fullTitle": "FORGE: Teaser | ADV",
-      "role": "Director",
-      "category": "director",
+      "role": "Director & DoP",
+      "category": [
+        "director",
+        "dop"
+      ],
       "cover": "forge-teaser-adv",
       "blocks": [
         {
@@ -529,8 +556,11 @@
       "title": "Un Caffè con Erminia",
       "kind": "Slow Food Documentary",
       "fullTitle": "Un Caffè con Erminia | Slow Food Documentary",
-      "role": "Director",
-      "category": "director",
+      "role": "Director & DoP",
+      "category": [
+        "director",
+        "dop"
+      ],
       "cover": "un-caffe-con-erminia-slow-food-documentary",
       "blocks": [
         {
@@ -556,8 +586,11 @@
       "title": "RADICI, Storie di Slow Food",
       "kind": "",
       "fullTitle": "RADICI, Storie di Slow Food",
-      "role": "Director",
-      "category": "director",
+      "role": "Director & DoP",
+      "category": [
+        "director",
+        "dop"
+      ],
       "cover": "radici-storie-di-slow-food",
       "blocks": [
         {
@@ -584,8 +617,11 @@
       "title": "Il Silenzio dei Boschi",
       "kind": "",
       "fullTitle": "Il Silenzio dei Boschi",
-      "role": "Director",
-      "category": "director",
+      "role": "Director & DoP",
+      "category": [
+        "director",
+        "dop"
+      ],
       "cover": "il-silenzio-dei-boschi",
       "blocks": [
         {
@@ -611,8 +647,11 @@
       "title": "Nicole",
       "kind": "",
       "fullTitle": "Nicole",
-      "role": "Director",
-      "category": "director",
+      "role": "Director & DoP",
+      "category": [
+        "director",
+        "dop"
+      ],
       "cover": "nicole",
       "blocks": [
         {
@@ -638,7 +677,7 @@
       "title": "Vertical ADV",
       "kind": "",
       "fullTitle": "Vertical ADV",
-      "role": "Director",
+      "role": "Full Production",
       "category": "director",
       "cover": "vertical-adv",
       "blocks": [

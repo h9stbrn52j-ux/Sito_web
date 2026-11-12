@@ -69,7 +69,15 @@ projects.forEach((p, i) => {
   seen.add(p.slug);
   p.role = p.role || '';
   p.year = String(p.year || '');
-  p.category = p.category || (/photograph(y|er)$|^photo/i.test(p.role) && !/director/i.test(p.role) ? 'photography' : /photography|dop/i.test(p.role) ? 'dop' : 'director');
+  // "category" decide sotto quali filtri della home compare il progetto: può essere una sola
+  // voce oppure un elenco, es. ["director", "dop"] per i lavori di cui si firma regia e fotografia.
+  if (!p.category) {
+    const dir = /director(?! of photography)|regia|regista/i.test(p.role.replace(/director of photography/gi, ''));
+    const dop = /director of photography|\bdop\b|\bdp\b|cinematograph/i.test(p.role);
+    p.category = /^photo/i.test(p.role) ? 'photography' : dir && dop ? ['director', 'dop'] : dop ? 'dop' : 'director';
+  }
+  p.categories = Array.isArray(p.category) ? p.category : [p.category];
+  p.category = p.categories[0];
   const quick = p.video ? (Array.isArray(p.video) ? p.video : [p.video]).map((v) => (typeof v === 'string' ? { video: v, vertical: p.vertical } : v)) : [];
   p.blocks = expandBlocks([...quick, ...(p.blocks || [])], where);
 });
@@ -219,7 +227,7 @@ function card(p, root, { eager = false, index = 0 } = {}) {
   const hover = p.coverHover
     ? `<img class="card__img card__img--hover" ${imgAttrs(base, p.coverHover, 1600)} sizes="(max-width: 720px) 100vw, 50vw" alt="${esc(p.fullTitle)} — ${esc(site.name)}" loading="lazy" decoding="async">`
     : '';
-  return `<a class="card" href="${root}${p.slug}/" data-category="${p.category}" data-cursor="${p.category === 'photography' ? 'View' : 'Play'}">
+  return `<a class="card" href="${root}${p.slug}/" data-category="${p.categories.join(' ')}" data-cursor="${p.category === 'photography' ? 'View' : 'Play'}">
   <span class="card__media">
     <img class="card__img" ${imgAttrs(base, p.cover, 1600)} sizes="(max-width: 720px) 100vw, 50vw" width="1600" height="900" alt="${esc(p.fullTitle)}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">${hover}
     <span class="card__index">${pad(index + 1)}</span>
@@ -330,7 +338,7 @@ function home() {
     ['dop', 'Director of Photography'],
     ['photography', 'Photography'],
   ];
-  const count = (k) => (k === 'all' ? projects.length : projects.filter((p) => p.category === k).length);
+  const count = (k) => (k === 'all' ? projects.length : projects.filter((p) => p.categories.includes(k)).length);
   const covers = projects.map((p) => `assets/img/covers/${imgSrc(p.cover, true)}`);
   const body = `<section class="hero" id="top">
   <div class="hero__meta">
@@ -431,7 +439,7 @@ ${more.map((m) => card(m, root, { index: projects.indexOf(m) })).join('\n')}
     url,
     description: clip(description, 300),
     image: coverUrl,
-    [p.category === 'dop' ? 'contributor' : 'creator']: { '@id': `${site.url}/#person` },
+    [p.categories.includes('director') || p.category === 'photography' ? 'creator' : 'contributor']: { '@id': `${site.url}/#person` },
     ...(p.year ? { dateCreated: p.year, copyrightYear: Number(p.year) } : {}),
     copyrightHolder: { '@id': `${site.url}/#person` },
     ...(p.category === 'photography'
@@ -450,7 +458,7 @@ ${more.map((m) => card(m, root, { index: projects.indexOf(m) })).join('\n')}
         uploadDate: v.uploadDate,
         ...(v.duration ? { duration: iso(v.duration) } : {}),
         embedUrl: `https://player.vimeo.com/video/${v.id}${v.hash ? `?h=${v.hash}` : ''}`,
-        [p.category === 'dop' ? 'contributor' : 'creator']: { '@id': `${site.url}/#person` },
+        [p.categories.includes('director') ? 'creator' : 'contributor']: { '@id': `${site.url}/#person` },
       })
     )
     .join('');

@@ -149,7 +149,10 @@
         b.setAttribute('aria-pressed', String(on));
       });
       $$('#grid .card').forEach(function (card) {
-        var show = f === 'all' || card.getAttribute('data-category') === f;
+        var cats = (card.getAttribute('data-category') || '').split(' ');
+        var show = f === 'all' || cats.indexOf(f) > -1;
+        // nel filtro DoP i lavori di sola fotografia vengono prima
+        card.style.order = f === 'dop' && show && cats.length === 1 ? '-1' : '';
         card.classList.toggle('is-out', !show);
         if (show) card.classList.add('is-in');
       });

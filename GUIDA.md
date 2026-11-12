@@ -41,7 +41,8 @@ Qui sotto c'è la versione breve.
    ```
 
    Cambia solo i testi tra virgolette a destra dei due punti.
-   `role` può essere `Director` oppure `Director of Photography`.
+   `role` può essere `Director`, `Director of Photography` oppure `Director & DoP`
+   (in quest'ultimo caso il lavoro compare sotto entrambi i filtri della home).
 4. **Commit changes**. Dopo circa 2 minuti il sito è aggiornato.
 
 L'indirizzo della pagina, i filtri della home e l'**animazione iniziale** si aggiornano da soli:
