@@ -167,22 +167,13 @@ export async function createCamera(canvas, { covers = [], onFrame } = {}) {
 
   function drawIris(open) {
     const key = Math.round(open * 400);
-    const im = imgs[current];
-    const ready = im && im.complete && im.naturalWidth;
-    if (key === lastIris && !(ready && lastIris < 0)) return;
+    if (key === lastIris) return;
     lastIris = key;
     const c = N / 2, R = N / 2;
     ig.setTransform(1, 0, 0, 1, 0, 0);
     ig.fillStyle = '#000'; ig.fillRect(0, 0, N, N);
+    // dentro l'apertura non si disegna nulla: lì main.js lascia vedere il sito vero, che sta sotto l'intro
     const r = R * 0.985 * open;
-    if (ready && r > 1) {
-      // il fotogramma riempie il cerchio (taglio "cover"), alla piena risoluzione del file
-      const s = Math.max(N / im.naturalWidth, N / im.naturalHeight);
-      const w = im.naturalWidth * s, h = im.naturalHeight * s;
-      ig.save(); ig.beginPath(); ig.arc(c, c, R, 0, Math.PI * 2); ig.clip();
-      ig.drawImage(im, c - w / 2, c - h / 2, w, h);
-      ig.restore();
-    }
     // lamelle
     const n = 9, L = R * 3, tan = Math.tan(Math.PI / n);
     ig.translate(c, c);
@@ -253,7 +244,7 @@ export async function createCamera(canvas, { covers = [], onFrame } = {}) {
     cam.position.set(target.x, target.y + Math.sin(elev) * dist, target.z + Math.cos(elev) * dist);
     cam.lookAt(target);
 
-    glassMat.opacity = 0.32 * (1 - ease(seg(0.62, 0.86)) * 0.85);
+    glassMat.opacity = 0.32 * (1 - ease(seg(0.52, 0.64))); // il riflesso del vetro sparisce prima che l'iride si apra
     drawIris(open);
     renderer.render(scene, cam);
 

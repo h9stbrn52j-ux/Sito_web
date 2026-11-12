@@ -416,7 +416,8 @@
     var root = doc.body.getAttribute('data-root') || './';
     var it = (navigator.language || '').slice(0, 2).toLowerCase() === 'it';
     var T = it ? { enter: 'Entra', hint: 'Scorri' } : { enter: 'Enter', hint: 'Scroll' };
-    var big = covers.map(function (c) { return root + c.replace(/-800\.webp$/, '.webp'); });
+    // per il monitor della cinepresa bastano le copertine piccole
+    var big = covers.map(function (c) { return root + c; });
 
     var el = doc.createElement('div');
     el.className = 'intro is-loading';
@@ -471,9 +472,9 @@
         name.style.opacity = (1 - ease(seg(0.18, 0.42))).toFixed(3);
         name.style.transform = 'translateY(' + (-seg(0.18, 0.5) * 30).toFixed(1) + 'px)';
         tstop.textContent = 'T' + (16 - api.open * 14.5).toFixed(1).replace('.0', '');
-        // attraverso l'apertura si vede il sito, poi l'apertura si allarga fino a tutto lo schermo
-        var reveal = ease(seg(0.84, 1));
-        if (reveal > 0) {
+        // l'iride si apre direttamente sul sito vero (che sta sotto l'intro), poi l'apertura si allarga a tutto schermo
+        var reveal = ease(seg(0.86, 1));
+        if (p > 0.6) {
           if (!revealed) { revealed = true; html.classList.remove('has-intro'); fit(); }
           var hole = ap.r * (1 + reveal * 2) + reveal * Math.hypot(W, H);
           var m = 'radial-gradient(circle at ' + ap.x.toFixed(1) + 'px ' + ap.y.toFixed(1) + 'px, transparent ' + hole.toFixed(1) + 'px, #000 ' + (hole + 1.5).toFixed(1) + 'px)';
