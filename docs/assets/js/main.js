@@ -137,6 +137,70 @@
     });
   });
 
+  /* ---------- Vertical ADV: lingua della pagina, telefono 3D, fila dei reel ---------- */
+
+  $$('[data-vadv]').forEach(function (page) {
+    // lingua: tutta la pagina in italiano o in inglese
+    var tabs = $$('[data-vlang]', page);
+    function setLang(code, save) {
+      page.setAttribute('data-l', code);
+      tabs.forEach(function (t) {
+        var on = t.getAttribute('data-vlang') === code;
+        t.classList.toggle('is-active', on);
+        t.setAttribute('aria-pressed', String(on));
+      });
+      if (save) store.set('lm-lang', code);
+    }
+    var saved = store.get('lm-lang');
+    var browser = (navigator.language || '').slice(0, 2).toLowerCase();
+    setLang(saved === 'it' || saved === 'en' ? saved : browser === 'it' ? 'it' : 'en', false);
+    tabs.forEach(function (t) { t.addEventListener('click', function () { setLang(t.getAttribute('data-vlang'), true); }); });
+
+    // fila dei reel: frecce su desktop, swipe su telefono
+    var track = $('[data-vreels-track]', page);
+    $$('[data-vreels]', page).forEach(function (b) {
+      b.addEventListener('click', function () {
+        track.scrollBy({ left: Number(b.getAttribute('data-vreels')) * track.clientWidth * 0.8, behavior: reduced ? 'auto' : 'smooth' });
+      });
+    });
+
+    // palco: scorrendo, il telefono ruota, i reel scorrono sullo schermo e i testi si alternano
+    var stage = $('[data-vstage]', page);
+    var phone = $('[data-phone]', page);
+    if (!stage || !phone || reduced) return;
+    var panels = $$('[data-vpanel]', stage);
+    var dots = $$('.vstage__dots i', stage);
+    var strip = $('.phone__strip', phone);
+    var screen = $('.phone__screen', phone);
+    var ticking = false, active = -1;
+    stage.classList.add('is-live');
+
+    function update() {
+      ticking = false;
+      var r = stage.getBoundingClientRect();
+      var total = r.height - innerHeight;
+      var p = total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 0;
+      var e = p * p * (3 - 2 * p);
+      var ry = -26 + e * 46; // da -26° a +20°
+      phone.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+      phone.style.setProperty('--rx', (5 - e * 8).toFixed(2) + 'deg');
+      phone.style.setProperty('--sx', (-ry / 26).toFixed(3));
+      var room = Math.max(0, strip.scrollHeight - screen.clientHeight);
+      phone.style.setProperty('--shift', (p * room).toFixed(1));
+      var idx = Math.min(panels.length - 1, Math.floor(p * panels.length * 0.999));
+      if (idx !== active) {
+        active = idx;
+        panels.forEach(function (el, n) { el.classList.toggle('is-on', n === idx); });
+        dots.forEach(function (el, n) { el.classList.toggle('is-on', n === idx); });
+      }
+    }
+    function request() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+    addEventListener('scroll', request, { passive: true });
+    addEventListener('resize', request);
+    $$('img', strip).forEach(function (im) { im.addEventListener('load', request); });
+    update();
+  });
+
   /* ---------- filtri ---------- */
 
   var filters = $$('.filter');

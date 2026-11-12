@@ -497,6 +497,146 @@ ${more.map((m) => card(m, root, { index: projects.indexOf(m) })).join('\n')}
   );
 }
 
+/* ---------- pagina Vertical ADV: una landing a sé, per brand ed eventi ---------- */
+
+function verticalPage(p) {
+  const root = '../';
+  const v = data.vertical;
+  // testo nelle due lingue: se ne vede una alla volta (selettore in alto)
+  const t = (o) => (typeof o === 'string' ? esc(o) : `<span data-l-en>${esc(o.en)}</span><span data-l-it lang="it">${esc(o.it)}</span>`);
+  const reels = [];
+  (function collect(bs) {
+    for (const b of bs) {
+      if (b.type === 'row') collect(b.items);
+      if (b.type === 'video') reels.push(b);
+    }
+  })(p.blocks);
+  const strip = reels.filter((r) => r.thumb).slice(0, 8);
+  const insta = site.socials.find((s) => /instagram/i.test(s.label));
+  const logo = (c) =>
+    `<img src="${root}assets/img/logos/${c.file}" alt="${esc(c.name)}" style="height:${Math.round(46 * (c.scale || 1))}px" loading="lazy" decoding="async">`;
+  const logos = v.clients.map(logo).join('');
+
+  const body = `<div class="vadv" data-vadv data-l="en" id="top">
+<section class="vstage" data-vstage>
+  <div class="vstage__sticky">
+    <div class="vstage__top">
+      <a class="back" href="${root}">← ${t({ en: 'All work', it: 'Tutti i lavori' })}</a>
+      <div class="lang__tabs" role="group" aria-label="Language / Lingua">
+        <button type="button" class="lang__tab is-active" data-vlang="en" aria-pressed="true">English</button>
+        <button type="button" class="lang__tab" data-vlang="it" aria-pressed="false">Italiano</button>
+      </div>
+    </div>
+    <div class="vstage__copy">
+      <div class="vpanel is-on" data-vpanel>
+        <p class="label">${t(v.label)}</p>
+        <h1 class="vadv__title">Vertical ADV</h1>
+        <p class="vadv__claim">${t(v.claim)}</p>
+        <p class="vadv__sub">${t(v.sub)}</p>
+        <div class="vadv__actions">
+          <a class="btn btn--solid" href="#vcontact">${t(v.ctaPrimary)}</a>
+          <a class="btn" href="#vreels">${t(v.ctaSecondary)} ↓</a>
+        </div>
+      </div>
+      ${v.steps
+        .map(
+          (s, n) => `<div class="vpanel" data-vpanel>
+        <p class="vpanel__n">${pad(n + 1)} <span>/ ${pad(v.steps.length)}</span></p>
+        <h2 class="vpanel__title">${t(s.title)}</h2>
+        <p class="vpanel__text">${t(s.text)}</p>
+      </div>`
+        )
+        .join('\n      ')}
+    </div>
+    <div class="vstage__phone" aria-hidden="true">
+      <div class="phone" data-phone>
+        <div class="phone__screen"><div class="phone__strip">${strip
+          .map((r, n) => `<img src="${root}assets/img/${imgSrc(r.thumb)}" alt="" ${n < 2 ? '' : 'loading="lazy" '}decoding="async">`)
+          .join('')}</div></div>
+        <i class="phone__island"></i>
+      </div>
+    </div>
+    <div class="vstage__dots" aria-hidden="true">${[0, ...v.steps.map((_, n) => n + 1)].map((n) => `<i${n === 0 ? ' class="is-on"' : ''}></i>`).join('')}</div>
+  </div>
+</section>
+
+<section class="vclients" aria-label="Clients">
+  <h2 class="label">${t(v.clientsTitle)}</h2>
+  <div class="marquee"><div class="marquee__track">${logos}<span class="marquee__dup" aria-hidden="true">${logos}</span></div></div>
+</section>
+
+<section class="vfeat">
+  ${v.features
+    .map(
+      (f, n) => `<div class="vfeat__item">
+    <span class="vfeat__n">${pad(n + 1)}</span>
+    <h3>${t(f.title)}</h3>
+    <p>${t(f.text)}</p>
+  </div>`
+    )
+    .join('\n  ')}
+</section>
+
+<section class="vreels" id="vreels">
+  <div class="vreels__head">
+    <h2 class="vsection__title">${t(v.reelsTitle)}</h2>
+    <div class="vreels__nav"><span>${pad(reels.length)} reels</span><button type="button" data-vreels="-1" aria-label="Previous">←</button><button type="button" data-vreels="1" aria-label="Next">→</button></div>
+  </div>
+  <div class="vreels__track" data-vreels-track>
+${reels.map((r) => videoBlock(r, root, p)).join('\n')}
+  </div>
+</section>
+
+<section class="vcta" id="vcontact">
+  <p class="label">${t(v.cta.label)}</p>
+  <h2 class="vcta__title">${t(v.cta.title)}</h2>
+  <p class="vcta__text">${t(v.cta.text)}</p>
+  <div class="contact__actions">
+    <a class="btn btn--solid" href="mailto:${site.email}" data-mail="${site.email}">${t({ en: 'Write me an email', it: 'Scrivimi una email' })}</a>
+    <a class="btn" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=${encodeURIComponent(site.email)}" target="_blank" rel="noopener">Gmail ↗</a>
+    ${insta ? `<a class="btn" href="${esc(insta.url)}" target="_blank" rel="noopener">Instagram ↗</a>` : ''}
+    <button class="btn" type="button" data-copy="${site.email}">${site.email}</button>
+  </div>
+  <p class="contact__status" role="status" aria-live="polite"></p>
+</section>
+</div>`;
+
+  const description = `Vertical ADV — ${v.claim.en} ${v.sub.en}`;
+  const head =
+    ld(person()) +
+    ld({
+      '@type': 'Service',
+      name: 'Vertical ADV',
+      serviceType: 'Vertical video production for brands and events',
+      description: `${v.claim.en} ${v.sub.en}`,
+      url: `${site.url}/${p.slug}/`,
+      provider: { '@id': `${site.url}/#person` },
+      areaServed: 'IT',
+    }) +
+    ld({
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Work', item: `${site.url}/` },
+        { '@type': 'ListItem', position: 2, name: 'Vertical ADV', item: `${site.url}/${p.slug}/` },
+      ],
+    });
+  write(
+    `${p.slug}/index.html`,
+    layout({
+      path: `${p.slug}/`,
+      root,
+      title: `Vertical ADV — ${site.name}`,
+      description,
+      image: p.slug,
+      current: 'vertical-adv',
+      head,
+      keywords: 'vertical video, vertical ADV, reels, social media campaigns, spot verticali, contenuti verticali, video per brand, video per eventi, 9:16',
+      body,
+      bodyClass: 'page-vertical',
+    })
+  );
+}
+
 function about() {
   const root = '../';
   const body = `<section class="page" id="top">
@@ -588,7 +728,7 @@ if (missing.length) {
 }
 
 home();
-projects.forEach(projectPage);
+projects.forEach((p, i) => (p.slug === 'vertical-adv' && data.vertical ? verticalPage(p) : projectPage(p, i)));
 about();
 contact();
 notFound();

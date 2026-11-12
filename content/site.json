@@ -687,24 +687,6 @@
       "cover": "vertical-adv",
       "blocks": [
         {
-          "type": "row",
-          "items": [
-            {
-              "type": "text",
-              "html": "<p>ENGLISH</p><p>A selection of <strong>social media campaigns</strong> and <strong>vertical commercials</strong> I directed.</p><p class=\"gap\">My approach to digital content is simple: a <strong>premium service</strong> deserves an exclusive aesthetic. </p><p>I bring the formal <strong>care and quality</strong> of cinematic direction straight into vertical formats (9:16), creating ad-ready content designed to convert and drive bookings. </p><p>Operating with zero intermediaries, I ensure a discreet presence on set while personally handling cinematic lighting and custom color grading. </p><p>The goal is to give your brand a strong, elegant, and instantly recognizable look.</p><p class=\"gap\"><strong>To discuss collaborations, feel free to send me a message on Instagram, use the Contact form or email me to <a href=\"mailto:work@lorenzomangini.com\">work@lorenzomangini.com</a></strong></p>"
-            },
-            {
-              "type": "text",
-              "html": "<p>ITALIANO</p><p>Una selezione di <strong>campagne social</strong> e <strong>spot verticali</strong> che ho diretto.</p><p class=\"gap\">Il mio approccio ai contenuti digitali è semplice: un <strong>servizio premium</strong> merita un'estetica esclusiva.<br>Porto la <strong>cura formale e la qualità</strong> della direzione cinematografica direttamente nei formati verticali (9:16), creando contenuti pronti per le ads, pensati per convertire e generare prenotazioni.<br>Lavorando senza intermediari, garantisco una presenza discreta sul set, curando personalmente l'illuminazione cinematografica e un color grading su misura.<br>L'obiettivo è dare al tuo brand un <strong>look forte, elegante e immediatamente riconoscibile</strong>.</p><p class=\"gap\"><strong>Per discutere di una collaborazione, puoi mandarmi un messaggio su Instagram, utilizzare il form di contatto o scrivermi a <a href=\"mailto:work@lorenzomangini.com\">work@lorenzomangini.com</a>.</strong></p>"
-            }
-          ]
-        },
-        {
-          "type": "button",
-          "href": "contact",
-          "label": "CONTACT ME!"
-        },
-        {
           "type": "video",
           "provider": "youtube",
           "id": "9zfxDdVHeyc",
@@ -1117,5 +1099,185 @@
         }
       ]
     }
-  ]
+  ],
+  "vertical": {
+    "label": {
+      "en": "For brands & events",
+      "it": "Per brand ed eventi"
+    },
+    "claim": {
+      "en": "Vertical content with a cinema-grade look.",
+      "it": "Contenuti verticali con un look da cinema."
+    },
+    "sub": {
+      "en": "Full production for brands and events: from concept to delivery, with one person in charge.",
+      "it": "Produzione completa per brand ed eventi: dall'idea alla consegna, con un unico referente."
+    },
+    "ctaPrimary": {
+      "en": "Start a project",
+      "it": "Inizia un progetto"
+    },
+    "ctaSecondary": {
+      "en": "Watch the reels",
+      "it": "Guarda i reel"
+    },
+    "steps": [
+      {
+        "title": {
+          "en": "Concept",
+          "it": "Idea"
+        },
+        "text": {
+          "en": "We shape the idea, the script and the shot list around your brand.",
+          "it": "Costruiamo idea, script e piano di ripresa attorno al tuo brand."
+        }
+      },
+      {
+        "title": {
+          "en": "Shoot",
+          "it": "Riprese"
+        },
+        "text": {
+          "en": "A discreet presence on set. Cinematic lighting, handled in person.",
+          "it": "Presenza discreta sul set. Luce cinematografica, curata in prima persona."
+        }
+      },
+      {
+        "title": {
+          "en": "Delivery",
+          "it": "Consegna"
+        },
+        "text": {
+          "en": "Edit and custom color grading. Ad-ready 9:16, built to convert.",
+          "it": "Montaggio e color grading su misura. 9:16 pronti per le ads, pensati per convertire."
+        }
+      }
+    ],
+    "clientsTitle": {
+      "en": "Worked with",
+      "it": "Collaborazioni"
+    },
+    "clients": [
+      {
+        "name": "Blu Basket Bergamo",
+        "file": "blu-basket-bergamo.png",
+        "scale": 0.9
+      },
+      {
+        "name": "FORGE Gym",
+        "file": "forge-gym.png",
+        "scale": 1.05
+      },
+      {
+        "name": "Slow Food",
+        "file": "slow-food.png",
+        "scale": 1.25
+      },
+      {
+        "name": "IED",
+        "file": "ied.png",
+        "scale": 0.95
+      },
+      {
+        "name": "Medici del Mondo",
+        "file": "medici-del-mondo.png",
+        "scale": 1.5
+      },
+      {
+        "name": "Masters — House of Icons",
+        "file": "masters.png",
+        "scale": 1.45
+      },
+      {
+        "name": "Milano Cortina 2026",
+        "file": "milano-cortina-2026.png",
+        "scale": 1.6
+      },
+      {
+        "name": "Olympic Games",
+        "file": "olympics.png",
+        "scale": 1.05
+      },
+      {
+        "name": "Kings League",
+        "file": "kings-league.png",
+        "scale": 1.5
+      },
+      {
+        "name": "Experience Fitness Club",
+        "file": "experience-fitness-club.png",
+        "scale": 1.55
+      },
+      {
+        "name": "Looperfest",
+        "file": "looperfest.png",
+        "scale": 1.5
+      },
+      {
+        "name": "",
+        "file": "crest.png",
+        "scale": 1.5
+      }
+    ],
+    "features": [
+      {
+        "title": {
+          "en": "Premium look",
+          "it": "Estetica premium"
+        },
+        "text": {
+          "en": "A premium service deserves an exclusive aesthetic: strong, elegant, instantly recognizable.",
+          "it": "Un servizio premium merita un'estetica esclusiva: forte, elegante, immediatamente riconoscibile."
+        }
+      },
+      {
+        "title": {
+          "en": "Zero intermediaries",
+          "it": "Zero intermediari"
+        },
+        "text": {
+          "en": "You talk directly to the person who directs, lights and grades your content.",
+          "it": "Parli direttamente con chi dirige, illumina e fa il color dei tuoi contenuti."
+        }
+      },
+      {
+        "title": {
+          "en": "Ad-ready",
+          "it": "Pronti per le ads"
+        },
+        "text": {
+          "en": "Vertical 9:16 formats designed to convert and drive bookings.",
+          "it": "Formati verticali 9:16 pensati per convertire e generare prenotazioni."
+        }
+      },
+      {
+        "title": {
+          "en": "Brands & events",
+          "it": "Brand ed eventi"
+        },
+        "text": {
+          "en": "Social campaigns, vertical commercials and event coverage, delivered as a finished product.",
+          "it": "Campagne social, spot verticali e riprese di eventi, consegnati come prodotto finito."
+        }
+      }
+    ],
+    "reelsTitle": {
+      "en": "Selected reels",
+      "it": "Reel selezionati"
+    },
+    "cta": {
+      "label": {
+        "en": "Let's make it happen",
+        "it": "Facciamolo succedere"
+      },
+      "title": {
+        "en": "Let's talk about your brand.",
+        "it": "Parliamo del tuo brand."
+      },
+      "text": {
+        "en": "Tell me what you need: I'll get back to you with an idea and a quote.",
+        "it": "Raccontami di cosa hai bisogno: ti rispondo con un'idea e un preventivo."
+      }
+    }
+  }
 }
