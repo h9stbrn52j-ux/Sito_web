@@ -67,19 +67,30 @@
   var header = $('.header');
   var menu = $('#menu');
   var toggle = $('.nav__toggle');
-  var lastY = scrollY;
-  addEventListener('scroll', function () {
-    var y = scrollY;
-    if (menu && !menu.hidden) return;
-    header.classList.toggle('is-hidden', y > 240 && y > lastY);
+  // la barra si nasconde scorrendo verso il basso e torna scorrendo verso l'alto.
+  // Si ignorano i piccoli movimenti (rimbalzo elastico di iOS, inerzia): erano loro a farla sfarfallare.
+  var lastY = Math.max(0, scrollY), hidden = false, ticking = false;
+  function onScroll() {
+    ticking = false;
+    var y = Math.max(0, scrollY);
+    var maxY = doc.documentElement.scrollHeight - innerHeight;
+    if (menu && !menu.hidden) { lastY = y; return; }
+    if (y < 120) { if (hidden) { hidden = false; header.classList.remove('is-hidden'); } lastY = y; return; }
+    if (y > maxY - 2) { lastY = y; return; } // rimbalzo in fondo alla pagina
+    var d = y - lastY;
+    if (Math.abs(d) < 14) return;
+    if (d > 0 !== hidden) { hidden = d > 0; header.classList.toggle('is-hidden', hidden); }
     lastY = y;
-  }, { passive: true });
+  }
+  addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
 
   function setMenu(open) {
     menu.hidden = !open;
     toggle.setAttribute('aria-expanded', String(open));
     toggle.textContent = open ? 'Close' : 'Menu';
-    doc.body.style.overflow = open ? 'hidden' : '';
+    // con il menu aperto la barra resta visibile e la pagina sotto non scorre
+    if (open) { hidden = false; header.classList.remove('is-hidden'); }
+    html.classList.toggle('is-locked', open);
   }
   if (toggle && menu) {
     toggle.addEventListener('click', function () { setMenu(menu.hidden); });
@@ -312,7 +323,7 @@
     }
     function close() {
       box.hidden = true;
-      doc.body.style.overflow = '';
+      html.classList.remove('is-locked');
       removeEventListener('keydown', onKey);
       if (opener) opener.focus();
     }
@@ -353,7 +364,7 @@
         if (!box) build();
         opener = a;
         box.hidden = false;
-        doc.body.style.overflow = 'hidden';
+        html.classList.add('is-locked');
         show(i);
         addEventListener('keydown', onKey);
         $('.lightbox__close', box).focus();

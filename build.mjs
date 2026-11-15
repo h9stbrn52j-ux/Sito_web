@@ -146,7 +146,7 @@ function layout({ path, root, title, description, image, current, body, bodyClas
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(clip(description))}">
 <meta name="keywords" content="${esc(keywords ? `${keywords}, ${site.keywords}` : site.keywords)}">
