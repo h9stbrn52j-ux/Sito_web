@@ -435,17 +435,16 @@
     el.setAttribute('aria-label', 'Intro');
     el.innerHTML =
       '<canvas class="intro__gl" aria-hidden="true"></canvas>' +
-      '<div class="intro__name"><span class="intro__first">Lorenzo</span><span class="intro__last">Mangini</span><span class="intro__role">Director · Director of Photography</span></div>' +
-      '<div class="intro__hud intro__hud--tl"><span class="intro__rec">Rec</span> <span class="intro__tc">00:00:00:00</span></div>' +
-      '<div class="intro__hud intro__hud--tr">Frame <span class="intro__count">01</span>/' + pad(Math.max(1, covers.length)) + '</div>' +
-      '<div class="intro__hud intro__hud--bl">25 fps · 1/50 · <span class="intro__t">T16</span></div>' +
-      '<div class="intro__hud intro__hud--br"><span class="intro__pct">000</span>%</div>' +
-      '<div class="intro__panel"><span class="intro__hint"><i></i>' + T.hint + '</span><button type="button" class="intro__enter">' + T.enter + ' →</button></div>' +
+      '<div class="intro__grain" aria-hidden="true"></div>' +
+      '<div class="intro__name"><span class="intro__last">Lorenzo Mangini</span><span class="intro__role">Director <i>/</i> Director of Photography</span></div>' +
+      '<div class="intro__hud intro__hud--tl"><span class="intro__rec"></span><span class="intro__tc">00:00:00:00</span></div>' +
+      '<div class="intro__hud intro__hud--tr"><span class="intro__t">T 16</span></div>' +
+      '<div class="intro__panel"><span class="intro__hint">' + T.hint + '<i></i></span><button type="button" class="intro__enter">[ ' + T.enter + ' ]</button></div>' +
       '<div class="intro__progress"><i></i></div>';
     doc.body.appendChild(el);
 
     var gl = $('.intro__gl', el), name = $('.intro__name', el);
-    var pct = $('.intro__pct', el), tc = $('.intro__tc', el), count = $('.intro__count', el), tstop = $('.intro__t', el);
+    var tc = $('.intro__tc', el), tstop = $('.intro__t', el);
     var api = null, done = false, finishing = false, revealed = false;
     var p = 0, target = 0, start = performance.now(), lastInput = start, lastTick = start, raf;
     var W = innerWidth, H = innerHeight, mx = 0, my = 0, pmx = 0, pmy = 0;
@@ -458,7 +457,6 @@
       if (!api || !big.length) return;
       frameIdx = (frameIdx + 1) % Math.min(6, big.length);
       api.setFrame(frameIdx);
-      count.textContent = pad(frameIdx + 1);
     }
 
     function ease(t) { t = Math.max(0, Math.min(1, t)); return t * t * (3 - 2 * t); }
@@ -481,7 +479,7 @@
         if (p > 0.55 && frameTimer) { clearInterval(frameTimer); frameTimer = null; }
         name.style.opacity = (1 - ease(seg(0.18, 0.42))).toFixed(3);
         name.style.transform = 'translateY(' + (-seg(0.18, 0.5) * 30).toFixed(1) + 'px)';
-        tstop.textContent = 'T' + (16 - api.open * 14.5).toFixed(1).replace('.0', '');
+        tstop.textContent = 'T ' + (16 - api.open * 14.5).toFixed(1).replace('.0', '');
         // l'iride si apre direttamente sul sito vero (che sta sotto l'intro), poi l'apertura si allarga a tutto schermo
         var reveal = ease(seg(0.86, 1));
         if (p > 0.6) {
@@ -494,7 +492,6 @@
           el.style.webkitMaskImage = el.style.maskImage = '';
         }
         if (p > 0.12) el.classList.add('is-active');
-        pct.textContent = ('00' + Math.round(p * 100)).slice(-3);
         el.style.setProperty('--p', p.toFixed(3));
         if (p >= 0.999 && !done) return close();
       }

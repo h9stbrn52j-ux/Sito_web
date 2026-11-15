@@ -25,30 +25,56 @@ export async function createCamera(canvas, { covers = [], onFrame } = {}) {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.05;
+  renderer.toneMappingExposure = 1.12;
 
   const scene = new THREE.Scene();
   const pmrem = new THREE.PMREMGenerator(renderer);
-  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-  const key = new THREE.DirectionalLight(0xffffff, 2.2); key.position.set(-3, 4, 4); scene.add(key);
-  const rim = new THREE.DirectionalLight(0x8fb3ff, 3.2); rim.position.set(4, 2, -4); scene.add(rim);
-  const fill = new THREE.DirectionalLight(0xf1e9d6, 0.6); fill.position.set(2, -1, 5); scene.add(fill);
+  // studio fotografico virtuale: fondo nero e grandi pannelli luminosi (softbox) che si specchiano sulle superfici lucide
+  const studio = new THREE.Scene();
+  studio.background = new THREE.Color(0x020306);
+  const panel = (w, h, color, k, x, y, z, ry = 0, rx = 0) => {
+    const mat = new THREE.MeshBasicMaterial({ color: new THREE.Color(color).multiplyScalar(k), side: THREE.DoubleSide });
+    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(w, h), mat);
+    mesh.position.set(x, y, z); mesh.rotation.set(rx, ry, 0); mesh.lookAt(0, 0, 0); studio.add(mesh);
+  };
+  panel(7, 2.6, 0xffffff, 4.0, 0, 6, 1.5);          // softbox grande dall'alto
+  panel(1.2, 7, 0xfff4e6, 6.0, -6, 1, 2.5);         // striscia calda a sinistra
+  panel(1.0, 6, 0xdbe6ff, 5.0, 6, 1.2, -1.5);       // striscia fredda a destra, dietro
+  panel(5, 5, 0xf1e9d6, 0.9, 4.5, 1.5, 5.5);        // grande pannello morbido davanti a destra: dà forma alle facce piane
+  panel(5, 0.6, 0xffffff, 2.0, 0, -2.5, 6);         // riflesso basso, davanti
+  panel(3, 3, 0x8fb3ff, 1.0, 0, 2, -7);             // controluce blu del sito
+  const envMap = pmrem.fromScene(studio, 0.02).texture;
+  scene.environment = envMap;
+  scene.environmentIntensity = 1.0;
+  const key = new THREE.DirectionalLight(0xfff4e8, 1.6); key.position.set(-3, 5, 4); scene.add(key);
+  const rim = new THREE.DirectionalLight(0x8fb3ff, 2.6); rim.position.set(4, 2.5, -4); scene.add(rim);
+  const fill = new THREE.DirectionalLight(0xf1e9d6, 0.35); fill.position.set(2, -1, 5); scene.add(fill);
 
   const cam = new THREE.PerspectiveCamera(30, 1, 0.01, 60);
 
   // ---------- materiali ----------
-  const body = new THREE.MeshStandardMaterial({ color: 0x1c1e22, roughness: 0.58, metalness: 0.35 });
-  const bodyDark = new THREE.MeshStandardMaterial({ color: 0x121316, roughness: 0.7, metalness: 0.2 });
-  const rubber = new THREE.MeshStandardMaterial({ color: 0x141517, roughness: 0.92, metalness: 0.05 });
-  const metal = new THREE.MeshStandardMaterial({ color: 0x9aa0a8, roughness: 0.28, metalness: 1 });
-  const barrel = new THREE.MeshStandardMaterial({ color: 0x0f1012, roughness: 0.32, metalness: 0.65 });
-  const red = new THREE.MeshStandardMaterial({ color: 0xd8382e, roughness: 0.4, metalness: 0.1, emissive: 0x3a0806 });
-  const knurl = new THREE.MeshStandardMaterial({
-    color: 0xffffff, roughness: 0.6, metalness: 0.4,
-    map: canvasTex(512, 32, (g, w, h) => { g.fillStyle = '#0d0e10'; g.fillRect(0, 0, w, h); for (let x = 0; x < w; x += 4) { g.fillStyle = '#26282d'; g.fillRect(x, 0, 2, h); } }),
-  });
-  const marks = new THREE.MeshStandardMaterial({
-    roughness: 0.4, metalness: 0.5,
+  // grana fine dell'alluminio anodizzato: piccole variazioni di lucidità, come su un corpo macchina vero
+  const grainTex = (() => {
+    const t = canvasTex(256, 256, (g, w, h) => {
+      const d = g.createImageData(w, h);
+      for (let i = 0; i < d.data.length; i += 4) { const v = 150 + Math.random() * 70; d.data[i] = d.data[i + 1] = d.data[i + 2] = v; d.data[i + 3] = 255; }
+      g.putImageData(d, 0, 0);
+    }, [6, 6]);
+    t.colorSpace = THREE.NoColorSpace;
+    return t;
+  })();
+  const body = new THREE.MeshPhysicalMaterial({ color: 0x24262b, metalness: 0.55, roughness: 0.38, roughnessMap: grainTex, clearcoat: 0.55, clearcoatRoughness: 0.16 });
+  const bodyDark = new THREE.MeshPhysicalMaterial({ color: 0x15171b, metalness: 0.45, roughness: 0.44, roughnessMap: grainTex, clearcoat: 0.35, clearcoatRoughness: 0.22 });
+  const rubber = new THREE.MeshPhysicalMaterial({ color: 0x121315, roughness: 0.82, metalness: 0.02, bumpMap: grainTex, bumpScale: 0.6, sheen: 0.4, sheenRoughness: 0.8, sheenColor: new THREE.Color(0x30343c) });
+  const metal = new THREE.MeshPhysicalMaterial({ color: 0xd2d5da, roughness: 0.16, metalness: 1, clearcoat: 0.4 });
+  const barrel = new THREE.MeshPhysicalMaterial({ color: 0x090a0c, metalness: 0.85, roughness: 0.2, clearcoat: 1, clearcoatRoughness: 0.04 });
+  const red = new THREE.MeshPhysicalMaterial({ color: 0xc8302a, roughness: 0.32, metalness: 0.1, clearcoat: 0.6, emissive: 0x2a0503 });
+  const knurlMap = canvasTex(512, 32, (g, w, h) => { g.fillStyle = '#0d0e10'; g.fillRect(0, 0, w, h); for (let x = 0; x < w; x += 4) { g.fillStyle = '#2b2d33'; g.fillRect(x, 0, 2, h); } });
+  const knurlBump = canvasTex(512, 32, (g, w, h) => { g.fillStyle = '#000'; g.fillRect(0, 0, w, h); for (let x = 0; x < w; x += 4) { g.fillStyle = '#fff'; g.fillRect(x, 0, 2, h); } });
+  knurlBump.colorSpace = THREE.NoColorSpace;
+  const knurl = new THREE.MeshPhysicalMaterial({ color: 0xffffff, map: knurlMap, bumpMap: knurlBump, bumpScale: 1.2, roughness: 0.38, metalness: 0.7, clearcoat: 0.3 });
+  const marks = new THREE.MeshPhysicalMaterial({
+    roughness: 0.22, metalness: 0.8, clearcoat: 1, clearcoatRoughness: 0.05,
     map: canvasTex(1024, 64, (g, w, h) => {
       g.fillStyle = '#101113'; g.fillRect(0, 0, w, h);
       g.fillStyle = '#e8e4dc'; g.font = '600 26px "JetBrains Mono", monospace'; g.textBaseline = 'middle';
@@ -56,8 +82,8 @@ export async function createCamera(canvas, { covers = [], onFrame } = {}) {
       for (let x = 0; x < 520; x += 12) g.fillRect(x + 30, 6, 1.5, x % 36 === 0 ? 12 : 7);
     }),
   });
-  const carbon = new THREE.MeshStandardMaterial({
-    roughness: 0.45, metalness: 0.3,
+  const carbon = new THREE.MeshPhysicalMaterial({
+    roughness: 0.35, metalness: 0.3, clearcoat: 1, clearcoatRoughness: 0.08,
     map: canvasTex(64, 64, (g, w, h) => {
       g.fillStyle = '#16171a'; g.fillRect(0, 0, w, h);
       for (let y = 0; y < h; y += 8) for (let x = 0; x < w; x += 8) {
@@ -131,7 +157,11 @@ export async function createCamera(canvas, { covers = [], onFrame } = {}) {
   const irisTex = new THREE.CanvasTexture(irisCanvas); irisTex.colorSpace = THREE.SRGBColorSpace; irisTex.anisotropy = 8;
   add(new THREE.CircleGeometry(GLASS_R, 128), new THREE.MeshBasicMaterial({ map: irisTex, toneMapped: false }), 0, 0, GLASS_Z, lens);
   const capR = 0.62, capA = Math.asin(GLASS_R / capR);
-  const glassMat = new THREE.MeshPhysicalMaterial({ color: 0x0c1424, roughness: 0.03, metalness: 0, clearcoat: 1, transparent: true, opacity: 0.32, envMapIntensity: 2.4, depthWrite: false });
+  const glassMat = new THREE.MeshPhysicalMaterial({
+    color: 0x070b14, roughness: 0.02, metalness: 0.1, clearcoat: 1, clearcoatRoughness: 0,
+    iridescence: 1, iridescenceIOR: 1.6, iridescenceThicknessRange: [180, 520],
+    transparent: true, opacity: 0.5, envMapIntensity: 3, depthWrite: false,
+  });
   const cap = add(new THREE.SphereGeometry(capR, 96, 24, 0, Math.PI * 2, 0, capA), glassMat, 0, 0, GLASS_Z + 0.03 - capR, lens); cap.rotation.x = Math.PI / 2;
 
   // ombra morbida
@@ -224,13 +254,14 @@ export async function createCamera(canvas, { covers = [], onFrame } = {}) {
     const open = 0.035 + ease(seg(0.6, 0.86)) * 0.965;
     state.open = open;
 
-    model.rotation.y = (-0.82 + mx * 0.22) * (1 - t1);
+    model.rotation.y = (-0.82 + Math.sin(now / 5200) * 0.07 + mx * 0.18) * (1 - t1);
+    scene.environmentRotation.y = Math.sin(now / 7000) * 0.35; // i riflessi scivolano lentamente sulle superfici lucide
     model.rotation.x = (0.06 - my * 0.06) * (1 - t1);
     model.position.y = Math.sin(now / 900) * 0.02 * (1 - t1);
     model.updateMatrixWorld();
 
     // inquadratura iniziale: cinepresa intera nella metà bassa; finale: il vetro riempie la finestra
-    const fitH = mobile ? 2.3 / 0.42 : 2.0 / 0.56;
+    const fitH = mobile ? 2.3 / 0.4 : 2.0 / 0.5;
     const fitW = (mobile ? 2.5 : 2.8) / (mobile ? 0.9 : 0.62);
     const vh0 = Math.max(fitH, fitW / a);
     const d0 = vh0 / (2 * tanH);
@@ -244,7 +275,7 @@ export async function createCamera(canvas, { covers = [], onFrame } = {}) {
     cam.position.set(target.x, target.y + Math.sin(elev) * dist, target.z + Math.cos(elev) * dist);
     cam.lookAt(target);
 
-    glassMat.opacity = 0.32 * (1 - ease(seg(0.52, 0.64))); // il riflesso del vetro sparisce prima che l'iride si apra
+    glassMat.opacity = 0.5 * (1 - ease(seg(0.52, 0.64))); // il riflesso del vetro sparisce prima che l'iride si apra
     drawIris(open);
     renderer.render(scene, cam);
 
