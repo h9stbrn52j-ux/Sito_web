@@ -29,7 +29,7 @@
   --bg-2: #161616;
   --line: rgba(241, 233, 214, 0.16);
   --accent: #f1e9d6;   /* avorio: wordmark, menu, titoli */
-  --hi: #8fb3ff;       /* azzurro: etichette, evidenziazioni, stati attivi */
+  --hi: #d6bc8a;       /* paglia: il colore delle spighe del video, per etichette, evidenziazioni, stati attivi */
   --text: #ece9e2;
   --muted: rgba(236, 233, 226, 0.66);
   --pad: clamp(16px, 1.7vw, 28px);

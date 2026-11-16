@@ -39,15 +39,15 @@ export async function createCamera(canvas, { covers = [], onFrame } = {}) {
   };
   panel(7, 2.6, 0xffffff, 4.0, 0, 6, 1.5);          // softbox grande dall'alto
   panel(1.2, 7, 0xfff4e6, 6.0, -6, 1, 2.5);         // striscia calda a sinistra
-  panel(1.0, 6, 0xdbe6ff, 5.0, 6, 1.2, -1.5);       // striscia fredda a destra, dietro
+  panel(1.0, 6, 0xfff1dc, 5.0, 6, 1.2, -1.5);       // striscia a destra, dietro
   panel(5, 5, 0xf1e9d6, 0.9, 4.5, 1.5, 5.5);        // grande pannello morbido davanti a destra: dà forma alle facce piane
   panel(5, 0.6, 0xffffff, 2.0, 0, -2.5, 6);         // riflesso basso, davanti
-  panel(3, 3, 0x8fb3ff, 1.0, 0, 2, -7);             // controluce blu del sito
+  panel(3, 3, 0xd6bc8a, 1.0, 0, 2, -7);             // controluce color paglia, come le spighe del video
   const envMap = pmrem.fromScene(studio, 0.02).texture;
   scene.environment = envMap;
   scene.environmentIntensity = 1.0;
   const key = new THREE.DirectionalLight(0xfff4e8, 1.6); key.position.set(-3, 5, 4); scene.add(key);
-  const rim = new THREE.DirectionalLight(0x8fb3ff, 2.6); rim.position.set(4, 2.5, -4); scene.add(rim);
+  const rim = new THREE.DirectionalLight(0xe8d2a6, 2.2); rim.position.set(4, 2.5, -4); scene.add(rim);
   const fill = new THREE.DirectionalLight(0xf1e9d6, 0.35); fill.position.set(2, -1, 5); scene.add(fill);
 
   const cam = new THREE.PerspectiveCamera(30, 1, 0.01, 60);
