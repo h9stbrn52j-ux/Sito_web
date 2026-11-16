@@ -169,7 +169,7 @@ function layout({ path, root, title, description, image, current, body, bodyClas
 <meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(clip(description, 200))}">
 <meta name="twitter:image" content="${esc(og)}">
-<meta name="theme-color" content="#0b1322">
+<meta name="theme-color" content="#0a0a0b">
 <link rel="icon" href="${root}favicon.ico" sizes="48x48">
 <link rel="icon" type="image/png" sizes="96x96" href="${root}assets/img/icon-96.png">
 <link rel="icon" type="image/png" sizes="192x192" href="${root}assets/img/icon-192.png">
@@ -181,7 +181,7 @@ function layout({ path, root, title, description, image, current, body, bodyClas
 <script>document.documentElement.classList.add('js')</script>
 ${head}</head>
 <body class="${bodyClass}" data-root="${root}">
-<div class="bgvideo" aria-hidden="true"><video muted playsinline loop autoplay preload="auto" disablepictureinpicture poster="${root}assets/video/bg-poster.jpg"><source src="${root}assets/video/bg-720.mp4" type="video/mp4" media="(max-width: 720px)"><source src="${root}assets/video/bg.webm" type="video/webm"><source src="${root}assets/video/bg.mp4" type="video/mp4"></video></div>
+<div class="bgvideo" aria-hidden="true"><video muted playsinline webkit-playsinline loop autoplay preload="auto" disablepictureinpicture disableremoteplayback poster="${root}assets/video/bg-poster.jpg"><source src="${root}assets/video/bg-720.mp4" type="video/mp4" media="(max-width: 720px)"><source src="${root}assets/video/bg.webm" type="video/webm"><source src="${root}assets/video/bg.mp4" type="video/mp4"></video></div>
 <a class="skip" href="#main">Skip to content</a>
 <header class="header">
   <nav class="nav" aria-label="Main">
@@ -343,7 +343,7 @@ function home() {
   const filters = [
     ['all', 'All'],
     ['director', 'Director'],
-    ['dop', 'Director of Photography'],
+    ['dop', 'DoP'],
     ['photography', 'Photography'],
   ];
   const count = (k) => (k === 'all' ? projects.length : projects.filter((p) => p.categories.includes(k)).length);

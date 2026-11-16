@@ -24,11 +24,16 @@
       try { bgv.pause(); } catch (e) {}
     } else {
       bgv.muted = true;
-      var tryPlay = function () { var pr = bgv.play(); if (pr && pr.catch) pr.catch(function () {}); };
+      bgv.defaultMuted = true;
+      var tryPlay = function () { if (!bgv.paused) return; var pr = bgv.play(); if (pr && pr.catch) pr.catch(function () {}); };
       tryPlay();
+      // si riprova appena il browser ha i primi fotogrammi, quando la pagina torna visibile
+      // (anche tornando indietro dalla cronologia) e al primo gesto: alcuni telefoni avviano i video solo dopo un tocco
+      ['loadedmetadata', 'loadeddata', 'canplay'].forEach(function (ev) { bgv.addEventListener(ev, tryPlay); });
       doc.addEventListener('visibilitychange', function () { if (!doc.hidden) tryPlay(); });
-      // alcuni browser avviano i video solo dopo un primo tocco
-      addEventListener('touchstart', tryPlay, { once: true, passive: true });
+      addEventListener('pageshow', tryPlay);
+      ['touchstart', 'pointerdown', 'scroll', 'keydown'].forEach(function (ev) { addEventListener(ev, tryPlay, { once: true, passive: true }); });
+      if (bgv.readyState === 0) bgv.load();
     }
   }
 

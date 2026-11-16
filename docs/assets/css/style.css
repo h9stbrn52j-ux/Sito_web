@@ -24,15 +24,14 @@
 }
 
 :root {
-  /* Blu inchiostro + avorio: lo sfondo freddo e scuro fa risaltare per contrasto
-     complementare i toni caldi (pelle, luci) dei fotogrammi; l'avorio resta molto leggibile. */
-  --bg: #0b1322;
-  --bg-2: #121c30;
-  --line: #24314c;
+  /* lo sfondo è il video del corto: i colori del sito sono neutri, avorio per i testi e un azzurro per i dettagli attivi */
+  --bg: #0a0a0b;
+  --bg-2: #161616;
+  --line: rgba(241, 233, 214, 0.16);
   --accent: #f1e9d6;   /* avorio: wordmark, menu, titoli */
   --hi: #8fb3ff;       /* azzurro: etichette, evidenziazioni, stati attivi */
-  --text: #dde4f0;
-  --muted: #8593ad;
+  --text: #ece9e2;
+  --muted: rgba(236, 233, 226, 0.66);
   --pad: clamp(16px, 1.7vw, 28px);
   --gap: clamp(14px, 1.7vw, 26px);
   --radius: clamp(8px, 0.8vw, 12px);
@@ -52,7 +51,7 @@
 html { overflow-x: clip; -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: var(--header-h); }
 body {
   margin: 0;
-  background: #090f1b;
+  background: #0a0a0b;
   color: var(--text);
   font-family: var(--mono);
   font-size: 13px;
@@ -61,18 +60,17 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: clip; /* 'hidden' qui renderebbe il body un contenitore di scorrimento e romperebbe position: sticky */
 }
-/* sfondo: un'inquadratura del corto, rallentata nel tono e scurita con la stessa notte blu del sito,
-   così resta un movimento discreto dietro i testi senza disturbarne la lettura */
-.bgvideo { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; background: #070a11 url('../video/bg-poster.jpg') center / cover no-repeat; }
-.bgvideo video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.04); filter: saturate(0.8) brightness(0.85) contrast(1.04); }
+/* sfondo: un'inquadratura del corto, ben visibile; solo un velo neutro (senza colore) ai bordi per i testi */
+.bgvideo { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; background: #0a0a0b url('../video/bg-poster.jpg') center / cover no-repeat; }
+.bgvideo video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.04); filter: saturate(0.95) brightness(0.95); }
 .bgvideo::after {
   content: ''; position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse 85% 75% at 50% 45%, rgba(8, 12, 22, 0.1), rgba(5, 8, 15, 0.62) 100%),
-    linear-gradient(180deg, rgba(9, 14, 26, 0.5) 0%, rgba(9, 14, 26, 0.22) 45%, rgba(7, 11, 20, 0.6) 100%);
+    radial-gradient(ellipse 90% 80% at 50% 45%, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.42) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.34) 0%, rgba(0, 0, 0, 0.06) 40%, rgba(0, 0, 0, 0.34) 100%);
 }
-/* nelle pagine da leggere (progetti, about, contatti) il velo è più fitto */
-body:not(.page-home) .bgvideo::after { background: linear-gradient(180deg, rgba(9, 14, 26, 0.7), rgba(7, 11, 20, 0.8)); }
+/* nelle pagine da leggere (progetti, about, contatti) il velo è un po' più fitto, sempre neutro */
+body:not(.page-home) .bgvideo::after { background: rgba(0, 0, 0, 0.46); }
 /* grana pellicola appena percettibile (ferma, per non distrarre durante la lettura) */
 body::after {
   content: ''; position: fixed; inset: 0; z-index: 400; pointer-events: none;
@@ -102,14 +100,11 @@ h2.label { font-size: inherit; font-weight: 400; }
   position: sticky; top: 0; z-index: 50;
   /* la barra parte dal bordo dello schermo e copre anche la zona dell'orologio */
   padding-top: var(--safe-top);
-  background: color-mix(in srgb, #0d1526 92%, transparent);
-  backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2);
-  border-bottom: 1px solid rgba(241, 233, 214, 0.06);
-  transition: transform 0.4s var(--ease);
+  background: transparent;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.6);
+  transition: transform 0.4s var(--ease), opacity 0.4s var(--ease);
 }
-.header.is-hidden { transform: translateY(-100%); }
-/* striscia fissa dietro l'orologio dell'iPhone: quando la barra si nasconde, sotto l'ora non passa il contenuto */
-html::before { content: ''; position: fixed; left: 0; right: 0; top: 0; height: var(--safe-top); z-index: 49; pointer-events: none; background: color-mix(in srgb, #0d1526 92%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.header.is-hidden { transform: translateY(-100%); opacity: 0; }
 .nav {
   height: var(--header);
   padding: 0 max(var(--pad), var(--safe-right)) 0 max(var(--pad), var(--safe-left));
@@ -140,7 +135,7 @@ html.is-locked .nav__icons { visibility: hidden; }
 .nav__toggle::after { content: ']'; }
 
 .menu {
-  position: fixed; inset: 0; z-index: 40; background: rgba(8, 12, 22, 0.9); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  position: fixed; inset: 0; z-index: 40; background: rgba(0, 0, 0, 0.62); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
   padding: calc(var(--header-h) + 24px) max(var(--pad), var(--safe-right)) calc(28px + var(--safe-bottom)) max(var(--pad), var(--safe-left));
   display: flex; flex-direction: column; justify-content: space-between;
 }
@@ -172,7 +167,7 @@ html.is-locked .nav__icons { visibility: hidden; }
 .hero__word { cursor: default; position: relative; }
 .hero__word .ch { display: inline-block; transition: font-weight 0.35s var(--ease), transform 0.35s var(--ease); will-change: transform; }
 
-.hero__meta, .hero__roles, .filters, .service, .card__caption, .intro__name, .intro__hud, .intro__panel { text-shadow: 0 1px 14px rgba(4, 7, 14, 0.85); }
+.hero__meta, .hero__roles, .filters, .service, .card__caption, .intro__name, .intro__hud, .intro__panel { text-shadow: 0 1px 14px rgba(0, 0, 0, 0.75); }
 .hero__roles { margin-top: clamp(10px, 1.4vw, 20px); color: var(--muted); text-transform: uppercase; letter-spacing: 0.24em; font-size: 11px; }
 .hero__roles i { font-style: normal; color: var(--hi); padding: 0 0.5em; }
 .credits { max-width: 1500px; margin: clamp(26px, 4vw, 56px) auto 0; width: 100%; padding-top: 16px; border-top: 1px solid var(--line); display: grid; grid-template-columns: minmax(120px, 1fr) minmax(0, 4fr); gap: 12px 24px; }
@@ -187,10 +182,11 @@ html.is-locked .nav__icons { visibility: hidden; }
 
 /* ---------- filtri + griglia ---------- */
 
-.work { padding: clamp(22px, 3vw, 44px) var(--pad) 0; }
-.filters { display: flex; flex-wrap: wrap; gap: 8px 26px; margin-bottom: clamp(18px, 2vw, 30px); color: var(--muted); }
+.work { padding: clamp(18px, 2.4vw, 36px) var(--pad) 0; }
+.filters { display: flex; flex-wrap: nowrap; gap: clamp(14px, 2vw, 28px); overflow-x: auto; scrollbar-width: none; margin-bottom: 0; color: var(--muted); font-size: 10px; letter-spacing: 0.14em; white-space: nowrap; }
+.filters::-webkit-scrollbar { display: none; }
 .filter { padding: 6px 0; transition: color 0.2s; }
-.filter sup { font-size: 9px; margin-left: 4px; }
+.filter sup { font-size: 8px; margin-left: 3px; }
 .filter:hover { color: var(--text); }
 .filter.is-active { color: var(--hi); }
 .filter.is-active::before { content: '[ '; }
@@ -229,9 +225,12 @@ html.snap-home .footer { scroll-snap-align: end; }
 .grid--reel { display: block; }
 .grid--reel .card {
   --f: 1; --w: min(100%, 1180px, calc((100svh - 230px) * 16 / 9));
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  min-height: 100svh; scroll-snap-align: center; scroll-snap-stop: always; padding: 0;
+  display: flex; flex-direction: column; align-items: center;
+  margin-top: 26px; scroll-snap-align: center; scroll-snap-stop: always; padding: 0;
 }
+/* tra un lavoro e l'altro c'è lo spazio di uno schermo, così al centro ce n'è uno solo */
+.grid--reel .card:not(.is-out) ~ .card:not(.is-out) { margin-top: max(18svh, calc(100svh - var(--w) * 9 / 16 - 140px)); }
+.grid--reel { padding-bottom: 18svh; }
 .grid--reel .card.is-out { display: none; }
 .grid--reel .card__media { width: var(--w); border-radius: 4px; filter: brightness(calc(0.3 + 0.7 * var(--f))); opacity: calc(0.35 + 0.65 * var(--f)); transform: scale(calc(0.94 + 0.06 * var(--f))); transition: filter 0.2s linear, opacity 0.2s linear, transform 0.2s linear; }
 .grid--reel .card:hover .card__img { transform: scale(1.02); }
@@ -241,7 +240,6 @@ html.snap-home .footer { scroll-snap-align: end; }
 .grid--reel .card__meta { font-size: 10px; letter-spacing: 0.16em; color: var(--muted); }
 .grid--reel .card__cta { margin-top: 10px; font-size: 10px; letter-spacing: 0.2em; color: var(--accent); border-bottom: 1px solid currentColor; padding-bottom: 2px; }
 .grid--reel .card:hover .card__cta { color: var(--hi); }
-.work .filters { margin-bottom: 0; }
 
 /* ---------- pagina progetto ---------- */
 
@@ -275,7 +273,7 @@ html.snap-home .footer { scroll-snap-align: end; }
 .video__frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .video__play {
   position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-  padding: 10px 14px; border-radius: 999px; background: rgba(11, 19, 34, 0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  padding: 10px 14px; border-radius: 999px; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
   white-space: nowrap; transition: background 0.2s, color 0.2s;
 }
 .video__frame:hover .video__play, .video__frame:focus-visible .video__play { background: var(--hi); color: var(--bg); }
@@ -395,7 +393,7 @@ html:not(.js) .lang__tabs { display: none; }
 
 /* ---------- lightbox ---------- */
 
-.lightbox { position: fixed; inset: 0; z-index: 150; background: rgba(7, 12, 22, 0.97); display: flex; align-items: center; justify-content: center; padding: 56px var(--pad); }
+.lightbox { position: fixed; inset: 0; z-index: 150; background: rgba(0, 0, 0, 0.94); display: flex; align-items: center; justify-content: center; padding: 56px var(--pad); }
 .lightbox[hidden] { display: none; }
 .lightbox img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 6px; }
 .lightbox__bar { position: absolute; left: var(--pad); right: var(--pad); top: 16px; display: flex; justify-content: space-between; color: var(--accent); text-transform: uppercase; }
@@ -475,8 +473,7 @@ html:not(.js) .lang__tabs { display: none; }
 /* sfumature ai bordi fatte con due livelli sopra i loghi: la maschera CSS su un elemento animato
    molto largo fa sparire i loghi dopo pochi secondi in Safari (iPhone e Mac) */
 .marquee::before, .marquee::after { content: ''; position: absolute; top: 0; bottom: 0; width: 14%; z-index: 1; pointer-events: none; }
-.marquee::before { left: 0; background: linear-gradient(90deg, #0a101d, rgba(10, 16, 29, 0)); }
-.marquee::after { right: 0; background: linear-gradient(270deg, #0a101d, rgba(10, 16, 29, 0)); }
+.marquee::before, .marquee::after { display: none; } /* niente bande scure ai lati sopra il video */
 .marquee__track { display: flex; align-items: center; width: max-content; animation: marquee var(--mq-dur, 22s) linear infinite; will-change: transform; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
 .marquee__dup { display: flex; align-items: center; }
 .marquee img { display: block; width: auto; max-width: none; margin: 0 clamp(22px, 3.2vw, 52px); opacity: 0.72; transition: opacity 0.25s; }
@@ -580,8 +577,8 @@ html.has-intro, html.is-locked { overflow: hidden; } /* sul body romperebbe la b
   position: fixed; inset: 0; z-index: 300; overflow: hidden; color: var(--accent);
   /* il video del sito resta visibile dietro; un velo più fitto al centro stacca la cinepresa dal fondo */
   background:
-    radial-gradient(ellipse 42% 36% at 50% 62%, rgba(4, 6, 12, 0.55), rgba(4, 6, 12, 0) 100%),
-    linear-gradient(180deg, rgba(6, 9, 17, 0.45), rgba(6, 9, 17, 0.05) 50%, rgba(6, 9, 17, 0.55));
+    radial-gradient(ellipse 40% 34% at 50% 62%, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.4));
   user-select: none; -webkit-user-select: none; touch-action: none; text-transform: uppercase; font-size: 11px; letter-spacing: 0.08em;
 }
 .intro > * { position: absolute; }
