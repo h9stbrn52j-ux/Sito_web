@@ -13,6 +13,25 @@
     set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
   };
 
+  /* ---------- video di sfondo ----------
+     Senza audio e in loop. Con "riduci movimento" o risparmio dati resta l'immagine ferma. */
+  var bgv = $('.bgvideo video');
+  if (bgv) {
+    var saveData = navigator.connection && navigator.connection.saveData;
+    if (reduced || saveData) {
+      bgv.removeAttribute('autoplay');
+      bgv.preload = 'none';
+      try { bgv.pause(); } catch (e) {}
+    } else {
+      bgv.muted = true;
+      var tryPlay = function () { var pr = bgv.play(); if (pr && pr.catch) pr.catch(function () {}); };
+      tryPlay();
+      doc.addEventListener('visibilitychange', function () { if (!doc.hidden) tryPlay(); });
+      // alcuni browser avviano i video solo dopo un primo tocco
+      addEventListener('touchstart', tryPlay, { once: true, passive: true });
+    }
+  }
+
   /* ---------- testo gigante che riempie la riga ---------- */
 
   function fit() {
@@ -108,7 +127,6 @@
   if (toggle && menu) {
     toggle.addEventListener('click', function () { setMenu(menu.hidden); });
     addEventListener('keydown', function (e) { if (e.key === 'Escape' && !menu.hidden) setMenu(false); });
-    matchMedia('(min-width: 721px)').addEventListener('change', function (e) { if (e.matches) setMenu(false); });
   }
 
   $$('[data-top]').forEach(function (a) {
@@ -491,7 +509,6 @@
     el.setAttribute('aria-label', 'Intro');
     el.innerHTML =
       '<canvas class="intro__gl" aria-hidden="true"></canvas>' +
-      '<div class="intro__grain" aria-hidden="true"></div>' +
       '<div class="intro__name"><span class="intro__last">Lorenzo Mangini</span><span class="intro__role">Director <i>/</i> Director of Photography</span></div>' +
       '<div class="intro__hud intro__hud--tl"><span class="intro__rec"></span><span class="intro__tc">00:00:00:00</span></div>' +
       '<div class="intro__hud intro__hud--tr"><span class="intro__t">T 16</span></div>' +

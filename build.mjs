@@ -181,6 +181,7 @@ function layout({ path, root, title, description, image, current, body, bodyClas
 <script>document.documentElement.classList.add('js')</script>
 ${head}</head>
 <body class="${bodyClass}" data-root="${root}">
+<div class="bgvideo" aria-hidden="true"><video muted playsinline loop autoplay preload="auto" disablepictureinpicture poster="${root}assets/video/bg-poster.jpg"><source src="${root}assets/video/bg-720.mp4" type="video/mp4" media="(max-width: 720px)"><source src="${root}assets/video/bg.webm" type="video/webm"><source src="${root}assets/video/bg.mp4" type="video/mp4"></video></div>
 <a class="skip" href="#main">Skip to content</a>
 <header class="header">
   <nav class="nav" aria-label="Main">
@@ -370,6 +371,7 @@ ${projects.map((p, i) => card(p, root, { eager: i < 2, index: i })).join('\n')}
 </section>`;
   const head = `<script>try{if(!sessionStorage.getItem('lm-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('has-intro')}catch(e){}</script>
 <script type="application/json" id="intro-data">${JSON.stringify(covers)}</script>
+<link rel="preload" href="assets/video/bg-poster.jpg" as="image">
 <link rel="modulepreload" href="assets/js/intro3d.js">
 <link rel="modulepreload" href="assets/js/vendor/three.module.min.js">
 ${ld({ '@type': 'WebSite', '@id': `${site.url}/#website`, url: `${site.url}/`, name: site.name, alternateName: [site.title, 'lorenzomangini.com'], description: site.description, inLanguage: ['en', 'it'], publisher: { '@id': `${site.url}/#person` } })}${ld(person())}${ld({
