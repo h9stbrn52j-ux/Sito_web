@@ -67,73 +67,6 @@
       ]
     },
     {
-      "slug": "autodromo-di-monza-x-masters-historic-racing-reel",
-      "title": "Autodromo di Monza x Masters Historic Racing",
-      "kind": "Reel",
-      "fullTitle": "Autodromo di Monza x Masters Historic Racing | Reel",
-      "role": "Director & DoP",
-      "category": [
-        "director",
-        "dop"
-      ],
-      "cover": "autodromo-di-monza-x-masters-historic-racing-reel",
-      "blocks": [
-        {
-          "type": "video",
-          "provider": "vimeo",
-          "id": "1234619732",
-          "hash": "6b5a45dca0",
-          "width": 1280,
-          "height": 2276,
-          "thumb": "video/1234619732",
-          "title": "Autodromo di Monza x Masters Historic Racing",
-          "duration": 34,
-          "uploadDate": "2026-10-10"
-        },
-        {
-          "type": "video",
-          "provider": "youtube",
-          "id": "9zfxDdVHeyc",
-          "width": 720,
-          "height": 1280,
-          "thumb": "video/9zfxDdVHeyc"
-        }
-      ],
-      "credits": [
-        "Directed by Lorenzo Mangini"
-      ]
-    },
-    {
-      "slug": "la-rivoluzione-slow-i-nostri-primi-40-anni-docu",
-      "title": "La Rivoluzione Slow: I nostri primi 40 anni",
-      "kind": "Docu",
-      "fullTitle": "La Rivoluzione Slow: I nostri primi 40 anni | Docu",
-      "role": "Director & DoP",
-      "category": [
-        "director",
-        "dop"
-      ],
-      "cover": "la-rivoluzione-slow-i-nostri-primi-40-anni-docu",
-      "blocks": [
-        {
-          "type": "video",
-          "provider": "vimeo",
-          "id": "1231973304",
-          "hash": "cc26633cda",
-          "width": 1280,
-          "height": 675,
-          "thumb": "video/1231973304",
-          "title": "La rivoluzione Slow: I nostri primi 40 anni",
-          "duration": 1253,
-          "uploadDate": "2026-10-01"
-        }
-      ],
-      "credits": [
-        "Diretto da Lorenzo Mangini",
-        "Quarant'anni fa prendeva forma una rivoluzione gentile, destinata a cambiare per sempre il nostro rapporto con il cibo e con la terra. Al centro di questo movimento, la visione e la determinazione di Carlin Petrini. Il documentario ripercorre le origini e le sfide di Slow Food, per poi spogliarsi della veste istituzionale e cercare l'uomo dietro il fondatore. Attraverso una semplice telefonata con la sua storica segretaria, Laura Bonino, emerge un ricordo intimo e quotidiano. A chiudere il cerchio sono le voci degli studenti dell'Università di Pollenzo: il frutto più vivo del suo sogno, pronti a portare questo lascito nel futuro."
-      ]
-    },
-    {
       "slug": "experience-fitness-club-commercial",
       "title": "Experience Fitness Club",
       "kind": "Commercial",
@@ -213,6 +146,321 @@
       "credits": [
         "Golden Notes, con Giovanni Falzone.",
         "Un documentario di Lorenzo Mangini e Francesco Fumagalli"
+      ]
+    },
+    {
+      "slug": "la-cosa-piu-sexy-spot-medici-del-mondo-2026",
+      "title": "La cosa più sexy",
+      "kind": "SPOT Medici del Mondo 2026",
+      "fullTitle": "La cosa più sexy | SPOT Medici del Mondo 2026",
+      "role": "Director of Photography",
+      "category": "dop",
+      "cover": "la-cosa-piu-sexy-spot-medici-del-mondo-2026",
+      "blocks": [
+        {
+          "type": "video",
+          "provider": "vimeo",
+          "id": "1185910200",
+          "hash": "cadab8d539",
+          "width": 1280,
+          "height": 720,
+          "thumb": "video/1185910200",
+          "title": "La cosa più sexy | SPOT Medici del Mondo 2026",
+          "duration": 64,
+          "uploadDate": "2026-04-23"
+        }
+      ],
+      "credits": [
+        "Regia di Sofia Votino",
+        "Fotografia di Lorenzo Mangini",
+        "Operatore di camera Gioele Gallo",
+        "Assistente regia Rebecca Molteni",
+        "Assistente camera Simona Autore",
+        "Gaffer Camilla Abati",
+        "Montaggio di Francesco Fumagalli",
+        "Con Lorenzo Riva e Camilla Borra"
+      ]
+    },
+    {
+      "slug": "forge-spot",
+      "title": "FORGE Gym",
+      "kind": "SPOT 2026",
+      "fullTitle": "FORGE Gym | SPOT 2026",
+      "role": "Director & DoP",
+      "category": [
+        "director",
+        "dop"
+      ],
+      "cover": "forge-spot",
+      "blocks": [
+        {
+          "type": "video",
+          "provider": "vimeo",
+          "id": "1179671398",
+          "hash": "4ad090542b",
+          "width": 1280,
+          "height": 640,
+          "thumb": "video/1179671398",
+          "title": "FORGE Gym | SPOT 2026",
+          "duration": 45,
+          "uploadDate": "2026-04-02"
+        }
+      ],
+      "credits": [
+        "Director and DP: Lorenzo Mangini",
+        "1AD and Light & Grip: Sofia Votino"
+      ]
+    },
+    {
+      "slug": "forge-teaser-adv",
+      "title": "FORGE: Teaser",
+      "kind": "ADV",
+      "fullTitle": "FORGE: Teaser | ADV",
+      "role": "Director & DoP",
+      "category": [
+        "director",
+        "dop"
+      ],
+      "cover": "forge-teaser-adv",
+      "blocks": [
+        {
+          "type": "text",
+          "html": "<p>FORGE: Teaser trailer</p><p>Director, DOP, Editor: Lorenzo Mangini</p><p>For FORGE™ GYM</p>"
+        },
+        {
+          "type": "video",
+          "provider": "vimeo",
+          "id": "1149169175",
+          "hash": "87ecf6740f",
+          "width": 1280,
+          "height": 720,
+          "thumb": "video/1149169175",
+          "title": "FORGE: Teaser | ADV",
+          "duration": 62,
+          "uploadDate": "2025-12-24"
+        }
+      ],
+      "credits": [
+        "Director, DOP, Editor: Lorenzo Mangini",
+        "For FORGE™ GYM"
+      ]
+    },
+    {
+      "slug": "la-rivoluzione-slow-i-nostri-primi-40-anni-docu",
+      "title": "La Rivoluzione Slow: I nostri primi 40 anni",
+      "kind": "Docu",
+      "fullTitle": "La Rivoluzione Slow: I nostri primi 40 anni | Docu",
+      "role": "Director & DoP",
+      "category": [
+        "director",
+        "dop"
+      ],
+      "cover": "la-rivoluzione-slow-i-nostri-primi-40-anni-docu",
+      "blocks": [
+        {
+          "type": "video",
+          "provider": "vimeo",
+          "id": "1231973304",
+          "hash": "cc26633cda",
+          "width": 1280,
+          "height": 675,
+          "thumb": "video/1231973304",
+          "title": "La rivoluzione Slow: I nostri primi 40 anni",
+          "duration": 1253,
+          "uploadDate": "2026-10-01"
+        }
+      ],
+      "credits": [
+        "Diretto da Lorenzo Mangini",
+        "Quarant'anni fa prendeva forma una rivoluzione gentile, destinata a cambiare per sempre il nostro rapporto con il cibo e con la terra. Al centro di questo movimento, la visione e la determinazione di Carlin Petrini. Il documentario ripercorre le origini e le sfide di Slow Food, per poi spogliarsi della veste istituzionale e cercare l'uomo dietro il fondatore. Attraverso una semplice telefonata con la sua storica segretaria, Laura Bonino, emerge un ricordo intimo e quotidiano. A chiudere il cerchio sono le voci degli studenti dell'Università di Pollenzo: il frutto più vivo del suo sogno, pronti a portare questo lascito nel futuro."
+      ]
+    },
+    {
+      "slug": "un-caffe-con-erminia-slow-food-documentary",
+      "title": "Un Caffè con Erminia",
+      "kind": "Slow Food Documentary",
+      "fullTitle": "Un Caffè con Erminia | Slow Food Documentary",
+      "role": "Director & DoP",
+      "category": [
+        "director",
+        "dop"
+      ],
+      "cover": "un-caffe-con-erminia-slow-food-documentary",
+      "blocks": [
+        {
+          "type": "video",
+          "provider": "vimeo",
+          "id": "1175479752",
+          "hash": "33f3c99b59",
+          "width": 1280,
+          "height": 582,
+          "thumb": "video/1175479752",
+          "title": "Un Caffè con Erminia | Slow Food Documentary",
+          "duration": 263,
+          "uploadDate": "2026-03-20"
+        }
+      ],
+      "credits": [
+        "Documentario in collaborazione con Slow Food Coffee Coalition",
+        "Prodotto e diretto da Lorenzo Mangini"
+      ]
+    },
+    {
+      "slug": "radici-storie-di-slow-food",
+      "title": "RADICI, Storie di Slow Food",
+      "kind": "",
+      "fullTitle": "RADICI, Storie di Slow Food",
+      "role": "Director & DoP",
+      "category": [
+        "director",
+        "dop"
+      ],
+      "cover": "radici-storie-di-slow-food",
+      "blocks": [
+        {
+          "type": "video",
+          "provider": "vimeo",
+          "id": "1113646105",
+          "hash": "06723964eb",
+          "width": 1280,
+          "height": 581,
+          "thumb": "video/1113646105",
+          "title": "RADICI, Storie di Slow Food - Documentario",
+          "duration": 900,
+          "uploadDate": "2025-08-27"
+        }
+      ],
+      "credits": [
+        "Documentario in collaborazione con Slow Food",
+        "Prodotto e diretto da Lorenzo Mangini",
+        "Co-Produzione di Sara Torcoli"
+      ]
+    },
+    {
+      "slug": "nicole",
+      "title": "Nicole",
+      "kind": "",
+      "fullTitle": "Nicole",
+      "role": "Director & DoP",
+      "category": [
+        "director",
+        "dop"
+      ],
+      "cover": "nicole",
+      "blocks": [
+        {
+          "type": "video",
+          "provider": "vimeo",
+          "id": "1071735770",
+          "hash": "d2b14ebccf",
+          "width": 1280,
+          "height": 1280,
+          "thumb": "video/1071735770",
+          "title": "Nicole",
+          "duration": 330,
+          "uploadDate": "2025-04-02"
+        }
+      ],
+      "credits": [
+        "Scritto e diretto da Lorenzo Mangini",
+        "Starring Nicole Bergamelli"
+      ]
+    },
+    {
+      "slug": "il-silenzio-dei-boschi",
+      "title": "Il Silenzio dei Boschi",
+      "kind": "",
+      "fullTitle": "Il Silenzio dei Boschi",
+      "role": "Director & DoP",
+      "category": [
+        "director",
+        "dop"
+      ],
+      "cover": "il-silenzio-dei-boschi",
+      "blocks": [
+        {
+          "type": "video",
+          "provider": "vimeo",
+          "id": "1100311061",
+          "hash": "9e211bb60c",
+          "width": 1280,
+          "height": 581,
+          "thumb": "video/1100311061",
+          "title": "Il Silenzio dei Boschi",
+          "duration": 286,
+          "uploadDate": "2025-07-10"
+        }
+      ],
+      "credits": [
+        "Scritto e diretto da Lorenzo Mangini",
+        "Con Isabella Campanelli"
+      ]
+    },
+    {
+      "slug": "autodromo-di-monza-x-masters-historic-racing-reel",
+      "title": "Autodromo di Monza x Masters Historic Racing",
+      "kind": "Reel",
+      "fullTitle": "Autodromo di Monza x Masters Historic Racing | Reel",
+      "role": "Director & DoP",
+      "category": [
+        "director",
+        "dop"
+      ],
+      "cover": "autodromo-di-monza-x-masters-historic-racing-reel",
+      "blocks": [
+        {
+          "type": "video",
+          "provider": "vimeo",
+          "id": "1234619732",
+          "hash": "6b5a45dca0",
+          "width": 1280,
+          "height": 2276,
+          "thumb": "video/1234619732",
+          "title": "Autodromo di Monza x Masters Historic Racing",
+          "duration": 34,
+          "uploadDate": "2026-10-10"
+        },
+        {
+          "type": "video",
+          "provider": "youtube",
+          "id": "9zfxDdVHeyc",
+          "width": 720,
+          "height": 1280,
+          "thumb": "video/9zfxDdVHeyc"
+        }
+      ],
+      "credits": [
+        "Directed by Lorenzo Mangini"
+      ]
+    },
+    {
+      "slug": "overrev-documentary",
+      "title": "OVERREV",
+      "kind": "Documentary",
+      "fullTitle": "OVERREV | Documentary",
+      "role": "Director & DoP",
+      "category": [
+        "director",
+        "dop"
+      ],
+      "cover": "overrev-documentary",
+      "blocks": [
+        {
+          "type": "video",
+          "provider": "vimeo",
+          "id": "1176310326",
+          "hash": "b742c5c729",
+          "width": 1280,
+          "height": 640,
+          "thumb": "video/1176310326",
+          "title": "OVERREV | Documentary",
+          "duration": 514,
+          "uploadDate": "2026-03-23"
+        }
+      ],
+      "credits": [
+        "Italian Car Culture Documentary",
+        "Directed and shot by Lorenzo Mangini"
       ]
     },
     {
@@ -303,99 +551,6 @@
         "Documentario sui detenuti della Casa Circondariale di Monza e la loro esperienza con il teatro.",
         "A cura di Lorenzo Mangini e Sofia Votino",
         "Montaggio e Color di Lorenzo Mangini"
-      ]
-    },
-    {
-      "slug": "la-cosa-piu-sexy-spot-medici-del-mondo-2026",
-      "title": "La cosa più sexy",
-      "kind": "SPOT Medici del Mondo 2026",
-      "fullTitle": "La cosa più sexy | SPOT Medici del Mondo 2026",
-      "role": "Director of Photography",
-      "category": "dop",
-      "cover": "la-cosa-piu-sexy-spot-medici-del-mondo-2026",
-      "blocks": [
-        {
-          "type": "video",
-          "provider": "vimeo",
-          "id": "1185910200",
-          "hash": "cadab8d539",
-          "width": 1280,
-          "height": 720,
-          "thumb": "video/1185910200",
-          "title": "La cosa più sexy | SPOT Medici del Mondo 2026",
-          "duration": 64,
-          "uploadDate": "2026-04-23"
-        }
-      ],
-      "credits": [
-        "Regia di Sofia Votino",
-        "Fotografia di Lorenzo Mangini",
-        "Operatore di camera Gioele Gallo",
-        "Assistente regia Rebecca Molteni",
-        "Assistente camera Simona Autore",
-        "Gaffer Camilla Abati",
-        "Montaggio di Francesco Fumagalli",
-        "Con Lorenzo Riva e Camilla Borra"
-      ]
-    },
-    {
-      "slug": "forge-spot",
-      "title": "FORGE Gym",
-      "kind": "SPOT 2026",
-      "fullTitle": "FORGE Gym | SPOT 2026",
-      "role": "Director & DoP",
-      "category": [
-        "director",
-        "dop"
-      ],
-      "cover": "forge-spot",
-      "blocks": [
-        {
-          "type": "video",
-          "provider": "vimeo",
-          "id": "1179671398",
-          "hash": "4ad090542b",
-          "width": 1280,
-          "height": 640,
-          "thumb": "video/1179671398",
-          "title": "FORGE Gym | SPOT 2026",
-          "duration": 45,
-          "uploadDate": "2026-04-02"
-        }
-      ],
-      "credits": [
-        "Director and DP: Lorenzo Mangini",
-        "1AD and Light & Grip: Sofia Votino"
-      ]
-    },
-    {
-      "slug": "overrev-documentary",
-      "title": "OVERREV",
-      "kind": "Documentary",
-      "fullTitle": "OVERREV | Documentary",
-      "role": "Director & DoP",
-      "category": [
-        "director",
-        "dop"
-      ],
-      "cover": "overrev-documentary",
-      "blocks": [
-        {
-          "type": "video",
-          "provider": "vimeo",
-          "id": "1176310326",
-          "hash": "b742c5c729",
-          "width": 1280,
-          "height": 640,
-          "thumb": "video/1176310326",
-          "title": "OVERREV | Documentary",
-          "duration": 514,
-          "uploadDate": "2026-03-23"
-        }
-      ],
-      "credits": [
-        "Italian Car Culture Documentary",
-        "Directed and shot by Lorenzo Mangini"
       ]
     },
     {
@@ -520,162 +675,8 @@
           "height": 1280,
           "thumb": "video/gbyrkTAAZWU"
         }
-      ]
-    },
-    {
-      "slug": "forge-teaser-adv",
-      "title": "FORGE: Teaser",
-      "kind": "ADV",
-      "fullTitle": "FORGE: Teaser | ADV",
-      "role": "Director & DoP",
-      "category": [
-        "director",
-        "dop"
       ],
-      "cover": "forge-teaser-adv",
-      "blocks": [
-        {
-          "type": "text",
-          "html": "<p>FORGE: Teaser trailer</p><p>Director, DOP, Editor: Lorenzo Mangini</p><p>For FORGE™ GYM</p>"
-        },
-        {
-          "type": "video",
-          "provider": "vimeo",
-          "id": "1149169175",
-          "hash": "87ecf6740f",
-          "width": 1280,
-          "height": 720,
-          "thumb": "video/1149169175",
-          "title": "FORGE: Teaser | ADV",
-          "duration": 62,
-          "uploadDate": "2025-12-24"
-        }
-      ],
-      "credits": [
-        "Director, DOP, Editor: Lorenzo Mangini",
-        "For FORGE™ GYM"
-      ]
-    },
-    {
-      "slug": "un-caffe-con-erminia-slow-food-documentary",
-      "title": "Un Caffè con Erminia",
-      "kind": "Slow Food Documentary",
-      "fullTitle": "Un Caffè con Erminia | Slow Food Documentary",
-      "role": "Director & DoP",
-      "category": [
-        "director",
-        "dop"
-      ],
-      "cover": "un-caffe-con-erminia-slow-food-documentary",
-      "blocks": [
-        {
-          "type": "video",
-          "provider": "vimeo",
-          "id": "1175479752",
-          "hash": "33f3c99b59",
-          "width": 1280,
-          "height": 582,
-          "thumb": "video/1175479752",
-          "title": "Un Caffè con Erminia | Slow Food Documentary",
-          "duration": 263,
-          "uploadDate": "2026-03-20"
-        }
-      ],
-      "credits": [
-        "Documentario in collaborazione con Slow Food Coffee Coalition",
-        "Prodotto e diretto da Lorenzo Mangini"
-      ]
-    },
-    {
-      "slug": "radici-storie-di-slow-food",
-      "title": "RADICI, Storie di Slow Food",
-      "kind": "",
-      "fullTitle": "RADICI, Storie di Slow Food",
-      "role": "Director & DoP",
-      "category": [
-        "director",
-        "dop"
-      ],
-      "cover": "radici-storie-di-slow-food",
-      "blocks": [
-        {
-          "type": "video",
-          "provider": "vimeo",
-          "id": "1113646105",
-          "hash": "06723964eb",
-          "width": 1280,
-          "height": 581,
-          "thumb": "video/1113646105",
-          "title": "RADICI, Storie di Slow Food - Documentario",
-          "duration": 900,
-          "uploadDate": "2025-08-27"
-        }
-      ],
-      "credits": [
-        "Documentario in collaborazione con Slow Food",
-        "Prodotto e diretto da Lorenzo Mangini",
-        "Co-Produzione di Sara Torcoli"
-      ]
-    },
-    {
-      "slug": "il-silenzio-dei-boschi",
-      "title": "Il Silenzio dei Boschi",
-      "kind": "",
-      "fullTitle": "Il Silenzio dei Boschi",
-      "role": "Director & DoP",
-      "category": [
-        "director",
-        "dop"
-      ],
-      "cover": "il-silenzio-dei-boschi",
-      "blocks": [
-        {
-          "type": "video",
-          "provider": "vimeo",
-          "id": "1100311061",
-          "hash": "9e211bb60c",
-          "width": 1280,
-          "height": 581,
-          "thumb": "video/1100311061",
-          "title": "Il Silenzio dei Boschi",
-          "duration": 286,
-          "uploadDate": "2025-07-10"
-        }
-      ],
-      "credits": [
-        "Scritto e diretto da Lorenzo Mangini",
-        "Con Isabella Campanelli"
-      ]
-    },
-    {
-      "slug": "nicole",
-      "title": "Nicole",
-      "kind": "",
-      "fullTitle": "Nicole",
-      "role": "Director & DoP",
-      "category": [
-        "director",
-        "dop"
-      ],
-      "cover": "nicole",
-      "blocks": [
-        {
-          "type": "video",
-          "provider": "vimeo",
-          "id": "1071735770",
-          "hash": "d2b14ebccf",
-          "width": 1280,
-          "height": 1280,
-          "thumb": "video/1071735770",
-          "title": "Nicole",
-          "duration": 330,
-          "uploadDate": "2025-04-02"
-        }
-      ],
-      "credits": [
-        "Scritto e diretto da Lorenzo Mangini",
-        "Starring Nicole Bergamelli"
-      ]
+      "listed": false
     },
     {
       "slug": "vertical-adv",
@@ -878,7 +879,8 @@
           "height": 1280,
           "thumb": "video/gQwc7J_4Ajg"
         }
-      ]
+      ],
+      "listed": false
     },
     {
       "slug": "rondo-x-blu-basket",
@@ -1021,7 +1023,8 @@
             }
           ]
         }
-      ]
+      ],
+      "listed": false
     },
     {
       "slug": "eurobucci-2025-photos",
@@ -1097,7 +1100,8 @@
             }
           ]
         }
-      ]
+      ],
+      "listed": false
     }
   ],
   "vertical": {

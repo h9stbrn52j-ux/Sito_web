@@ -339,14 +339,16 @@ function renderBlocks(blocks, root, p) {
 
 function home() {
   const root = './';
+  // in home solo i lavori in elenco, nell'ordine di site.json ("listed": false li tiene fuori, la pagina resta)
+  const listed = projects.filter((p) => p.listed !== false);
   const filters = [
     ['all', 'All'],
     ['director', 'Director'],
     ['dop', 'DoP'],
     ['photography', 'Photography'],
   ];
-  const count = (k) => (k === 'all' ? projects.length : projects.filter((p) => p.categories.includes(k)).length);
-  const covers = projects.map((p) => `assets/img/covers/${imgSrc(p.cover, true)}`);
+  const count = (k) => (k === 'all' ? listed.length : listed.filter((p) => p.categories.includes(k)).length);
+  const covers = listed.map((p) => `assets/img/covers/${imgSrc(p.cover, true)}`);
   const body = `<section class="hero" id="top">
   <div class="hero__meta">
     <span>Lorenzo</span>
@@ -358,6 +360,7 @@ function home() {
 <section class="work" aria-label="Selected work">
   <div class="filters" role="group" aria-label="Filter projects">
     ${filters
+      .filter(([k]) => count(k) > 0)
       .map(
         ([k, l], i) =>
           `<button type="button" class="filter${i === 0 ? ' is-active' : ''}" data-filter="${k}" aria-pressed="${i === 0}">${esc(l)}<sup>${pad(count(k))}</sup></button>`
@@ -365,7 +368,7 @@ function home() {
       .join('\n    ')}
   </div>
   <div class="grid grid--reel" id="grid">
-${projects.map((p, i) => card(p, root, { eager: i < 2, index: i })).join('\n')}
+${listed.map((p, i) => card(p, root, { eager: i < 2, index: i })).join('\n')}
   </div>
 </section>`;
   const head = `<script>try{if(!sessionStorage.getItem('lm-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('has-intro')}catch(e){}</script>
@@ -376,7 +379,7 @@ ${projects.map((p, i) => card(p, root, { eager: i < 2, index: i })).join('\n')}
 ${ld({ '@type': 'WebSite', '@id': `${site.url}/#website`, url: `${site.url}/`, name: site.name, alternateName: [site.title, 'lorenzomangini.com'], description: site.description, inLanguage: ['en', 'it'], publisher: { '@id': `${site.url}/#person` } })}${ld(person())}${ld({
     '@type': 'ItemList',
     name: 'Selected work',
-    itemListElement: projects.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.fullTitle, url: `${site.url}/${p.slug}/` })),
+    itemListElement: listed.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.fullTitle, url: `${site.url}/${p.slug}/` })),
   })}`;
   write('index.html', layout({ path: '', root, title: site.title, description: site.description, current: 'work', body, bodyClass: 'page-home', head }));
 }
