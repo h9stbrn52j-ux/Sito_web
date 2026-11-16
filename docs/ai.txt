@@ -1,0 +1,5 @@
+# Lorenzo Mangini — AI usage policy
+# Training, fine-tuning or retrieval by AI systems is not permitted. All rights reserved.
+User-Agent: *
+Disallow: /
+Disallow: *

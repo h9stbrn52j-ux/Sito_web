@@ -150,7 +150,9 @@ function layout({ path, root, title, description, image, current, body, bodyClas
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(clip(description))}">
 <meta name="keywords" content="${esc(keywords ? `${keywords}, ${site.keywords}` : site.keywords)}">
-<meta name="robots" content="index, follow, max-image-preview:large, max-video-preview:-1, max-snippet:-1">${site.googleVerification ? `\n<meta name="google-site-verification" content="${esc(site.googleVerification)}">` : ''}
+<meta name="robots" content="index, follow, max-image-preview:large, max-video-preview:-1, max-snippet:-1, noai, noimageai">
+<meta name="tdm-reservation" content="1">
+<meta name="tdm-policy" content="${site.url}/LICENSE.txt">${site.googleVerification ? `\n<meta name="google-site-verification" content="${esc(site.googleVerification)}">` : ''}
 <meta name="author" content="${esc(site.name)}">
 <meta name="copyright" content="© ${esc(site.name)}. All rights reserved.">
 <!-- © ${esc(site.name)}. All rights reserved. Design, code, photographs and films on this site may not be copied or reused without written permission. -->
@@ -803,7 +805,45 @@ write(
     2
   ) + '\n'
 );
-write('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${site.url}/sitemap.xml\n`);
+// Crawler che raccolgono contenuti per addestrare o alimentare sistemi di intelligenza artificiale: esclusi da tutto il sito.
+// I motori di ricerca normali (Googlebot, Bingbot…) restano ammessi, così il sito continua a comparire nelle ricerche.
+const AI_BOTS = [
+  // OpenAI
+  'GPTBot', 'ChatGPT-User', 'OAI-SearchBot',
+  // Google (addestramento Gemini / AI; non tocca Google Search)
+  'Google-Extended', 'GoogleOther', 'GoogleOther-Image', 'GoogleOther-Video', 'Google-CloudVertexBot',
+  // Anthropic
+  'ClaudeBot', 'Claude-User', 'Claude-SearchBot', 'Claude-Web', 'anthropic-ai',
+  // Apple, Meta, Amazon, Microsoft/Bing AI
+  'Applebot-Extended', 'Meta-ExternalAgent', 'Meta-ExternalFetcher', 'FacebookBot', 'Amazonbot',
+  // Perplexity, Mistral, Cohere, DuckDuckGo AI, You.com
+  'PerplexityBot', 'Perplexity-User', 'MistralAI-User', 'cohere-ai', 'cohere-training-data-crawler', 'DuckAssistBot', 'YouBot',
+  // ByteDance, Common Crawl e raccoglitori di dataset
+  'Bytespider', 'CCBot', 'Diffbot', 'ImagesiftBot', 'img2dataset', 'Omgilibot', 'Omgili', 'Timpibot', 'AI2Bot', 'Ai2Bot-Dolma',
+  'Kangaroo Bot', 'Webzio-Extended', 'PanguBot', 'Sidetrade indexer bot', 'FriendlyCrawler', 'ICC-Crawler', 'Scrapy', 'VelenPublicWebCrawler',
+  'iaskspider/2.0', 'ISSCyberRiskCrawler', 'Brightbot 1.0', 'TikTokSpider', 'Novellum', 'QualifiedBot',
+];
+write(
+  'robots.txt',
+  `# Il contenuto di questo sito (film, fotografie, testi, design) non può essere usato
+# per addestrare, alimentare o migliorare sistemi di intelligenza artificiale.
+# The content of this site may not be used to train, feed or improve AI systems.
+
+${AI_BOTS.map((b) => `User-agent: ${b}`).join('\n')}
+Disallow: /
+
+User-agent: *
+Allow: /
+
+Sitemap: ${site.url}/sitemap.xml
+`
+);
+// riserva dei diritti di text and data mining (art. 4 Direttiva UE 2019/790), in formato leggibile dalle macchine
+write('.well-known/tdmrep.json', JSON.stringify([{ location: '/*', 'tdm-reservation': 1, 'tdm-policy': `${site.url}/LICENSE.txt` }], null, 2) + '\n');
+write(
+  'ai.txt',
+  `# ${site.name} — AI usage policy\n# Training, fine-tuning or retrieval by AI systems is not permitted. All rights reserved.\nUser-Agent: *\nDisallow: /\nDisallow: *\n`
+);
 write('.nojekyll', '');
 write('CNAME', new URL(site.url).host + '\n');
 console.log(`OK — ${urls.length} pagine generate in docs/`);
