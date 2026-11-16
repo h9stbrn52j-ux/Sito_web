@@ -198,10 +198,9 @@ ${head}</head>
   </nav>
 </header>
 <div class="menu" id="menu" hidden>
-  <nav class="menu__links" aria-label="Mobile">${NAV.filter((n) => n.key !== 'vertical-adv').map(
+  <nav class="menu__links" aria-label="Menu">${NAV.map(
     (n) => `<a href="${root}${n.href}"${current === n.key ? ' aria-current="page"' : ''}>${esc(n.label)}</a>`
   ).join('')}</nav>
-  <a class="menu__service" href="${root}vertical-adv/"${current === 'vertical-adv' ? ' aria-current="page"' : ''}><span>${esc(site.service ? site.service.label : 'For brands & events')}</span>Vertical ADV →</a>
   <div class="menu__foot"><a href="mailto:${site.email}">${site.email}</a><div class="menu__socials">${socials}</div></div>
 </div>
 <main id="main">

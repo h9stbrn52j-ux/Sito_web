@@ -512,7 +512,12 @@
     el.className = 'intro is-loading';
     el.setAttribute('role', 'dialog');
     el.setAttribute('aria-label', 'Intro');
+    // l'intro ha un suo video di sfondo (lo stesso del sito, sincronizzato): è opaca, quindi la pagina
+    // sotto si vede solo attraverso l'apertura dell'iride, alla fine
+    var srcV = $('.bgvideo video');
     el.innerHTML =
+      (srcV ? '<video class="intro__bg" muted playsinline webkit-playsinline loop autoplay preload="auto" aria-hidden="true" poster="' + srcV.getAttribute('poster') + '">' + srcV.innerHTML + '</video>' : '') +
+      '<div class="intro__veil" aria-hidden="true"></div>' +
       '<canvas class="intro__gl" aria-hidden="true"></canvas>' +
       '<div class="intro__name"><span class="intro__last">Lorenzo Mangini</span><span class="intro__role">Director <i>/</i> Director of Photography</span></div>' +
       '<div class="intro__hud intro__hud--tl"><span class="intro__rec"></span><span class="intro__tc">00:00:00:00</span></div>' +
@@ -522,6 +527,19 @@
     doc.body.appendChild(el);
 
     var gl = $('.intro__gl', el), name = $('.intro__name', el);
+    var introV = $('.intro__bg', el);
+    if (introV) {
+      introV.muted = true;
+      if (reduced) { introV.removeAttribute('autoplay'); }
+      else {
+        var playIntroV = function () { if (!introV.paused) return; var pr = introV.play(); if (pr && pr.catch) pr.catch(function () {}); };
+        var syncV = function () { if (srcV && srcV.readyState > 0 && Math.abs(introV.currentTime - srcV.currentTime) > 0.15) { try { introV.currentTime = srcV.currentTime; } catch (e) {} } };
+        introV.addEventListener('loadedmetadata', function () { syncV(); playIntroV(); });
+        ['canplay', 'loadeddata'].forEach(function (ev) { introV.addEventListener(ev, playIntroV); });
+        addEventListener('touchstart', playIntroV, { once: true, passive: true });
+        playIntroV();
+      }
+    }
     var tc = $('.intro__tc', el), tstop = $('.intro__t', el);
     var api = null, done = false, finishing = false, revealed = false;
     var p = 0, target = 0, start = performance.now(), lastInput = start, lastTick = start, raf;
