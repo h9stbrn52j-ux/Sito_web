@@ -187,15 +187,20 @@ ${head}</head>
     <div class="nav__group nav__group--left">${NAV.slice(0, 2).map(link).join('')}</div>
     <a class="nav__logo" href="${root}" aria-label="${esc(site.name)} — home"><span class="logo" aria-hidden="true"></span></a>
     <div class="nav__group nav__group--right">${NAV.slice(2).map(link).join('')}</div>
-    <a class="nav__quick${current === 'vertical-adv' ? ' is-current' : ''}" href="${root}vertical-adv/">Vertical ADV</a>
+    <div class="nav__icons">${[['vimeo', 'Vimeo', '<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M22.4 7.2c-.1 2-1.5 4.8-4.2 8.3-2.8 3.6-5.2 5.4-7.1 5.4-1.2 0-2.2-1.1-3.1-3.4L6.3 11.3C5.6 9 4.9 7.9 4.1 7.9c-.2 0-.8.4-1.8 1.1L1.2 7.6 4.6 4.6C6.1 3.3 7.3 2.6 8 2.5c1.8-.2 2.9 1 3.3 3.6.4 2.8.7 4.6.9 5.3.5 2.3 1.1 3.4 1.7 3.4.5 0 1.2-.8 2.2-2.3 1-1.5 1.5-2.7 1.6-3.5.1-1.3-.4-2-1.6-2-.6 0-1.1.1-1.7.4 1.1-3.6 3.3-5.4 6.5-5.3 2.4.1 3.5 1.6 3.5 4.6Z\"/></svg>'], ['instagram', 'Instagram', '<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"/><circle cx=\"12\" cy=\"12\" r=\"4.2\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"/><circle cx=\"17.4\" cy=\"6.6\" r=\"1.1\" fill=\"currentColor\"/></svg>']]
+      .map(([k, label, svg]) => {
+        const so = site.socials.find((x) => x.label.toLowerCase() === k);
+        return so ? `<a href="${esc(so.url)}" target="_blank" rel="noopener" aria-label="${label}">${svg}</a>` : '';
+      })
+      .join('')}</div>
     <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
   </nav>
 </header>
 <div class="menu" id="menu" hidden>
-  <nav class="menu__links" aria-label="Mobile">${NAV.map(
-    (n, i) =>
-      `<a href="${root}${n.href}"${current === n.key ? ' aria-current="page"' : ''}><span>${pad(i + 1)}</span>${esc(n.label)}</a>`
+  <nav class="menu__links" aria-label="Mobile">${NAV.filter((n) => n.key !== 'vertical-adv').map(
+    (n) => `<a href="${root}${n.href}"${current === n.key ? ' aria-current="page"' : ''}>${esc(n.label)}</a>`
   ).join('')}</nav>
+  <a class="menu__service" href="${root}vertical-adv/"${current === 'vertical-adv' ? ' aria-current="page"' : ''}><span>${esc(site.service ? site.service.label : 'For brands & events')}</span>Vertical ADV →</a>
   <div class="menu__foot"><a href="mailto:${site.email}">${site.email}</a><div class="menu__socials">${socials}</div></div>
 </div>
 <main id="main">
@@ -234,8 +239,9 @@ function card(p, root, { eager = false, index = 0 } = {}) {
     <span class="card__index">${pad(index + 1)}</span>
   </span>
   <span class="card__caption">
-    <span class="card__title">${esc(p.title)}${p.kind ? ` <span class="card__kind">${esc(p.kind)}</span>` : ''}</span>
-    <span class="card__meta">${esc(roleOf(p))}${p.year ? ` — ${esc(p.year)}` : ''}</span>
+    <span class="card__title">${esc(p.title)}</span>
+    <span class="card__meta">${[p.kind, roleOf(p)].filter(Boolean).map(esc).join(' · ')}</span>
+    <span class="card__cta">${p.category === 'photography' ? 'View' : 'Watch'}</span>
   </span>
 </a>`;
 }
@@ -344,16 +350,10 @@ function home() {
   const body = `<section class="hero" id="top">
   <div class="hero__meta">
     <span>Lorenzo</span>
-    <span>${site.roles.map(esc).join(' / ')}</span>
-    <span>${esc(site.location)}</span>
   </div>
   <h1 class="hero__word" data-fit><span class="sr">${esc(site.name)} — ${site.roles.map(esc).join(', ')} </span><span class="fit" aria-hidden="true">MANGINI</span></h1>
-  <p class="hero__intro">${esc(site.descriptionLong)}</p>
-  ${site.service ? `<a class="service" href="${root}${site.service.href}">
-    <span class="service__label">${esc(site.service.label)}</span>
-    <span class="service__text">${esc(site.service.text)}</span>
-    <span class="service__arrow" aria-hidden="true">→</span>
-  </a>` : ''}
+  <p class="hero__roles">Director <i>/</i> DoP</p>
+  ${site.service ? `<a class="service" href="${root}${site.service.href}"><span class="service__label">${esc(site.service.label)}</span><span class="service__text">${esc(site.service.text)}</span><span class="service__arrow" aria-hidden="true">→</span></a>` : ''}
 </section>
 <section class="work" aria-label="Selected work">
   <div class="filters" role="group" aria-label="Filter projects">
@@ -364,7 +364,7 @@ function home() {
       )
       .join('\n    ')}
   </div>
-  <div class="grid" id="grid">
+  <div class="grid grid--reel" id="grid">
 ${projects.map((p, i) => card(p, root, { eager: i < 2, index: i })).join('\n')}
   </div>
 </section>`;
@@ -382,9 +382,6 @@ ${ld({ '@type': 'WebSite', '@id': `${site.url}/#website`, url: `${site.url}/`, n
 
 function projectPage(p, i) {
   const root = '../';
-  const prev = projects[(i - 1 + projects.length) % projects.length];
-  const next = projects[(i + 1) % projects.length];
-  const more = [1, 2, 3, 4].map((n) => projects[(i + n) % projects.length]);
   const firstVideo = (function find(bs) {
     for (const b of bs) {
       if (b.type === 'video') return b;
@@ -414,17 +411,7 @@ ${renderBlocks(p.blocks, root, p)}
     <h2 class="label" id="credits-title">Credits</h2>
     <p>${p.credits.map(esc).join('<br>')}</p>
   </section>` : ''}
-  <nav class="pager" aria-label="Projects">
-    <a href="${root}${prev.slug}/"><span>← Previous</span>${esc(prev.title)}</a>
-    <a href="${root}${next.slug}/"><span>Next →</span>${esc(next.title)}</a>
-  </nav>
-</article>
-<section class="more" aria-labelledby="more-title">
-  <h2 class="label" id="more-title">You may also like</h2>
-  <div class="grid grid--small">
-${more.map((m) => card(m, root, { index: projects.indexOf(m) })).join('\n')}
-  </div>
-</section>`;
+</article>`;
   const credits = (p.credits || []).join('. ').replace(/\.\./g, '.');
   const description = `${p.fullTitle} (${[roleOf(p), p.year].filter(Boolean).join(', ')}). ${credits ? credits + '. ' : ''}From the portfolio of ${site.name}, ${site.tagline}.`;
   const url = `${site.url}/${p.slug}/`;

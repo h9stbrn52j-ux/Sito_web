@@ -82,7 +82,20 @@
     if (d > 0 !== hidden) { hidden = d > 0; header.classList.toggle('is-hidden', hidden); }
     lastY = y;
   }
-  addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  // in home lo scorrimento "a scatti" fa piccoli ritorni: lì si decide solo a movimento finito,
+  // confrontando la posizione con quella del lavoro precedente (un cambio per ogni lavoro, niente sfarfallio)
+  var settleTimer = null, settledY = lastY;
+  function onSettle() {
+    var y = Math.max(0, scrollY);
+    if (menu && !menu.hidden) { settledY = y; return; }
+    var show = y < 120 ? true : y > settledY + 24 ? false : y < settledY - 24 ? true : !hidden;
+    if (show === hidden) { hidden = !show; header.classList.toggle('is-hidden', hidden); }
+    settledY = y; lastY = y;
+  }
+  addEventListener('scroll', function () {
+    if (html.classList.contains('snap-home')) { clearTimeout(settleTimer); settleTimer = setTimeout(onSettle, 140); return; }
+    if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
+  }, { passive: true });
 
   function setMenu(open) {
     menu.hidden = !open;
@@ -108,7 +121,7 @@
 
   /* ---------- comparsa allo scorrimento ---------- */
 
-  var revealItems = $$('.card, .project__body > *, .gallery__item, .about__text > *');
+  var revealItems = $$('.card:not(.grid--reel .card), .project__body > *, .gallery__item, .about__text > *');
   if ('IntersectionObserver' in window && !reduced) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
@@ -234,6 +247,37 @@
     update();
   });
 
+  /* ---------- home: lavori a tutto schermo ----------
+     Lo scorrimento si ferma su un lavoro alla volta; chi si allontana dal centro dello schermo si attenua. */
+  var reel = $('.grid--reel');
+  if (reel) {
+    var reelCards = $$('.card', reel);
+    // lo scatto si attiva quando l'intro è finita (aggiungere la classe solo se manca: altrimenti si riattiva all'infinito)
+    var snapOn = function () {
+      if (html.classList.contains('has-intro') || reduced || html.classList.contains('snap-home')) return;
+      html.classList.add('snap-home');
+      if (snapObs) snapObs.disconnect();
+    };
+    var snapObs = null;
+    snapOn();
+    if (!html.classList.contains('snap-home') && !reduced) { snapObs = new MutationObserver(snapOn); snapObs.observe(html, { attributes: true, attributeFilter: ['class'] }); }
+    var reelTick = false;
+    var focusCards = function () {
+      reelTick = false;
+      var vh = innerHeight;
+      reelCards.forEach(function (card) {
+        if (card.classList.contains('is-out')) return;
+        var r = card.getBoundingClientRect();
+        if (r.bottom < -vh || r.top > vh * 2) return;
+        var d = Math.abs(r.top + r.height / 2 - vh / 2) / vh;
+        card.style.setProperty('--f', Math.max(0, Math.min(1, 1 - d * 1.5)).toFixed(3));
+      });
+    };
+    addEventListener('scroll', function () { if (!reelTick) { reelTick = true; requestAnimationFrame(focusCards); } }, { passive: true });
+    addEventListener('resize', focusCards);
+    focusCards();
+  }
+
   /* ---------- filtri ---------- */
 
   var filters = $$('.filter');
@@ -251,6 +295,7 @@
         // nel filtro DoP i lavori di sola fotografia vengono prima
         card.style.order = f === 'dop' && show && cats.length === 1 ? '-1' : '';
         card.classList.toggle('is-out', !show);
+        card.style.setProperty('--f', '1');
         if (show) card.classList.add('is-in');
       });
     });
