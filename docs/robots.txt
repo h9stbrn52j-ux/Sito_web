@@ -10,6 +10,8 @@ User-agent: GoogleOther
 User-agent: GoogleOther-Image
 User-agent: GoogleOther-Video
 User-agent: Google-CloudVertexBot
+User-agent: Google-Agent
+User-agent: Google-NotebookLM
 User-agent: ClaudeBot
 User-agent: Claude-User
 User-agent: Claude-SearchBot

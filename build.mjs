@@ -811,7 +811,7 @@ const AI_BOTS = [
   // OpenAI
   'GPTBot', 'ChatGPT-User', 'OAI-SearchBot',
   // Google (addestramento Gemini / AI; non tocca Google Search)
-  'Google-Extended', 'GoogleOther', 'GoogleOther-Image', 'GoogleOther-Video', 'Google-CloudVertexBot',
+  'Google-Extended', 'GoogleOther', 'GoogleOther-Image', 'GoogleOther-Video', 'Google-CloudVertexBot', 'Google-Agent', 'Google-NotebookLM',
   // Anthropic
   'ClaudeBot', 'Claude-User', 'Claude-SearchBot', 'Claude-Web', 'anthropic-ai',
   // Apple, Meta, Amazon, Microsoft/Bing AI
