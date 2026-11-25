@@ -690,14 +690,6 @@
         {
           "type": "video",
           "provider": "youtube",
-          "id": "UD7I9k9ZVbU",
-          "width": 720,
-          "height": 1280,
-          "thumb": "video/UD7I9k9ZVbU"
-        },
-        {
-          "type": "video",
-          "provider": "youtube",
           "id": "9zfxDdVHeyc",
           "width": 720,
           "height": 1280,
