@@ -1171,11 +1171,6 @@
     },
     "clients": [
       {
-        "name": "Spazio Astra",
-        "file": "spazio-astra.png",
-        "scale": 1.5
-      },
-      {
         "name": "Germi — luogo di contaminazione",
         "file": "germi.png",
         "scale": 1.25
